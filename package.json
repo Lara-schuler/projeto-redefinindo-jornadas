@@ -1,0 +1,11 @@
+{
+  "name": "projeto-redefinindo-jornadas",
+  "version": "1.0.0",
+  "description": "\"Backend da rede social solidária para a reintegração de pessoas em situação de rua.\"",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "\"Lara Schüler\"",
+  "license": "ISC"
+}
