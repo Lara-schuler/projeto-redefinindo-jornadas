@@ -1,0 +1,185 @@
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+  
+  .container {
+    width: 100%;
+    max-width: 360px;
+    margin: 0 auto;
+    padding: 2rem; /* Ajuste para usar rem em vez de px */
+    flex: 1;
+  }
+  
+  .top-bar {
+    width: 100%;
+    height: 12vh; /* Aumente a altura da navbar para acomodar melhor o logotipo */
+    background-color: #004AAD;
+    display: flex;
+    align-items: center;
+    padding: 0 2rem; /* Mantém o padding com rem */
+  }
+  
+  .profile-picture img {
+    width: 4rem; /* Reduza o tamanho do logotipo */
+    height: 4rem; /* Reduza o tamanho do logotipo */
+    border-radius: 50%;
+  }
+  
+  .top-nav ul {
+    display: flex;
+    list-style-type: none;
+    margin-left: auto;
+    padding: 0;
+  }
+  
+  .top-nav ul li {
+    margin-left: 1.5rem; /* Ajuste com rem */
+  }
+  
+  .top-nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 0.75rem; /* Ajuste com rem */
+    font-weight: 700;
+  }
+  
+  .secao-bem-vindo {
+    text-align: center;
+    padding: 2rem 1rem; /* Ajuste com rem */
+  }
+  
+  .secao-bem-vindo h1 {
+    color: #004AAD;
+    font-size: 1.5rem; /* Ajuste com rem */
+    font-weight: 700;
+  }
+  
+  .secao-bem-vindo p {
+    color: #004AAD;
+    font-size: 0.875rem; /* Ajuste com rem */
+    font-weight: 700;
+    line-height: 1.25; /* Ajuste para usar unidades relativas */
+  }
+  
+  .logo-grande img {
+    width: 40vw; /* Usando vw para ajustar o tamanho proporcionalmente à largura da viewport */
+    height: auto; /* Manter a proporção da imagem */
+    display: block;
+    margin: 1rem auto; /* Ajuste com rem */
+  }
+  
+  .novo-texto {
+    text-align: center;
+    color: #004AAD;
+    font-size: 0.875rem; /* Ajuste com rem */
+    font-weight: 700;
+    line-height: 1.5; /* Ajuste para usar unidades relativas */
+    padding: 1rem; /* Ajuste com rem */
+  }
+  
+  .secao-cta {
+    display: flex;
+    justify-content: center;
+    gap: 1rem; /* Ajuste com rem */
+    padding: 1rem 0; /* Ajuste com rem */
+  }
+  
+  .botao-cta a {
+    display: inline-block;
+    width: 8rem; /* Ajuste com rem */
+    height: 2.5rem; /* Ajuste com rem */
+    background-color: #004AAD;
+    color: white;
+    border-radius: 2rem; /* Ajuste com rem */
+    text-align: center;
+    line-height: 2.5rem; /* Ajuste com rem */
+    font-size: 0.75rem; /* Ajuste com rem */
+    font-weight: 700;
+    text-decoration: none;
+  }
+  
+  .declaracao-missao {
+    text-align: center;
+    padding: 1rem; /* Ajuste com rem */
+  }
+  
+  .declaracao-missao p {
+    color: #004AAD;
+    font-size: 0.875rem; /* Ajuste com rem */
+    font-weight: 700;
+    line-height: 1.5; /* Ajuste para usar unidades relativas */
+  }
+  
+  footer {
+    background-color: #004AAD;
+    padding: 1rem 0; /* Ajuste com rem */
+    margin: 0;
+    width: 100%;
+  }
+  
+  .redes-sociais {
+    display: flex;
+    justify-content: center;
+    gap: 1rem; /* Ajuste com rem */
+    padding: 1rem 0; /* Ajuste com rem */
+  }
+  
+  .icone-rede-social {
+    color: white;
+    font-size: 1.5rem; /* Ajuste com rem */
+    text-decoration: none;
+  }
+  
+  .icone-rede-social:hover {
+    color: #ccc; /* Cor de destaque ao passar o mouse */
+  }
+  
+  /* Media Queries para responsividade */
+  @media (min-width: 768px) {
+    .container {
+      max-width: 720px;
+    }
+  
+    .top-bar {
+      height: 14vh; 
+    }
+  
+    .profile-picture img {
+      width: 5rem; 
+      height: 5rem; 
+    }
+  
+    .top-nav ul li a {
+      font-size: 1rem; /* Ajuste com rem */
+    }
+  
+    .secao-bem-vindo h1 {
+      font-size: 2rem; /* Ajuste com rem */
+    }
+  
+    .secao-bem-vindo p, .novo-texto, .declaracao-missao p {
+      font-size: 1rem; 
+    }
+  
+    .botao-cta a {
+      width: 10rem; 
+      height: 3rem; 
+      font-size: 1rem; 
+      line-height: 3rem; 
+    }
+  
+    .logo-grande img {
+      width: 16vw; 
+    }
+  
+    .novo-texto {
+      font-size: 1rem; 
+    }
+  }
+  
