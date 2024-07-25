@@ -1,0 +1,27 @@
+<div class="container-login">
+    <div class="caixa-login">
+        <h2>Faça o login para ver mais</h2>
+        <form action="/login" method="POST">
+            <div class="grupo-formulario">
+                <label for="email">E-mail ou telefone:</label>
+                <input type="text" id="email" name="email" class="form-control" required>
+            </div>
+            <div class="grupo-formulario">
+                <label for="password">Senha:</label>
+                <input type="password" id="password" name="password" class="form-control" required>
+            </div>
+            <div class="grupo-formulario">
+                <a href="/recuperar-senha" class="link-senha-esquecida">Esqueceu sua senha?</a>
+            </div>
+            <button type="submit" class="botao-primario">Entrar</button>
+        </form>
+        <button onclick="window.location.href='/'" class="botao-voltar">Voltar</button>
+        <div class="termos">
+            <p>Ao continuar, você concorda com os <a href="#">Termos de Serviço</a> do Redefinindo Jornadas e confirma que leu a nossa <a href="#">Política de Privacidade</a>;</p>
+            <p><a href="#">Aviso na coleta de informações</a>;</p>
+        </div>
+        <div class="criar-conta-p">
+            <p>Ainda não está no Redefinindo Jornadas? <a href="/criar-conta">Crie uma conta.</a></p>
+        </div>
+    </div>
+</div>

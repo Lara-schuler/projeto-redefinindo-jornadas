@@ -1,0 +1,126 @@
+/* Estilos existentes */
+
+.container-login {
+    width: 360px;
+    margin: auto;
+    padding: 20px;
+}
+
+.barra-superior {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;  /* Adicione esta linha para centralizar verticalmente */
+    background-color: #004AAD;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.imagem-perfil {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;  /* Adicione esta linha para garantir que a imagem se encaixe bem no container */
+}
+
+.criar-conta {
+    color: white;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+/* Outros estilos existentes */
+
+.caixa-login {
+    background-color: white;
+    box-shadow: 0px 1px 20px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+    padding: 20px;
+}
+
+.caixa-login h2 {
+    color: #004AAD;
+    text-align: center;
+}
+
+.grupo-formulario {
+    margin-bottom: 15px;
+}
+
+.grupo-formulario label {
+    color: #004AAD;
+    font-weight: bold;
+}
+
+.grupo-formulario input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #004AAD;
+    border-radius: 5px;
+}
+
+.link-senha-esquecida {
+    color: #004AAD; /* Cor azul para o link */
+    font-size: 12px; /* Tamanho da fonte */
+    text-decoration: none; /* Remove o sublinhado padrão */
+    display: block; /* Faz com que o link ocupe uma linha completa */
+    text-align: center; /* Centraliza o texto */
+    margin-top: 10px; /* Espaço acima do link */
+}
+
+.link-senha-esquecida:hover {
+    text-decoration: underline; /* Adiciona sublinhado ao passar o mouse */
+    color: #002a5c; /* Cor do texto ao passar o mouse */
+}
+
+.botao-primario {
+    width: 100%;
+    padding: 10px;
+    background-color: #004AAD;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+}
+
+.termos {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 10px;
+    color: rgba(28, 28, 28, 0.88);
+}
+
+.termos a {
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.criar-conta-p {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 10px;
+    color: rgba(28, 28, 28, 0.88);
+}
+
+.criar-conta-p a {
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.botao-voltar {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background: none;
+    border: none;
+    color: #004AAD;
+    font-weight: bold;
+    text-align: center;
+    cursor: pointer;
+    margin-top: 10px; /* Espaçamento acima do botão */
+    font-size: 14px; /* Ajuste o tamanho da fonte conforme necessário */
+    text-decoration: underline; /* Adiciona um efeito de sublinhado */
+}
+
+.botao-voltar:hover {
+    color: #002a5c; /* Cor de texto ao passar o mouse */
+}
