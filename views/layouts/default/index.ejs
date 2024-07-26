@@ -9,6 +9,12 @@
     <link rel="stylesheet" href="<%= layoutVariables.style %>default.css">
     <% if (title === 'Login') { %>
         <link rel="stylesheet" href="<%= layoutVariables.style %>login.css">
+    <% } else if (title === 'Criar Conta') { %>
+        <link rel="stylesheet" href="<%= layoutVariables.style %>criar-conta.css">
+    <% } else if (title === 'Recuperar Senha') { %>
+        <link rel="stylesheet" href="<%= layoutVariables.style %>recuperar-senha.css">
+    <% } else if (title === 'Verificar Token') { %>
+        <link rel="stylesheet" href="<%= layoutVariables.style %>verificar-token.css">
     <% } %>
 </head>
 <body>

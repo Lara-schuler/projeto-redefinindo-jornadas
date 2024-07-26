@@ -1,0 +1,57 @@
+<div class="container-criar-conta">
+    <div class="caixa-criar-conta">
+        <h2>Cadastre-se para ver mais</h2>
+        <form action="/criar-conta" method="POST">
+            <div class="grupo-formulario">
+                <label for="email">E-mail:</label>
+                <input type="email" id="email" name="email" class="form-control" required>
+            </div>
+            <div class="grupo-formulario">
+                <label for="telefone">Telefone:</label>
+                <input type="tel" id="telefone" name="telefone" class="form-control" required>
+            </div>
+            <div class="grupo-formulario">
+                <label for="senha">Senha</label>
+                <div class="input-container">
+                    <input type="password" id="senha" name="senha" placeholder="Digite sua senha" required>
+                    <i class="bi bi-eye" id="toggleSenha"></i>
+                </div>
+            </div>
+            
+            <div class="grupo-formulario">
+                <label for="confirmar-senha">Confirmar Senha</label>
+                <div class="input-container">
+                    <input type="password" id="confirmar-senha" name="confirmar-senha" placeholder="Confirme sua senha" required>
+                    <i class="bi bi-eye" id="toggleConfirmarSenha"></i>
+                </div>
+            </div>
+            <button type="submit" class="botao-primario">Continuar</button>
+        </form>
+        <button onclick="window.location.href='/'" class="botao-voltar">Voltar</button>
+        <div class="termos">
+            <p>Ao continuar, você concorda com os <a href="#">Termos de Serviço</a> do Redefinindo Jornadas e confirma que leu a nossa <a href="#">Política de Privacidade</a>;</p>
+            <p><a href="#">Aviso na coleta de informações</a>;</p>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const toggleSenha = document.getElementById('toggleSenha');
+        const senhaInput = document.getElementById('senha');
+        
+        if (toggleSenha && senhaInput) {
+            toggleSenha.addEventListener('click', function() {
+                if (senhaInput.type === 'password') {
+                    senhaInput.type = 'text';
+                    toggleSenha.classList.remove('bi-eye');
+                    toggleSenha.classList.add('bi-eye-slash');
+                } else {
+                    senhaInput.type = 'password';
+                    toggleSenha.classList.remove('bi-eye-slash');
+                    toggleSenha.classList.add('bi-eye');
+                }
+            });
+        }
+    });
+</script>

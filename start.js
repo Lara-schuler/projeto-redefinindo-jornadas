@@ -50,6 +50,20 @@ app.get('/criar-conta', (req, res) => {
     });
 });
 
+app.get('/recuperar-senha', (req, res) => {
+    res.render('recuperar-senha', {
+        layout: './layouts/default/index',
+        title: 'Recuperar Senha'
+    });
+});
+
+app.get('/verificar-token', (req, res) => {
+    res.render('verificar-token', {
+        layout: './layouts/default/index',
+        title: 'Verificar Token'
+    });
+});
+
 // Inicializa o servidor
 app.listen(port, () => { 
     console.log(`Servidor rodando em http://localhost:${port}`);

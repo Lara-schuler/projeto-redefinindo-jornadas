@@ -7,9 +7,13 @@
                 <input type="text" id="email" name="email" class="form-control" required>
             </div>
             <div class="grupo-formulario">
-                <label for="password">Senha:</label>
-                <input type="password" id="password" name="password" class="form-control" required>
+                <label for="senha">Senha</label>
+                <div class="input-container">
+                    <input type="password" id="senha" name="senha" placeholder="Digite sua senha" required>
+                    <i class="bi bi-eye" id="toggleSenha"></i>
+                </div>
             </div>
+            
             <div class="grupo-formulario">
                 <a href="/recuperar-senha" class="link-senha-esquecida">Esqueceu sua senha?</a>
             </div>
@@ -24,4 +28,26 @@
             <p>Ainda não está no Redefinindo Jornadas? <a href="/criar-conta">Crie uma conta.</a></p>
         </div>
     </div>
+    
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const toggleSenha = document.getElementById('toggleSenha');
+        const senhaInput = document.getElementById('senha');
+        
+        if (toggleSenha && senhaInput) {
+            toggleSenha.addEventListener('click', function() {
+                if (senhaInput.type === 'password') {
+                    senhaInput.type = 'text';
+                    toggleSenha.classList.remove('bi-eye');
+                    toggleSenha.classList.add('bi-eye-slash');
+                } else {
+                    senhaInput.type = 'password';
+                    toggleSenha.classList.remove('bi-eye-slash');
+                    toggleSenha.classList.add('bi-eye');
+                }
+            });
+        }
+    });
+</script>
