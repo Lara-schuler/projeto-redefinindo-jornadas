@@ -13,7 +13,11 @@ const port = 4000;
 app.use(express.static(path.join(__dirname, 'public')));
 
 //Inicia sessão
-app.use(session({secret:'rj2024'}));
+app.use(session({
+    secret: 'rj2024',
+    resave: false, 
+    saveUninitialized: false
+}));
 
 // Configura o parsing do corpo das requisições
 app.use(express.urlencoded({ extended: true }));
