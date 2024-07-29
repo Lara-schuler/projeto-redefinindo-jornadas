@@ -2,12 +2,18 @@ const express = require('express');
 const path = require('path');
 require("dotenv").config();
 const expressLayouts = require('express-ejs-layouts');
+const session = require('express-session');
+
+const usuarioController = require('./controllers/usuarioController');
 
 const app = express(); 
 const port = 4000; 
 
 // Configura arquivos estáticos
 app.use(express.static(path.join(__dirname, 'public')));
+
+//Inicia sessão
+app.use(session({secret:'rj2024'}));
 
 // Configura o parsing do corpo das requisições
 app.use(express.urlencoded({ extended: true }));
@@ -37,31 +43,14 @@ app.get('/', (req, res) => {
 });
 
 app.get('/login', (req, res) => {
-    res.render('login', {
-        layout: './layouts/default/index',
+    res.render('usuarios/login', {
+        layout: './layouts/default/login',
         title: 'Login'
     });
 });
 
-app.get('/criar-conta', (req, res) => {
-    res.render('criar-conta', {
-        layout: './layouts/default/index',
-        title: 'Criar Conta'
-    });
-});
-
-app.get('/recuperar-senha', (req, res) => {
-    res.render('recuperar-senha', {
-        layout: './layouts/default/index',
-        title: 'Recuperar Senha'
-    });
-});
-
-app.get('/verificar-token', (req, res) => {
-    res.render('verificar-token', {
-        layout: './layouts/default/index',
-        title: 'Verificar Token'
-    });
+app.post('/login', (req, res) => {
+    usuarioController.autenticar(req, res);
 });
 
 // Inicializa o servidor
