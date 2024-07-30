@@ -27,7 +27,7 @@ app.use(expressLayouts);
 app.set('layout', './layouts/default/index');
 app.set('view engine', 'ejs');
 
-// Middleware para definir variáveis locais
+// "Middleware" para definir variáveis locais
 app.use((req, res, next) => {
     res.locals.layoutVariables = {
         url: process.env.URL,
@@ -55,6 +55,13 @@ app.get('/login', (req, res) => {
 
 app.post('/login', (req, res) => {
     usuarioController.autenticar(req, res);
+});
+
+app.get('/criar-conta', (req, res) => {
+    res.render('usuarios/criar-conta', {
+        layout: './layouts/default/criar-conta',
+        title: 'Criar Conta'
+    });
 });
 
 // Inicializa o servidor

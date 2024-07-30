@@ -13,21 +13,20 @@
             <div class="grupo-formulario">
                 <label for="senha">Senha</label>
                 <div class="input-container">
-                    <input type="password" id="senha" name="senha" placeholder="Digite sua senha" required>
+                    <input type="password" id="senha" name="senha" class="form-control" placeholder="Digite sua senha" required>
                     <i class="bi bi-eye" id="toggleSenha"></i>
                 </div>
             </div>
-            
             <div class="grupo-formulario">
                 <label for="confirmar-senha">Confirmar Senha</label>
                 <div class="input-container">
-                    <input type="password" id="confirmar-senha" name="confirmar-senha" placeholder="Confirme sua senha" required>
+                    <input type="password" id="confirmar-senha" name="confirmar-senha" class="form-control" placeholder="Confirme sua senha" required>
                     <i class="bi bi-eye" id="toggleConfirmarSenha"></i>
                 </div>
             </div>
-            <button type="submit" class="botao-primario">Continuar</button>
+            <button type="submit" class="btn btn-primary w-100">Continuar</button>
         </form>
-        <button onclick="window.location.href='/'" class="botao-voltar">Voltar</button>
+        <button onclick="window.location.href='/'" class="btn btn-link w-100 mt-3">Voltar</button>
         <div class="termos">
             <p>Ao continuar, você concorda com os <a href="#">Termos de Serviço</a> do Redefinindo Jornadas e confirma que leu a nossa <a href="#">Política de Privacidade</a>;</p>
             <p><a href="#">Aviso na coleta de informações</a>;</p>
@@ -39,7 +38,7 @@
     document.addEventListener('DOMContentLoaded', function() {
         const toggleSenha = document.getElementById('toggleSenha');
         const senhaInput = document.getElementById('senha');
-        
+
         if (toggleSenha && senhaInput) {
             toggleSenha.addEventListener('click', function() {
                 if (senhaInput.type === 'password') {
@@ -50,6 +49,23 @@
                     senhaInput.type = 'password';
                     toggleSenha.classList.remove('bi-eye-slash');
                     toggleSenha.classList.add('bi-eye');
+                }
+            });
+        }
+
+        const toggleConfirmarSenha = document.getElementById('toggleConfirmarSenha');
+        const confirmarSenhaInput = document.getElementById('confirmar-senha');
+
+        if (toggleConfirmarSenha && confirmarSenhaInput) {
+            toggleConfirmarSenha.addEventListener('click', function() {
+                if (confirmarSenhaInput.type === 'password') {
+                    confirmarSenhaInput.type = 'text';
+                    toggleConfirmarSenha.classList.remove('bi-eye');
+                    toggleConfirmarSenha.classList.add('bi-eye-slash');
+                } else {
+                    confirmarSenhaInput.type = 'password';
+                    toggleConfirmarSenha.classList.remove('bi-eye-slash');
+                    toggleConfirmarSenha.classList.add('bi-eye');
                 }
             });
         }
