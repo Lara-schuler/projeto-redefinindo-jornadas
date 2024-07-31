@@ -1,185 +1,437 @@
+/* Estilos gerais */
 body {
-    font-family: 'Poppins', sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #ffffff;
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-  }
-  
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  flex: 1;
+}
+
+/* Estilos da home */
+.top-bar {
+  width: 100%;
+  height: 14vh;
+  background-color: #004AAD;
+  display: flex;
+  align-items: center;
+  padding: 0 2rem;
+}
+
+.profile-picture img {
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+}
+
+.top-nav ul {
+  display: flex;
+  list-style-type: none;
+  margin-left: auto;
+  padding: 0;
+}
+
+.top-nav ul li {
+  margin-left: 2rem;
+}
+
+.top-nav ul li a {
+  color: white;
+  text-decoration: none;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.secao-bem-vindo {
+  text-align: center;
+  padding: 1rem 0; /* Reduzido para diminuir o espaço */
+}
+
+.secao-bem-vindo h1 {
+  color: #004AAD;
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0; /* Reduzido para diminuir o espaço */
+}
+
+.secao-bem-vindo p {
+  color: #004AAD;
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.5;
+  margin: 0; /* Reduzido para diminuir o espaço */
+}
+
+.logo-grande img {
+  width: 25vw;
+  height: auto;
+  display: block;
+  margin: 1rem auto; /* Ajustado para reduzir o espaço ao redor do logo */
+}
+
+.novo-texto {
+  text-align: center;
+  color: #004AAD;
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.5;
+  padding: 1rem;
+}
+
+.secao-cta {
+  display: flex;
+  justify-content: center;
+  gap: 1rem; /* Ajustado para reduzir o espaço entre os botões */
+  padding: 1rem 0; /* Ajustado para reduzir o espaço */
+}
+
+.botao-cta a {
+  display: inline-block;
+  width: 10rem;
+  height: 3rem;
+  background-color: #004AAD;
+  color: white;
+  border-radius: 2rem;
+  text-align: center;
+  line-height: 3rem;
+  font-size: 1rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.declaracao-missao {
+  text-align: center;
+  padding: 1rem 0; /* Ajustado para reduzir o espaço */
+}
+
+.declaracao-missao p {
+  color: #004AAD;
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.5;
+  margin: 0; /* Reduzido para diminuir o espaço */
+}
+
+footer {
+  background-color: #004AAD;
+  padding: 0.4rem 0;
+  margin: 0;
+  width: 100%;
+}
+
+.redes-sociais {
+  display: flex;
+  justify-content: center;
+  gap: 1rem; /* Ajustado para reduzir o espaço entre ícones */
+  padding: 1rem 0; /* Ajustado para reduzir o espaço */
+}
+
+.icone-rede-social {
+  color: white;
+  font-size: 2rem;
+  text-decoration: none;
+}
+
+.icone-rede-social:hover {
+  color: #ccc;
+}
+
+/* Estilos da página de login */
+.container-login {
+  width: 360px;
+  margin: auto;
+  padding: 3rem 1.25rem 1.25rem 1.25rem;
+}
+
+.barra-superior {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #004AAD;
+  padding: 0.625rem;
+  border-radius: 0.3125rem;
+}
+
+.imagem-perfil {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.criar-conta {
+  color: white;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.caixa-login {
+  background-color: white;
+  box-shadow: 0 0.0625rem 1.25rem rgba(0, 0, 0, 0.25);
+  border-radius: 0.625rem;
+  padding: 1.25rem;
+}
+
+.caixa-login h2 {
+  color: #004AAD;
+  text-align: center;
+  font-size: 1.5rem;
+}
+
+.grupo-formulario {
+  margin-bottom: 0.9375rem;
+}
+
+.grupo-formulario label {
+  color: #004AAD;
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+.grupo-formulario input {
+  width: 100%;
+  padding: 0.625rem;
+  border: 0.0625rem solid #004AAD;
+  border-radius: 0.3125rem;
+  font-size: 1rem;
+}
+
+.link-senha-esquecida {
+  color: #004AAD;
+  font-size: 0.75rem;
+  text-decoration: none;
+  display: block;
+  text-align: center;
+  margin-top: 0.625rem;
+}
+
+.link-senha-esquecida:hover {
+  text-decoration: underline;
+  color: #002a5c;
+}
+
+.botao-primario {
+  width: 100%;
+  padding: 0.625rem;
+  background-color: #004AAD;
+  border: none;
+  border-radius: 0.3125rem;
+  color: white;
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+.termos {
+  text-align: center;
+  margin-top: 1.25rem;
+  font-size: 0.625rem;
+  color: rgba(28, 28, 28, 0.88);
+}
+
+.termos a {
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.criar-conta-p {
+  text-align: center;
+  margin-top: 1.25rem;
+  font-size: 0.625rem;
+  color: rgba(28, 28, 28, 0.88);
+}
+
+.criar-conta-p a {
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.botao-voltar {
+  display: block;
+  width: 100%;
+  padding: 0.625rem;
+  background: none;
+  border: none;
+  color: #004AAD;
+  font-weight: bold;
+  text-align: center;
+  cursor: pointer;
+  margin-top: 0.625rem;
+  font-size: 0.875rem;
+  text-decoration: underline;
+}
+
+.botao-voltar:hover {
+  color: #002a5c;
+}
+
+.input-container {
+  position: relative;
+}
+
+.input-container input {
+  width: 100%;
+  padding-right: 2.5rem;
+}
+
+.input-container i {
+  position: absolute;
+  right: 0.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #004AAD;
+}
+
+/* Media queries para responsividade */
+@media (max-width: 768px) {
   .container {
-    width: 100%;
-    max-width: 360px;
-    margin: 0 auto;
-    padding: 2rem; /* Ajuste para usar rem em vez de px */
-    flex: 1;
+    max-width: 90%;
   }
-  
+
   .top-bar {
-    width: 100%;
-    height: 12vh; /* Aumente a altura da navbar para acomodar melhor o logotipo */
-    background-color: #004AAD;
-    display: flex;
-    align-items: center;
-    padding: 0 2rem; /* Mantém o padding com rem */
+    height: 10vh;
+    padding: 0 1rem;
   }
-  
+
   .profile-picture img {
-    width: 4rem; /* Reduza o tamanho do logotipo */
-    height: 4rem; /* Reduza o tamanho do logotipo */
-    border-radius: 50%;
+    width: 4rem;
+    height: 4rem;
   }
-  
-  .top-nav ul {
-    display: flex;
-    list-style-type: none;
-    margin-left: auto;
-    padding: 0;
-  }
-  
+
   .top-nav ul li {
-    margin-left: 1.5rem; /* Ajuste com rem */
+    margin-left: 1.25rem;
   }
-  
+
   .top-nav ul li a {
-    color: white;
-    text-decoration: none;
-    font-size: 0.75rem; /* Ajuste com rem */
-    font-weight: 700;
+    font-size: 0.85rem;
   }
-  
+
   .secao-bem-vindo {
-    text-align: center;
-    padding: 2rem 1rem; /* Ajuste com rem */
+    padding: 0.5rem 0; /* Ajustado para telas menores */
   }
-  
+
   .secao-bem-vindo h1 {
-    color: #004AAD;
-    font-size: 1.5rem; /* Ajuste com rem */
-    font-weight: 700;
+    font-size: 1.75rem;
+    margin: 0.5rem 0; /* Ajustado para reduzir espaço */
   }
-  
+
   .secao-bem-vindo p {
-    color: #004AAD;
-    font-size: 0.875rem; /* Ajuste com rem */
-    font-weight: 700;
-    line-height: 1.25; /* Ajuste para usar unidades relativas */
+    font-size: 0.875rem;
+    margin: 0.5rem 0; /* Ajustado para reduzir espaço */
   }
-  
+
   .logo-grande img {
-    width: 40vw; /* Usando vw para ajustar o tamanho proporcionalmente à largura da viewport */
-    height: auto; /* Manter a proporção da imagem */
-    display: block;
-    margin: 1rem auto; /* Ajuste com rem */
+    width: 50vw;
+    margin: 1rem auto;
   }
-  
+
   .novo-texto {
-    text-align: center;
-    color: #004AAD;
-    font-size: 0.875rem; /* Ajuste com rem */
-    font-weight: 700;
-    line-height: 1.5; /* Ajuste para usar unidades relativas */
-    padding: 1rem; /* Ajuste com rem */
+    font-size: 0.85rem;
+    padding: 0.75rem; /* Ajustado para reduzir espaço */
   }
-  
+
   .secao-cta {
-    display: flex;
-    justify-content: center;
-    gap: 1rem; /* Ajuste com rem */
-    padding: 1rem 0; /* Ajuste com rem */
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem 0;
   }
-  
+
   .botao-cta a {
-    display: inline-block;
-    width: 8rem; /* Ajuste com rem */
-    height: 2.5rem; /* Ajuste com rem */
-    background-color: #004AAD;
-    color: white;
-    border-radius: 2rem; /* Ajuste com rem */
-    text-align: center;
-    line-height: 2.5rem; /* Ajuste com rem */
-    font-size: 0.75rem; /* Ajuste com rem */
-    font-weight: 700;
-    text-decoration: none;
-  }
-  
-  .declaracao-missao {
-    text-align: center;
-    padding: 1rem; /* Ajuste com rem */
-  }
-  
-  .declaracao-missao p {
-    color: #004AAD;
-    font-size: 0.875rem; /* Ajuste com rem */
-    font-weight: 700;
-    line-height: 1.5; /* Ajuste para usar unidades relativas */
-  }
-  
-  footer {
-    background-color: #004AAD;
-    padding: 1rem 0; /* Ajuste com rem */
-    margin: 0;
     width: 100%;
+    height: auto;
+    padding: 0.5rem;
+    font-size: 0.85rem;
   }
-  
+
+  .declaracao-missao {
+    padding: 1rem 0; /* Ajustado para telas menores */
+  }
+
+  .declaracao-missao p {
+    font-size: 0.875rem;
+    margin: 0.5rem 0; /* Ajustado para reduzir espaço */
+  }
+
+  .footer {
+    padding: 1rem 0; /* Ajustado para telas menores */
+  }
+
   .redes-sociais {
-    display: flex;
-    justify-content: center;
-    gap: 1rem; /* Ajuste com rem */
-    padding: 1rem 0; /* Ajuste com rem */
+    gap: 1rem; /* Ajustado para reduzir espaço entre ícones */
   }
-  
+
   .icone-rede-social {
-    color: white;
-    font-size: 1.5rem; /* Ajuste com rem */
-    text-decoration: none;
+    font-size: 1.5rem; /* Ajustado para telas menores */
   }
-  
-  .icone-rede-social:hover {
-    color: #ccc; /* Cor de destaque ao passar o mouse */
+
+  .container-login {
+    width: 90%;
   }
-  
-  /* Media Queries para responsividade */
-  @media (min-width: 768px) {
-    .container {
-      max-width: 720px;
-    }
-  
-    .top-bar {
-      height: 14vh; 
-    }
-  
-    .profile-picture img {
-      width: 5rem; 
-      height: 5rem; 
-    }
-  
-    .top-nav ul li a {
-      font-size: 1rem; /* Ajuste com rem */
-    }
-  
-    .secao-bem-vindo h1 {
-      font-size: 2rem; /* Ajuste com rem */
-    }
-  
-    .secao-bem-vindo p, .novo-texto, .declaracao-missao p {
-      font-size: 1rem; 
-    }
-  
-    .botao-cta a {
-      width: 10rem; 
-      height: 3rem; 
-      font-size: 1rem; 
-      line-height: 3rem; 
-    }
-  
-    .logo-grande img {
-      width: 16vw; 
-    }
-  
-    .novo-texto {
-      font-size: 1rem; 
-    }
+
+  .barra-superior {
+    padding: 0.5rem;
   }
-  
+
+  .imagem-perfil {
+    width: 2rem;
+    height: 2rem;
+  }
+
+  .caixa-login {
+    padding: 1rem;
+  }
+
+  .caixa-login h2 {
+    font-size: 1.25rem;
+  }
+
+  .grupo-formulario {
+    margin-bottom: 0.75rem;
+  }
+
+  .grupo-formulario label {
+    font-size: 0.875rem;
+  }
+
+  .grupo-formulario input {
+    font-size: 0.875rem;
+  }
+
+  .link-senha-esquecida {
+    font-size: 0.65rem;
+  }
+
+  .botao-primario {
+    padding: 0.5rem;
+    font-size: 0.875rem;
+  }
+
+  .termos {
+    font-size: 0.625rem;
+  }
+
+  .criar-conta-p {
+    font-size: 0.625rem;
+  }
+
+  .botao-voltar {
+    font-size: 0.75rem;
+  }
+
+  .input-container input {
+    padding-right: 2rem;
+  }
+
+  .input-container i {
+    font-size: 1.25rem;
+  }
+}
