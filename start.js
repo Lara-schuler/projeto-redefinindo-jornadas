@@ -57,6 +57,7 @@ app.post('/login', (req, res) => {
     usuarioController.autenticar(req, res);
 });
 
+// Rotas para criação de conta
 app.get('/criar-conta', (req, res) => {
     res.render('usuarios/criar-conta', {
         layout: './layouts/default/criar-conta',
@@ -64,6 +65,21 @@ app.get('/criar-conta', (req, res) => {
     });
 });
 
+app.post('/criar-conta', (req, res) => {
+    usuarioController.criarConta(req, res);
+});
+
+// Rotas para recuperação de senha
+app.get('/recuperar-senha', (req, res) => {
+    res.render('usuarios/recuperar-senha', {
+        layout: './layouts/default/recuperar-senha',
+        title: 'Recuperar Senha'
+    });
+});
+
+app.post('/recuperar-senha', (req, res) => {
+    usuarioController.recuperarSenha(req, res);
+});
 // Inicializa o servidor
 app.listen(port, () => { 
     console.log(`Servidor rodando em http://localhost:${port}`);
