@@ -3,6 +3,7 @@ const path = require('path');
 require("dotenv").config();
 const expressLayouts = require('express-ejs-layouts');
 const session = require('express-session');
+const flash = require('connect-flash');
 
 const usuarioController = require('./controllers/usuarioController');
 
@@ -38,6 +39,14 @@ app.use((req, res, next) => {
     next();
 });
 
+app.use(flash());
+
+// Middleware para adicionar mensagens ao res.locals
+app.use((req, res, next) => {
+    res.locals.message = req.flash('message');
+    next();
+});
+
 // Rotas
 app.get('/', (req, res) => { 
     res.render('home', {
@@ -46,6 +55,7 @@ app.get('/', (req, res) => {
     }); 
 });
 
+// Rotas de login
 app.get('/login', (req, res) => {
     res.render('usuarios/login', {
         layout: './layouts/default/login',
@@ -57,7 +67,7 @@ app.post('/login', (req, res) => {
     usuarioController.autenticar(req, res);
 });
 
-// Rotas para criação de conta
+// Rotas de criação de conta
 app.get('/criar-conta', (req, res) => {
     res.render('usuarios/criar-conta', {
         layout: './layouts/default/criar-conta',

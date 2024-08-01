@@ -31,7 +31,13 @@ class Usuario {
 
     static async buscarPorEmail(email) {
         let sql = `SELECT * FROM pessoa WHERE email = '${email}'`;
+        console.log(sql);
         return await db.query(sql);
+    }
+
+    static async checkEmailExists(email) {
+        let result = await this.buscarPorEmail(email);
+        return result.length > 0;
     }
 }
 
