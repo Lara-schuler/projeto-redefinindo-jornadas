@@ -90,6 +90,17 @@ app.get('/recuperar-senha', (req, res) => {
 app.post('/recuperar-senha', (req, res) => {
     usuarioController.recuperarSenha(req, res);
 });
+
+app.get('/verificar-token', (req, res) => {
+    res.render('usuarios/verificar-token', {
+        layout: './layouts/default/verificar-token',
+        title: 'verificar-token'
+    });
+});
+
+/*app.post('/verificar-token', (req, res) => {
+    usuarioController.verificar-token(req, res);
+});*/
 // Inicializa o servidor
 app.listen(port, () => { 
     console.log(`Servidor rodando em http://localhost:${port}`);

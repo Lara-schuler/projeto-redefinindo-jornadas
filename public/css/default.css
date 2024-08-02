@@ -168,12 +168,6 @@ footer {
   object-fit: cover;
 }
 
-.criar-conta {
-  color: white;
-  font-weight: bold;
-  text-decoration: none;
-}
-
 .caixa-login {
   background-color: white;
   box-shadow: 0 0.0625rem 1.25rem rgba(0, 0, 0, 0.25);
@@ -205,7 +199,7 @@ footer {
   font-size: 1rem;
 }
 
-/* public/css/default.css */
+/* mensagem de erro */
 
 .alert {
   padding: 15px;
@@ -268,19 +262,7 @@ footer {
   text-decoration: none;
 }
 
-.criar-conta-p {
-  text-align: center;
-  margin-top: 1.25rem;
-  font-size: 0.625rem;
-  color: rgba(28, 28, 28, 0.88);
-}
-
-.criar-conta-p a {
-  font-weight: bold;
-  text-decoration: none;
-}
-
-.botao-voltar {
+.botao-cancelar {
   display: block;
   width: 100%;
   padding: 0.625rem;
@@ -295,8 +277,27 @@ footer {
   text-decoration: underline;
 }
 
-.botao-voltar:hover {
+.botao-cancelar:hover {
   color: #002a5c;
+}
+
+/* Estilos específicos para a página de criação de conta */
+.container-criar-conta {
+  width: 100%;
+  max-width: 360px;
+  padding:20px;
+  background: white;
+  box-shadow: 0 1px 20px rgba(0, 0, 0, 0.25);
+  border-radius: 10px;
+  box-sizing: border-box;
+  margin: 40px auto; /* Centraliza horizontalmente */
+}
+
+.caixa-criar-conta h2 {
+  color: #004AAD;
+  text-align: center;
+  font-size: 24px;
+  margin-bottom: 20px;
 }
 
 .input-container {
@@ -304,7 +305,6 @@ footer {
 }
 
 .input-container input {
-  width: 100%;
   padding-right: 2.5rem;
 }
 
@@ -315,6 +315,134 @@ footer {
   transform: translateY(-50%);
   cursor: pointer;
   color: #004AAD;
+}
+
+input:focus {
+  border-color: #004AAD;
+  outline: none;
+}
+
+.btn-primary {
+  background-color: #004AAD;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  font-weight: bold;
+  font-size: 16px;
+  padding: 10px;
+}
+
+.btn-link {
+  color: #004AAD;
+  font-weight: bold;
+  text-align: center;
+  text-decoration: underline;
+}
+
+.btn-link:hover {
+  color: #002a5c;
+}
+.criar-conta-p {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 14px;
+  color: #004AAD;
+}
+
+.criar-conta-p a {
+  color: #004AAD;
+  text-decoration: underline;
+}
+
+.criar-conta-p a:hover {
+  color: #002a5c;
+}
+
+/* public/css/recuperar-senha.css */
+.container-recuperar-senha {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  padding: 1.25rem; /* 20px */
+}
+
+.caixa-recuperar-senha {
+  width: 100%;
+  max-width: 22.5rem; /* 360px */
+  background: white;
+  box-shadow: 0px 0.0625rem 1.25rem rgba(0, 0, 0, 0.25); /* 0px 1px 20px */
+  border-radius: 0.625rem; /* 10px */
+  padding: 1.25rem; /* 20px */
+  text-align: center;
+}
+
+.caixa-recuperar-senha h2 {
+  color: #004AAD;
+  margin-bottom: 1.25rem; /* 20px */
+  font-size: 1.5rem; /* 24px */
+}
+
+.caixa-recuperar-senha p {
+  color: #004AAD;
+  font-size: 0.875rem; /* 14px */
+  margin-bottom: 1.25rem; /* 20px */
+}
+
+/* verificar token*/
+
+.container-verificar-token {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  padding: 1.25rem; /* 20px */
+}
+
+.caixa-verificar-token {
+  background: white;
+  box-shadow: 0px 1px 20px rgba(0, 0, 0, 0.25);
+  border-radius: 10px;
+  padding: 20px;
+}
+
+.caixa-verificar-token .input-container {
+  margin-top: 20px;
+}
+
+.caixa-verificar-token .input-container input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #004AAD;
+  border-radius: 10px;
+}
+
+.caixa-verificar-token .input-container label {
+  color: #004AAD;
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+.caixa-verificar-token .button {
+  background: #004AAD;
+  color: white;
+  border-radius: 40px;
+  padding: 10px;
+  text-align: center;
+  margin-top: 20px;
+  cursor: pointer;
+}
+
+.caixa-verificar-token .link {
+  color: #004AAD;
+  display: block;
+  margin-top: 10px;
+  text-align: center;
+}
+
+.caixa-verificar-token .instructions {
+  color: #004AAD;
+  text-align: center;
 }
 
 /* Media queries para responsividade */
@@ -334,11 +462,11 @@ footer {
   }
 
   .top-nav ul li {
-    margin-left: 1.25rem;
+    margin-left: 1.5rem;
   }
 
   .top-nav ul li a {
-    font-size: 0.85rem;
+    font-size: 1rem;
   }
 
   .secao-bem-vindo {
@@ -460,4 +588,21 @@ footer {
   .input-container i {
     font-size: 1.25rem;
   }
+
+  .caixa-recuperar-senha {
+    width: 90vw;
+}
+
+.caixa-recuperar-senha h2 {
+    font-size: 1.25rem; /* 20px */
+}
+
+.caixa-recuperar-senha p {
+    font-size: 0.75rem; /* 12px */
+ }
+ .container-verificar-token {
+  width: 100%;
+  height: auto;
+  padding: 15px;
+}
 }
