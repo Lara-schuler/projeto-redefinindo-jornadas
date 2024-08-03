@@ -35,9 +35,25 @@ class Usuario {
         return await db.query(sql);
     }
 
-    static async checkEmailExists(email) {
-        let result = await this.buscarPorEmail(email);
-        return result.length > 0;
+    static async atualizarToken(email, token, expiration) {
+        let sql = `UPDATE pessoa SET reset_token = '${token}', token_expiration = '${expiration.toISOString()}' WHERE email = '${email}'`;
+        console.log(sql);
+        return await db.query(sql);
+    }
+
+    static async atualizarSenha(email, senha) {
+        let sql = `UPDATE usuario u
+                   JOIN pessoa p ON u.pessoa_id_pessoa = p.id_pessoa
+                   SET u.senha = '${md5(senha)}'
+                   WHERE p.email = '${email}'`;
+        console.log(sql);
+        return await db.query(sql);
+    }
+
+    static async limparToken(email) {
+        let sql = `UPDATE pessoa SET reset_token = NULL, token_expiration = NULL WHERE email = '${email}'`;
+        console.log(sql);
+        return await db.query(sql);
     }
 }
 

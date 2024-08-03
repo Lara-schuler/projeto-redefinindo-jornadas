@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title><%= title %></title>
+    <link rel="stylesheet" href="<%= style %>default.css">
+</head>
+<body>
+    <h1>Redefinir Senha</h1>
+    <form action="/redefinir-senha" method="post">
+        <input type="hidden" name="email" value="<%= email %>">
+        <label for="senha">Nova Senha:</label>
+        <input type="password" id="senha" name="senha" required>
+        <label for="confirmarSenha">Confirmar Senha:</label>
+        <input type="password" id="confirmarSenha" name="confirmarSenha" required>
+        <button type="submit">Redefinir Senha</button>
+    </form>
+    <p><%= message %></p>
+</body>
+</html>

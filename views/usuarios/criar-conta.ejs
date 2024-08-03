@@ -4,11 +4,11 @@
         <form action="/criar-conta" method="POST">
             <div class="grupo-formulario">
                 <label for="email">E-mail:</label>
-                <input type="email" id="email" name="email" class="form-control" required>
+                <input type="email" id="email" name="email" class="form-control" placeholder="Digite seu e-mail" required>
             </div>
             <div class="grupo-formulario">
                 <label for="telefone">Telefone:</label>
-                <input type="tel" id="telefone" name="telefone" class="form-control" required>
+                <input type="tel" id="telefone" name="telefone" class="form-control" placeholder="Digite seu telefone" required>
             </div>
             <div class="grupo-formulario">
                 <label for="senha">Senha</label>
@@ -24,7 +24,7 @@
                     <i class="bi bi-eye" id="toggleConfirmarSenha"></i>
                 </div>
             </div>
-            <button type="submit" class="btn btn-primary w-100">Continuar</button>
+            <button type="submit" class="botao-primario">Entrar</button>
         </form>
         <button onclick="window.location.href='/'" class="btn btn-link w-100 mt-3">Cancelar</button>
         <div class="termos">

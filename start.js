@@ -91,16 +91,30 @@ app.post('/recuperar-senha', (req, res) => {
     usuarioController.recuperarSenha(req, res);
 });
 
+// Rotas para verificação de token
 app.get('/verificar-token', (req, res) => {
     res.render('usuarios/verificar-token', {
         layout: './layouts/default/verificar-token',
-        title: 'verificar-token'
+        title: 'Verificar Token'
     });
 });
 
-/*app.post('/verificar-token', (req, res) => {
-    usuarioController.verificar-token(req, res);
-});*/
+app.post('/verificar-token', (req, res) => {
+    usuarioController.verificarToken(req, res);
+});
+
+// Rotas para redefinir a senha
+app.get('/redefinir-senha', (req, res) => {
+    res.render('usuarios/redefinir-senha', {
+        layout: './layouts/default/redefinir-senha',
+        title: 'Redefinir Senha'
+    });
+});
+
+app.post('/redefinir-senha', (req, res) => {
+    usuarioController.redefinirSenha(req, res);
+});
+
 // Inicializa o servidor
 app.listen(port, () => { 
     console.log(`Servidor rodando em http://localhost:${port}`);
