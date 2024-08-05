@@ -8,7 +8,7 @@ const flash = require('connect-flash');
 const usuarioController = require('./controllers/usuarioController');
 
 const app = express(); 
-const port = 4000; 
+const port = 5000; 
 
 // Configura arquivos estáticos
 app.use(express.static(path.join(__dirname, 'public')));
@@ -43,9 +43,14 @@ app.use(flash());
 
 // Middleware para adicionar mensagens ao res.locals
 app.use((req, res, next) => {
-    res.locals.message = req.flash('message');
+    res.locals.messages = {
+        error: req.flash('error'),
+        success: req.flash('success')
+    };
+
     next();
 });
+
 
 // Rotas
 app.get('/', (req, res) => { 
@@ -91,13 +96,16 @@ app.post('/recuperar-senha', (req, res) => {
     usuarioController.recuperarSenha(req, res);
 });
 
-// Rotas para verificação de token
 app.get('/verificar-token', (req, res) => {
+    const { email, token } = req.query;
     res.render('usuarios/verificar-token', {
         layout: './layouts/default/verificar-token',
-        title: 'Verificar Token'
+        title: 'Verificar Token',
+        email,
+        token
     });
 });
+
 
 app.post('/verificar-token', (req, res) => {
     usuarioController.verificarToken(req, res);

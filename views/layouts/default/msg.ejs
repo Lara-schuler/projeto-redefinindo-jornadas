@@ -1,5 +1,15 @@
-<% if (message && message.length > 0) { %>
-    <div class="alert alert-danger">
-        <p><%= message %></p>
-    </div>
+<% if (messages.error && messages.error.length > 0) { %>
+    <% messages.error.forEach(message => { %>
+        <div class="alert alert-danger">
+            <p><%= message %></p>
+        </div>
+    <% }); %>
+<% } %>
+
+<% if (messages.success && messages.success.length > 0) { %>
+    <% messages.success.forEach(message => { %>
+        <div class="alert alert-success">
+            <p><%= message %></p>
+        </div>
+    <% }); %>
 <% } %>

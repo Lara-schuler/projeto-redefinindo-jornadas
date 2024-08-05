@@ -199,8 +199,7 @@ footer {
   font-size: 1rem;
 }
 
-/* mensagem de erro */
-
+/* Estilo base para todas as mensagens de alerta */
 .alert {
   padding: 15px;
   margin-bottom: 20px;
@@ -212,18 +211,19 @@ footer {
   margin: 0;
 }
 
+/* Estilo para mensagens de sucesso */
 .alert-success {
-  color: #155724;
-  background-color: #d4edda;
-  border-color: #c3e6cb;
+  color: #155724; /* Cor do texto */
+  background-color: #d4edda; /* Cor de fundo */
+  border-color: #c3e6cb; /* Cor da borda */
 }
 
+/* Estilo para mensagens de erro */
 .alert-danger {
-  color: #721c24;
-  background-color: #f8d7da;
-  border-color: #f5c6cb;
+  color: #721c24; /* Cor do texto */
+  background-color: #f8d7da; /* Cor de fundo */
+  border-color: #f5c6cb; /* Cor da borda */
 }
-
 
 .link-senha-esquecida {
   color: #004AAD;
@@ -285,7 +285,7 @@ footer {
 .container-criar-conta {
   width: 100%;
   max-width: 360px;
-  padding:20px;
+  padding:1.25rem;
   background: white;
   box-shadow: 0 1px 20px rgba(0, 0, 0, 0.25);
   border-radius: 10px;
@@ -293,7 +293,7 @@ footer {
   margin: 40px auto; /* Centraliza horizontalmente */
 }
 
-.caixa-criar-conta h2 {
+.container-redefinir-senha h2, .caixa-criar-conta h2 {
   color: #004AAD;
   text-align: center;
   font-size: 24px;
@@ -373,7 +373,7 @@ input:focus {
   background: white;
   box-shadow: 0px 0.0625rem 1.25rem rgba(0, 0, 0, 0.25); /* 0px 1px 20px */
   border-radius: 0.625rem; /* 10px */
-  padding: 1.25rem; /* 20px */
+  padding: 2rem; /* 20px */
   
 }
 
@@ -383,7 +383,7 @@ input:focus {
   font-size: 1.5rem; /* 24px */
 }
 
-.caixa-verificar-token p,.caixa-recuperar-senha p {
+.container-redefinir-senha, .caixa-verificar-token p,.caixa-recuperar-senha p {
   color: #004AAD;
   font-size: 0.875rem; /* 14px */
   margin-bottom: 1.25rem; /* 20px */
@@ -403,12 +403,13 @@ input:focus {
   background: white;
   box-shadow: 0px 0.0625rem 1.25rem rgba(0, 0, 0, 0.25); /* 0px 1px 20px */
   border-radius: 0.625rem; /* 10px */
-  padding: 1.25rem; /* 20px */
+  padding: 2rem; /* 20px */
 }
 
 .caixa-verificar-token .input-container {
   margin-top: 1.25rem;
   margin-bottom: 1rem;
+  padding:0.625rem;
 }
 
 .caixa-verificar-token .input-container input {
@@ -429,6 +430,17 @@ input:focus {
   display: block;
   margin-top: 0.625rem; /* 10px */
   text-align: center;
+}
+
+.container-redefinir-senha {
+  width: 100%;
+  max-width: 360px;
+  padding:2rem;
+  background: white;
+  box-shadow: 0 1px 20px rgba(0, 0, 0, 0.25);
+  border-radius: 10px;
+  box-sizing: border-box;
+  margin: 90px auto; /* Centraliza horizontalmente */
 }
 
 
