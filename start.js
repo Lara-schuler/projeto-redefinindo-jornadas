@@ -103,11 +103,15 @@ app.post('/verificar-token', (req, res) => {
     usuarioController.verificarToken(req, res);
 });
 
+
 // Rotas para redefinir a senha
 app.get('/redefinir-senha', (req, res) => {
+    const { email, token } = req.query;
     res.render('usuarios/redefinir-senha', {
         layout: './layouts/default/redefinir-senha',
-        title: 'Redefinir Senha'
+        title: 'Redefinir Senha',
+        email,
+        token
     });
 });
 

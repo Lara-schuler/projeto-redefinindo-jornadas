@@ -124,9 +124,14 @@ async function recuperarSenha(req, res) {
             await usuarioModel.atualizarToken(email, token, expiration);
 
             // Enviar e-mail com o token
-            await enviarEmail(email, 'Recuperação de Senha', `Seu token de recuperação é: ${token}`);
+            const emailConteudo = `
+                Seu token de recuperação é: ${token}.
+                Acesse a página para verificar o token e redefinir sua senha.
+            `;
+            await enviarEmail(email, 'Recuperação de Senha', emailConteudo);
 
-            res.status(200).json({ message: 'Email de recuperação enviado' });
+            // Redirecionar para a página de verificação
+            res.redirect('/verificar-token?email=' + encodeURIComponent(email));
         } else {
             res.status(404).json({ message: 'Email não encontrado' });
         }
@@ -134,6 +139,7 @@ async function recuperarSenha(req, res) {
         res.status(400).json({ message: error.message });
     }
 }
+
 
 async function verificarToken(req, res) {
     const { email, token } = req.body;
@@ -143,11 +149,8 @@ async function verificarToken(req, res) {
             const usuarioInfo = usuario[0];
             const now = new Date();
             if (usuarioInfo.reset_token === token && new Date(usuarioInfo.token_expiration) > now) {
-                res.render('usuarios/redefinir-senha', {
-                    layout: './layouts/default/redefinir-senha',
-                    title: 'Redefinir Senha',
-                    email // Passar o email para usar na tela de redefinição de senha
-                });
+                // Redireciona para a página de redefinição de senha
+                res.redirect('/redefinir-senha?email=' + encodeURIComponent(email));
             } else {
                 res.status(400).json({ message: 'Token inválido ou expirado' });
             }
@@ -159,8 +162,10 @@ async function verificarToken(req, res) {
     }
 }
 
+
+
 async function redefinirSenha(req, res) {
-    const { email, senha, confirmarSenha } = req.body;
+    const { email, token, senha, confirmarSenha } = req.body;
     try {
         if (senha !== confirmarSenha) {
             throw new Error('As senhas não coincidem');
@@ -168,19 +173,29 @@ async function redefinirSenha(req, res) {
         if (senha.length > 128) {
             throw new Error('A senha é muito longa');
         }
-        
-        // Atualiza a senha no banco de dados
-        await usuarioModel.atualizarSenha(email, senha);
 
-        // Limpar o token após redefinir a senha
-        await usuarioModel.limparToken(email);
-
-        res.redirect('/login');
+        const usuario = await usuarioModel.buscarPorEmail(email);
+        if (usuario.length > 0) {
+            const usuarioInfo = usuario[0];
+            const now = new Date();
+            if (usuarioInfo.reset_token === token && new Date(usuarioInfo.token_expiration) > now) {
+                // Atualiza a senha no banco de dados
+                await usuarioModel.atualizarSenha(email, senha);
+                // Limpar o token após redefinir a senha
+                await usuarioModel.limparToken(email);
+                res.redirect('/login');
+            } else {
+                throw new Error('Token inválido ou expirado');
+            }
+        } else {
+            throw new Error('Email não encontrado');
+        }
     } catch (error) {
         req.flash('message', error.message);
         res.redirect('/redefinir-senha');
     }
 }
+
 
 
 module.exports = { autenticar, login, criarConta, recuperarSenha, verificarToken, redefinirSenha };
