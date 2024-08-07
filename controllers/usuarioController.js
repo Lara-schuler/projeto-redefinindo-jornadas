@@ -1,43 +1,50 @@
 const usuarioModel = require('../models/usuarioModel');
 const { enviarEmail } = require('../utils/mailer');
 
-// Função de validação de entrada
-function validarEntrada(email, senha) {
+function validarEntrada(email, telefone, senha) {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!email) {
-        throw new Error('O campo de email não pode estar vazio');
+    const telefoneRegex = /^\d{10,11}$/; // Ajuste conforme o formato necessário para o telefone
+
+    if (!email && !telefone) {
+        throw new Error('O campo de email ou telefone deve estar preenchido');
     }
-    if (!emailRegex.test(email)) {
+    if (email && !emailRegex.test(email) && telefone) {
         throw new Error('Formato de email inválido');
     }
-    if (email.includes(" ")) {
+    if (email && email.includes(" ")) {
         throw new Error('O email não deve conter espaços em branco');
     }
-    if (email.length > 254) {
+    if (email && email.length > 254) {
         throw new Error('O email é muito longo');
     }
-    if (!senha) {
-        throw new Error('O campo de senha não pode estar vazio');
+    if (telefone && !telefoneRegex.test(telefone)) {
+        throw new Error('Formato de telefone inválido');
     }
-    if (senha.length > 128) {
-        throw new Error('A senha é muito longa');
-    }
-    if (senha.length < 6) {
-        throw new Error('A senha é muito curta');
+    if (senha) {
+        if (senha.length > 128) {
+            throw new Error('A senha é muito longa');
+        }
+        if (senha.length < 6) {
+            throw new Error('A senha é muito curta');
+        }
     }
 }
+
 
 // Função para definir o tipo de mensagem
 function definirMensagem(req, tipo, texto) {
     req.flash(tipo, texto);
 }
 
-
 async function autenticar(req, res) {
-    const { email, senha } = req.body;
+    const { email, telefone, senha } = req.body;
     try {
-        validarEntrada(email, senha);
-        const resp = await usuarioModel.autenticar(email, senha);
+        validarEntrada(email, telefone, senha);
+        // Verifique se pelo menos um dos valores email ou telefone está definido
+        if (!email && !telefone) {
+            throw new Error('O campo de email ou telefone deve estar preenchido');
+        }
+        const resp = await usuarioModel.autenticar(email || telefone, senha);
         if (resp && resp.length > 0) {
             req.session.user = resp[0];
             res.redirect('/');
@@ -51,37 +58,56 @@ async function autenticar(req, res) {
     }
 }
 
+
 // Controlador de login
 async function login(req, res) {
-    const { email, senha } = req.body;
+    const { email, telefone, senha } = req.body;
+    console.log('Email:', email);
+    console.log('Telefone:', telefone);
+    console.log('Senha:', senha);
+
     try {
-        validarEntrada(email, senha);
-        const usuario = await usuarioModel.autenticar(email, senha);
+        if (!email && !telefone) {
+            throw new Error('O campo de email ou telefone deve estar preenchido');
+        }
+        if (!senha) {
+            throw new Error('A senha não pode estar vazia');
+        }
+        
+        const usuario = await usuarioModel.autenticar(email || telefone, senha);
+        console.log('Resultado da autenticação:', usuario);
+        
         if (usuario.length > 0) {
             req.session.usuario = usuario[0];
             res.status(200).json({ message: 'Login bem-sucedido', usuario: usuario[0] });
         } else {
-            res.status(401).json({ message: 'Email ou senha incorretos' });
+            res.status(401).json({ message: 'Email/Telefone ou senha incorretos' });
         }
     } catch (error) {
         res.status(400).json({ message: error.message });
     }
 }
 
+
 // Função de validação específica para criação de conta
-function validarEntradaCriarConta(email, senha, confirmarSenha) {
+function validarEntradaCriarConta(email, telefone, senha, confirmarSenha) {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!email) {
-        throw new Error('O campo de email não pode estar vazio');
+    const telefoneRegex = /^\d{10,11}$/;
+
+    if (!email && !telefone) {
+        throw new Error('O campo de email ou telefone deve estar preenchido');
     }
-    if (!emailRegex.test(email)) {
+    if (email && !emailRegex.test(email)) {
         throw new Error('Formato de email inválido');
     }
-    if (email.includes(" ")) {
+    if (email && email.includes(" ")) {
         throw new Error('O email não deve conter espaços em branco');
     }
-    if (email.length > 254) {
+    if (email && email.length > 254) {
         throw new Error('O email é muito longo');
+    }
+    if (telefone && !telefoneRegex.test(telefone)) {
+        throw new Error('Formato de telefone inválido');
     }
     if (!senha) {
         throw new Error('O campo de senha não pode estar vazio');
@@ -98,16 +124,25 @@ function validarEntradaCriarConta(email, senha, confirmarSenha) {
 }
 
 async function criarConta(req, res) {
-    const { email, senha, confirmarSenha } = req.body;
+    const { email, telefone, senha, confirmarSenha } = req.body;
     try {
-        validarEntradaCriarConta(email, senha, confirmarSenha);
-        const emailExists = await usuarioModel.buscarPorEmail(email);
+        validarEntradaCriarConta(email, telefone, senha, confirmarSenha);
+        const emailExists = email ? await usuarioModel.buscarPorEmail(email) : [];
+        const telefoneExists = telefone ? await usuarioModel.buscarPorTelefone(telefone) : [];
+        
         if (emailExists.length > 0) {
             definirMensagem(req, 'error', 'Email já está em uso.');
             res.redirect('/criar-conta');
             return;
         }
-        await usuarioModel.criarConta(email, senha);
+        
+        if (telefoneExists.length > 0) {
+            definirMensagem(req, 'error', 'Telefone já está em uso.');
+            res.redirect('/criar-conta');
+            return;
+        }
+
+        await usuarioModel.criarConta(email, telefone, senha);
         definirMensagem(req, 'success', 'Conta criada com sucesso.');
         res.redirect('/login');
     } catch (error) {
