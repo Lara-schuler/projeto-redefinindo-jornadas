@@ -1,5 +1,6 @@
 const usuarioModel = require('../models/usuarioModel');
 const { enviarEmail } = require('../utils/mailer');
+const crypto = require('crypto');
 
 function validarEntrada(email, telefone, senha) {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -156,7 +157,7 @@ async function recuperarSenha(req, res) {
     try {
         const usuario = await usuarioModel.buscarPorEmail(email);
         if (usuario.length > 0) {
-            const token = Math.random().toString(36).substr(2);
+            const token = crypto.randomBytes(32).toString('hex'); // Ajustado para usar crypto
             const expiration = new Date(Date.now() + 3600000); // 1 hora
 
             await usuarioModel.atualizarToken(email, token, expiration);
@@ -212,6 +213,7 @@ async function verificarToken(req, res) {
     }
 }
 
+
 async function redefinirSenha(req, res) {
     const { email, token, senha, confirmarSenha } = req.body;
     try {
@@ -244,5 +246,6 @@ async function redefinirSenha(req, res) {
         res.redirect('/redefinir-senha?email=' + encodeURIComponent(email) + '&token=' + encodeURIComponent(token));
     }
 }
+
 
 module.exports = { autenticar, login, criarConta, recuperarSenha, verificarToken, redefinirSenha };

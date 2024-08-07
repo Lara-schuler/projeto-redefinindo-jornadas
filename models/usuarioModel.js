@@ -58,6 +58,8 @@ class Usuario {
         console.log(sql);
         return await db.query(sql, [token, expiration.toISOString(), email]);
     }
+    
+    
 
     static async atualizarSenha(email, senha) {
         let sql = `UPDATE usuario u
