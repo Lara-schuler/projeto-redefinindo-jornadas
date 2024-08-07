@@ -53,14 +53,16 @@ body {
 
 .secao-bem-vindo {
   text-align: center;
-  padding: 1rem 0; /* Reduzido para diminuir o espaço */
+  padding: 1rem 0;
+  /* Reduzido para diminuir o espaço */
 }
 
 .secao-bem-vindo h1 {
   color: #004AAD;
   font-size: 2rem;
   font-weight: 700;
-  margin: 0; /* Reduzido para diminuir o espaço */
+  margin: 0;
+  /* Reduzido para diminuir o espaço */
 }
 
 .secao-bem-vindo p {
@@ -68,14 +70,16 @@ body {
   font-size: 1rem;
   font-weight: 700;
   line-height: 1.5;
-  margin: 0; /* Reduzido para diminuir o espaço */
+  margin: 0;
+  /* Reduzido para diminuir o espaço */
 }
 
 .logo-grande img {
   width: 25vw;
   height: auto;
   display: block;
-  margin: 1rem auto; /* Ajustado para reduzir o espaço ao redor do logo */
+  margin: 1rem auto;
+  /* Ajustado para reduzir o espaço ao redor do logo */
 }
 
 .novo-texto {
@@ -90,8 +94,10 @@ body {
 .secao-cta {
   display: flex;
   justify-content: center;
-  gap: 1rem; /* Ajustado para reduzir o espaço entre os botões */
-  padding: 1rem 0; /* Ajustado para reduzir o espaço */
+  gap: 1rem;
+  /* Ajustado para reduzir o espaço entre os botões */
+  padding: 1rem 0;
+  /* Ajustado para reduzir o espaço */
 }
 
 .botao-cta a {
@@ -110,7 +116,8 @@ body {
 
 .declaracao-missao {
   text-align: center;
-  padding: 1rem 0; /* Ajustado para reduzir o espaço */
+  padding: 1rem 0;
+  /* Ajustado para reduzir o espaço */
 }
 
 .declaracao-missao p {
@@ -118,7 +125,8 @@ body {
   font-size: 1rem;
   font-weight: 700;
   line-height: 1.5;
-  margin: 0; /* Reduzido para diminuir o espaço */
+  margin: 0;
+  /* Reduzido para diminuir o espaço */
 }
 
 footer {
@@ -131,8 +139,10 @@ footer {
 .redes-sociais {
   display: flex;
   justify-content: center;
-  gap: 1rem; /* Ajustado para reduzir o espaço entre ícones */
-  padding: 1rem 0; /* Ajustado para reduzir o espaço */
+  gap: 1rem;
+  /* Ajustado para reduzir o espaço entre ícones */
+  padding: 1rem 0;
+  /* Ajustado para reduzir o espaço */
 }
 
 .icone-rede-social {
@@ -147,9 +157,9 @@ footer {
 
 /* Estilos da página de login */
 .container-login {
-  width: 360px;
+  max-width: 360px;
   margin: auto;
-  padding: 3rem 1.25rem 1.25rem 1.25rem;
+  padding: 3rem 1rem 1rem 1rem;
 }
 
 .barra-superior {
@@ -213,16 +223,22 @@ footer {
 
 /* Estilo para mensagens de sucesso */
 .alert-success {
-  color: #155724; /* Cor do texto */
-  background-color: #d4edda; /* Cor de fundo */
-  border-color: #c3e6cb; /* Cor da borda */
+  color: #155724;
+  /* Cor do texto */
+  background-color: #d4edda;
+  /* Cor de fundo */
+  border-color: #c3e6cb;
+  /* Cor da borda */
 }
 
 /* Estilo para mensagens de erro */
 .alert-danger {
-  color: #721c24; /* Cor do texto */
-  background-color: #f8d7da; /* Cor de fundo */
-  border-color: #f5c6cb; /* Cor da borda */
+  color: #721c24;
+  /* Cor do texto */
+  background-color: #f8d7da;
+  /* Cor de fundo */
+  border-color: #f5c6cb;
+  /* Cor da borda */
 }
 
 .link-senha-esquecida {
@@ -284,16 +300,18 @@ footer {
 /* Estilos específicos para a página de criação de conta */
 .container-criar-conta {
   width: 100%;
-  max-width: 360px;
-  padding:1.25rem;
+  max-width: 320px;
+  padding: 1rem;
   background: white;
   box-shadow: 0 1px 20px rgba(0, 0, 0, 0.25);
   border-radius: 10px;
   box-sizing: border-box;
-  margin: 40px auto; /* Centraliza horizontalmente */
+  margin: 40px auto;
+  /* Centraliza horizontalmente */
 }
 
-.container-redefinir-senha h2, .caixa-criar-conta h2 {
+.container-redefinir-senha h2,
+.caixa-criar-conta h2 {
   color: #004AAD;
   text-align: center;
   font-size: 24px;
@@ -342,6 +360,7 @@ input:focus {
 .btn-link:hover {
   color: #002a5c;
 }
+
 .criar-conta-p {
   text-align: center;
   margin-top: 20px;
@@ -363,30 +382,42 @@ input:focus {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
-  padding: 1.25rem; /* 20px */
+  height: 90vh;
+  padding: 1.25rem;
+  /* 20px */
 }
 
 .caixa-recuperar-senha {
   width: 100%;
-  max-width: 22.5rem; /* 360px */
+  max-width: 22.5rem;
+  /* 360px */
   background: white;
-  box-shadow: 0px 0.0625rem 1.25rem rgba(0, 0, 0, 0.25); /* 0px 1px 20px */
-  border-radius: 0.625rem; /* 10px */
-  padding: 2rem; /* 20px */
-  
+  box-shadow: 0px 0.0625rem 1.25rem rgba(0, 0, 0, 0.25);
+  /* 0px 1px 20px */
+  border-radius: 0.625rem;
+  /* 10px */
+  padding: 2rem;
+  /* 20px */
+
 }
 
-.caixa-verificar-token h2,.caixa-recuperar-senha h2 {
+.caixa-verificar-token h2,
+.caixa-recuperar-senha h2 {
   color: #004AAD;
-  margin-bottom: 1.25rem; /* 20px */
-  font-size: 1.5rem; /* 24px */
+  margin-bottom: 1.25rem;
+  /* 20px */
+  font-size: 1.5rem;
+  /* 24px */
 }
 
-.container-redefinir-senha, .caixa-verificar-token p,.caixa-recuperar-senha p {
+.container-redefinir-senha p,
+.caixa-verificar-token p,
+.caixa-recuperar-senha p {
   color: #004AAD;
-  font-size: 0.875rem; /* 14px */
-  margin-bottom: 1.25rem; /* 20px */
+  font-size: 0.875rem;
+  /* 14px */
+  margin-bottom: 1.25rem;
+  /* 20px */
 }
 
 /* verificar token */
@@ -396,51 +427,61 @@ input:focus {
   justify-content: center;
   align-items: center;
   height: 100vh;
-  padding: 1.25rem; /* 20px */
+  padding: 1.25rem;
+  /* 20px */
 }
 
 .caixa-verificar-token {
   background: white;
-  box-shadow: 0px 0.0625rem 1.25rem rgba(0, 0, 0, 0.25); /* 0px 1px 20px */
-  border-radius: 0.625rem; /* 10px */
-  padding: 2rem; /* 20px */
+  box-shadow: 0px 0.0625rem 1.25rem rgba(0, 0, 0, 0.25);
+  /* 0px 1px 20px */
+  border-radius: 0.625rem;
+  /* 10px */
+  padding: 2rem;
+  /* 20px */
 }
 
 .caixa-verificar-token .input-container {
   margin-top: 1.25rem;
   margin-bottom: 1rem;
-  padding:0.625rem;
+  padding: 0.625rem;
 }
 
 .caixa-verificar-token .input-container input {
   width: 100%;
-  padding: 0.625rem; /* 10px */
-  border: 0.0625rem solid #004AAD; /* 1px */
-  border-radius: 0.625rem; /* 10px */
+  padding: 0.625rem;
+  /* 10px */
+  border: 0.0625rem solid #004AAD;
+  /* 1px */
+  border-radius: 0.625rem;
+  /* 10px */
 }
 
 .caixa-verificar-token .input-container label {
   color: #004AAD;
   font-weight: bold;
-  font-size: 1rem; /* 16px */
+  font-size: 1rem;
+  /* 16px */
 }
 
 .caixa-verificar-token .link {
   color: #004AAD;
   display: block;
-  margin-top: 0.625rem; /* 10px */
+  margin-top: 0.625rem;
+  /* 10px */
   text-align: center;
 }
 
 .container-redefinir-senha {
   width: 100%;
-  max-width: 360px;
-  padding:2rem;
+  max-width: 320px;
+  padding: 2rem;
   background: white;
   box-shadow: 0 1px 20px rgba(0, 0, 0, 0.25);
   border-radius: 10px;
   box-sizing: border-box;
-  margin: 90px auto; /* Centraliza horizontalmente */
+  margin: 90px auto;
+  /* Centraliza horizontalmente */
 }
 
 
@@ -469,17 +510,20 @@ input:focus {
   }
 
   .secao-bem-vindo {
-    padding: 0.5rem 0; /* Ajustado para telas menores */
+    padding: 0.5rem 0;
+    /* Ajustado para telas menores */
   }
 
   .secao-bem-vindo h1 {
     font-size: 1.75rem;
-    margin: 0.5rem 0; /* Ajustado para reduzir espaço */
+    margin: 0.5rem 0;
+    /* Ajustado para reduzir espaço */
   }
 
   .secao-bem-vindo p {
     font-size: 0.875rem;
-    margin: 0.5rem 0; /* Ajustado para reduzir espaço */
+    margin: 0.5rem 0;
+    /* Ajustado para reduzir espaço */
   }
 
   .logo-grande img {
@@ -489,7 +533,8 @@ input:focus {
 
   .novo-texto {
     font-size: 0.85rem;
-    padding: 0.75rem; /* Ajustado para reduzir espaço */
+    padding: 0.75rem;
+    /* Ajustado para reduzir espaço */
   }
 
   .secao-cta {
@@ -506,29 +551,34 @@ input:focus {
   }
 
   .declaracao-missao {
-    padding: 1rem 0; /* Ajustado para telas menores */
+    padding: 1rem 0;
+    /* Ajustado para telas menores */
   }
 
   .declaracao-missao p {
     font-size: 0.875rem;
-    margin: 0.5rem 0; /* Ajustado para reduzir espaço */
+    margin: 0.5rem 0;
+    /* Ajustado para reduzir espaço */
   }
 
   .footer {
-    padding: 1rem 0; /* Ajustado para telas menores */
+    padding: 1rem 0;
+    /* Ajustado para telas menores */
   }
 
   .redes-sociais {
-    gap: 1rem; /* Ajustado para reduzir espaço entre ícones */
+    gap: 1rem;
+    /* Ajustado para reduzir espaço entre ícones */
   }
 
   .icone-rede-social {
-    font-size: 1.5rem; /* Ajustado para telas menores */
+    font-size: 1.5rem;
+    /* Ajustado para telas menores */
   }
 
-  .container-login {
+  /*.container-login {
     width: 90%;
-  }
+  }*/
 
   .barra-superior {
     padding: 0.5rem;
@@ -543,9 +593,6 @@ input:focus {
     padding: 1rem;
   }
 
-  .caixa-login h2 {
-    font-size: 1.25rem;
-  }
 
   .grupo-formulario {
     margin-bottom: 0.75rem;
@@ -590,18 +637,21 @@ input:focus {
 
   .caixa-recuperar-senha {
     width: 90vw;
-}
+  }
 
-.caixa-recuperar-senha h2 {
-    font-size: 1.25rem; /* 20px */
-}
+  .caixa-recuperar-senha h2 {
+    font-size: 1.25rem;
+    /* 20px */
+  }
 
-.caixa-recuperar-senha p {
-    font-size: 0.75rem; /* 12px */
- }
- .container-verificar-token {
-  width: 100%;
-  height: auto;
-  padding: 15px;
-}
+  .caixa-recuperar-senha p {
+    font-size: 0.75rem;
+    /* 12px */
+  }
+
+  .container-verificar-token {
+    width: 100%;
+    height: auto;
+    padding: 15px;
+  }
 }
