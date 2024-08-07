@@ -185,12 +185,6 @@ footer {
   padding: 1.25rem;
 }
 
-.caixa-login h2 {
-  color: #004AAD;
-  text-align: center;
-  font-size: 1.5rem;
-}
-
 .grupo-formulario {
   margin-bottom: 0.9375rem;
 }
@@ -310,12 +304,12 @@ footer {
   /* Centraliza horizontalmente */
 }
 
-.container-redefinir-senha h2,
+.caixa-login h2, .container-redefinir-senha h2,
 .caixa-criar-conta h2 {
   color: #004AAD;
   text-align: center;
   font-size: 24px;
-  margin-bottom: 20px;
+  margin-bottom: 1rem;
 }
 
 .input-container {
