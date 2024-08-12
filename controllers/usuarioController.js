@@ -48,7 +48,8 @@ async function autenticar(req, res) {
         const resp = await usuarioModel.autenticar(email || telefone, senha);
         if (resp && resp.length > 0) {
             req.session.user = resp[0];
-            res.redirect('/');
+            definirMensagem(req, 'success', 'Login realizado com sucesso!');
+            res.redirect('/login/apresentacao');
         } else {
             definirMensagem(req, 'error', 'Credenciais inválidas. Tente novamente.');
             res.redirect('/login');

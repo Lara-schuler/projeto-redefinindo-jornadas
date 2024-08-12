@@ -127,6 +127,14 @@ app.post('/redefinir-senha', (req, res) => {
     usuarioController.redefinirSenha(req, res);
 });
 
+// Rota para a tela de Apresentação
+app.get('/login/apresentacao', (req, res) => {
+    res.render('usuarios/apresentacao', {
+        layout: './layouts/default/apresentacao',
+        title: 'Apresentação'
+    });
+});
+
 // Inicializa o servidor
 app.listen(port, () => { 
     console.log(`Servidor rodando em http://localhost:${port}`);
