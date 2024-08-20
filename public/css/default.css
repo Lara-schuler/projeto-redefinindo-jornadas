@@ -24,8 +24,10 @@ body {
   background-color: #004AAD;
   display: flex;
   align-items: center;
+  justify-content: space-between; 
   padding: 0 2rem;
 }
+
 
 .profile-picture img {
   width: 4rem;
@@ -36,12 +38,12 @@ body {
 .top-nav ul {
   display: flex;
   list-style-type: none;
-  margin-left: auto;
+  margin: 0;
   padding: 0;
 }
 
 .top-nav ul li {
-  margin-left: 2rem;
+  margin-right: 2rem;
 }
 
 .top-nav ul li a {

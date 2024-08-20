@@ -129,7 +129,7 @@ app.post('/redefinir-senha', (req, res) => {
 
 // Rota para a tela de Apresentação
 app.get('/login/apresentacao', (req, res) => {
-    res.render('usuarios/apresentacao', {
+    res.render('apresentacao', {
         layout: './layouts/default/apresentacao',
         title: 'Apresentação'
     });
