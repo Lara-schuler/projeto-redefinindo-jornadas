@@ -24,7 +24,7 @@ body {
   background-color: #004AAD;
   display: flex;
   align-items: center;
-  justify-content: space-between; 
+  justify-content: space-between;
   padding: 0 2rem;
 }
 
@@ -52,6 +52,33 @@ body {
   font-size: 1rem;
   font-weight: 700;
 }
+
+.menu-icon {
+  display: none;
+  cursor: pointer;
+  font-size: 2rem;
+  color: white;
+}
+
+/* Menu de Navegação */
+#nav-apresentacao ul {
+  display: flex;
+  list-style-type: none;
+  margin-left: auto;
+  padding: 0;
+}
+
+#nav-apresentacao ul li {
+  margin-left: 2rem;
+}
+
+#nav-apresentacao ul li a {
+  color: white;
+  text-decoration: none;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
 
 .secao-bem-vindo {
   text-align: center;
@@ -306,7 +333,8 @@ footer {
   /* Centraliza horizontalmente */
 }
 
-.caixa-login h2, .container-redefinir-senha h2,
+.caixa-login h2,
+.container-redefinir-senha h2,
 .caixa-criar-conta h2 {
   color: #004AAD;
   text-align: center;
@@ -505,6 +533,46 @@ input:focus {
     font-size: 1rem;
   }
 
+  /* Mostrar o ícone do menu hambúrguer e esconder o menu padrão */
+  .menu-icon {
+    display: block;
+  }
+
+  /* Menu de Navegação */
+  #nav-apresentacao {
+    display: none;
+    /* Inicialmente escondido */
+  }
+
+  #nav-apresentacao ul {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: #004AAD;
+    width: 100%;
+    max-height: 0;
+    /* Começa com max-height 0 */
+    overflow: hidden;
+    transition: max-height 0.3s ease-in-out;
+    padding: 0;
+    z-index: 1000; /* Adiciona z-index */
+  }
+
+  #nav-apresentacao ul.open {
+    max-height: 500px; /* Ajuste conforme necessário */
+    padding: 1rem 0;
+  }
+
+  #nav-apresentacao ul li {
+    margin: 1rem 0;
+    text-align: center;
+  }
+
+  #nav-apresentacao ul li a {
+    font-size: 1.2rem;
+  }
   .secao-bem-vindo {
     padding: 0.5rem 0;
     /* Ajustado para telas menores */

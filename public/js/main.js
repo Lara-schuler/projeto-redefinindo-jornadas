@@ -1,8 +1,14 @@
 document.addEventListener('DOMContentLoaded', function () {
-    const menuIcon = document.querySelector('.menu-toggle');
-    const navLinks = document.querySelector('.top-nav ul');
+    const menuIcon = document.querySelector('#menu-icon-apresentacao');
+    const navLinks = document.querySelector('#nav-apresentacao ul'); // Seleciona o ul dentro do nav
 
-    menuIcon.addEventListener('click', function () {
-        navLinks.classList.toggle('open');
-    });
+    if (menuIcon && navLinks) {
+        menuIcon.addEventListener('click', function () {
+            console.log('Menu icon clicked');
+            navLinks.classList.toggle('open');
+            console.log('Updated class list:', navLinks.classList);
+        });
+    } else {
+        console.log('Menu icon or nav links not found');
+    }
 });
