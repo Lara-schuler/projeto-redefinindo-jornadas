@@ -135,6 +135,19 @@ app.get('/login/apresentacao', (req, res) => {
     });
 });
 
+// Rota para a tela de criação de perfil
+app.get('/criar-perfil', (req, res) => {
+    res.render('usuarios/criar-perfil', {
+        layout: './layouts/default/criar-perfil',
+        title: 'Criar Perfil'
+    });
+});
+
+app.post('/criar-perfil', (req, res) => {
+    usuarioController.criarPerfil(req, res);
+});
+
+
 // Inicializa o servidor
 app.listen(port, () => { 
     console.log(`Servidor rodando em http://localhost:${port}`);

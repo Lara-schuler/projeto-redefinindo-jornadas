@@ -75,6 +75,46 @@ class Usuario {
         console.log(sql);
         return await db.query(sql, [email]);
     }
+
+    static async salvarTipoPerfil(usuarioId, tipoPerfil) {
+        let sql = '';
+        const parametros = [];
+    
+        switch (tipoPerfil) {
+            case 'psr':
+                sql = 'INSERT INTO psr (pessoa_fisica_pessoa_idpessoa) VALUES ((SELECT pessoa_id_pessoa FROM usuario WHERE id_usuario = ?))';
+                parametros.push(usuarioId);
+                break;
+            case 'instituicao_publica':
+                sql = 'INSERT INTO instituicao_publica (pessoa_juridica_pessoa_idpessoa) VALUES ((SELECT pessoa_id_pessoa FROM usuario WHERE id_usuario = ?))';
+                parametros.push(usuarioId);
+                break;
+            case 'ong':
+                sql = 'INSERT INTO ong (pessoa_juridica_pessoa_idpessoa) VALUES ((SELECT pessoa_id_pessoa FROM usuario WHERE id_usuario = ?))';
+                parametros.push(usuarioId);
+                break;
+            case 'pessoa_fisica':
+                sql = 'INSERT INTO pessoa_fisica (pessoa_idpessoa) VALUES ((SELECT pessoa_id_pessoa FROM usuario WHERE id_usuario = ?))';
+                parametros.push(usuarioId);
+                break;
+            case 'empresa':
+                sql = 'INSERT INTO empresa (pessoa_juridica_pessoa_idpessoa) VALUES ((SELECT pessoa_id_pessoa FROM usuario WHERE id_usuario = ?))';
+                parametros.push(usuarioId);
+                break;
+            case 'admin':
+                // Aqui pode-se adicionar uma lógica para os administradores, se houver uma tabela separada.
+                throw new Error('Admin não precisa de uma tabela separada.');
+            default:
+                throw new Error('Tipo de perfil inválido.');
+        }
+    
+        try {
+            await db.query(sql, parametros);
+        } catch (error) {
+            throw new Error('Erro ao atualizar tipo de perfil no banco de dados.');
+        }
+    }
+    
 }
 
 module.exports = Usuario;

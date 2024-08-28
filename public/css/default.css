@@ -207,7 +207,7 @@ footer {
   object-fit: cover;
 }
 
-.caixa-login {
+.caixa-login{
   background-color: white;
   box-shadow: 0 0.0625rem 1.25rem rgba(0, 0, 0, 0.25);
   border-radius: 0.625rem;
@@ -278,16 +278,7 @@ footer {
   color: #002a5c;
 }
 
-.botao-primario {
-  width: 100%;
-  padding: 0.625rem;
-  background-color: #004AAD;
-  border: none;
-  border-radius: 3rem;
-  color: white;
-  font-weight: bold;
-  font-size: 1rem;
-}
+
 
 .termos {
   text-align: center;
@@ -321,7 +312,7 @@ footer {
 }
 
 /* Estilos específicos para a página de criação de conta */
-.container-criar-conta {
+.container-criar-conta, .container-criar-perfil {
   width: 100%;
   max-width: 320px;
   padding: 1rem;
@@ -335,7 +326,7 @@ footer {
 
 .caixa-login h2,
 .container-redefinir-senha h2,
-.caixa-criar-conta h2 {
+.caixa-criar-conta h2, .caixa-criar-perfil h2 {
   color: #004AAD;
   text-align: center;
   font-size: 24px;
@@ -508,9 +499,68 @@ input:focus {
   /* Centraliza horizontalmente */
 }
 
+.caixa-criar-perfil {
+  max-width: 1000px; /* Largura máxima para a caixa */
+  width: 100%; /* Garante que a caixa ocupe toda a largura possível até o max-width */
+  background-color: white;
+  padding: 3rem; /* Espaçamento interno para a caixa */
+ }
+
+/* Estiliza o container do formulário para centralizá-lo */
+.form-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Faz com que o container ocupe toda a altura da tela */
+  background-color: #f4f4f4; /* Cor de fundo para ajudar na visualização */
+}
+
+/* Estiliza o formulário */
+form {
+  width: 100%;
+  max-width: 600px; /* Define uma largura máxima para o formulário */
+  margin: 0 auto; /* Centraliza o formulário dentro da caixa */
+}
+
+.formulario {
+  max-width: 500px; /* Define uma largura máxima para o formulário */
+  width: 100%;
+  padding: 2rem; /* Ajustado para um espaçamento interno mais razoável */
+  border-radius: 1rem;
+  background-color: #fff; /* Cor de fundo do formulário */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Estiliza os grupos de formulário */
+.form-group {
+  margin-bottom: 0.8rem; /* Adiciona espaçamento entre os grupos de formulário */
+}
+
+/* Ajusta os elementos do formulário */
+.form-check {
+  margin-bottom: 0.8rem; /* Adiciona espaçamento entre os itens de radio */
+}
+
+/* Estiliza o botão */
+.botao-primario {
+  width: 100%;
+  padding: 0.625rem;
+  background-color: #004AAD;
+  border: none;
+  border-radius: 3rem;
+  color: white;
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+
 
 /* Media queries para responsividade */
 @media (max-width: 768px) {
+
+  .botao-primario {
+    font-size: 0.875rem; /* Ajusta o tamanho da fonte em telas menores */
+  }
   .container {
     max-width: 90%;
   }

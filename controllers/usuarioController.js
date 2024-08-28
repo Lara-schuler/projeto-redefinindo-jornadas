@@ -248,5 +248,40 @@ async function redefinirSenha(req, res) {
     }
 }
 
+async function criarPerfil(req, res) {
+    const { tipoPerfil } = req.body; // Receba o tipo de perfil do formulário
+    const usuarioId = req.session.user.id; // Obtenha o ID do usuário da sessão
 
-module.exports = { autenticar, login, criarConta, recuperarSenha, verificarToken, redefinirSenha };
+    // Defina uma lista de tipos de perfil válidos
+    const tiposValidos = ['psr', 'instituicao_publica', 'ong', 'pessoa_fisica', 'empresa', 'administrador'];
+
+    try {
+        // Validação do tipo de perfil
+        if (!tipoPerfil) {
+            throw new Error('O tipo de perfil deve ser selecionado.');
+        }
+        if (!tiposValidos.includes(tipoPerfil)) {
+            throw new Error('Tipo de perfil inválido.');
+        }
+
+        // Armazenar o tipo de perfil no banco de dados
+        await usuarioModel.salvarTipoPerfil(usuarioId, tipoPerfil);
+
+        // Armazenar o tipo de perfil na sessão para fins de controle de acesso
+        req.session.user.tipoPerfil = tipoPerfil;
+
+        // Definir mensagem de sucesso
+        definirMensagem(req, 'success', 'Perfil criado com sucesso.');
+
+        // Redirecionar para a página desejada após a criação do perfil
+        res.redirect('/home');
+    } catch (error) {
+        // Definir mensagem de erro e redirecionar de volta para o formulário
+        definirMensagem(req, 'error', error.message);
+        res.redirect('/criar-perfil');
+    }
+}
+
+
+
+module.exports = { autenticar, login, criarConta, recuperarSenha, verificarToken, redefinirSenha, criarPerfil };

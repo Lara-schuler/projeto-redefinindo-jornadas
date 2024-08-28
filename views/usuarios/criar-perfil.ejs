@@ -1,0 +1,49 @@
+<div class="container-criar-perfil mt-5">
+    <div class="caixa-criar-perfil">
+        <h2 class="text-center mb-4">Selecione o Tipo de Perfil</h2>
+        <form action="/criar-perfil" method="POST">
+            <div class="form-group">
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="tipoPerfil" id="situacaoRua"
+                        value="psr">
+                    <label class="form-check-label" for="psr">
+                        Pessoa em Situação de Rua
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="tipoPerfil" id="instituicao_publica"
+                        value="instituicao_publica">
+                    <label class="form-check-label" for="instituicao_publica">
+                        Instituição Pública de Proteção Social
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="tipoPerfil" id="ong" value="ong">
+                    <label class="form-check-label" for="ong">
+                        ONG
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="tipoPerfil" id="empresa" value="empresa">
+                    <label class="form-check-label" for="empresa">
+                        Empresa
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="tipoPerfil" id="voluntario" value="voluntario">
+                    <label class="form-check-label" for="voluntario">
+                        Voluntário
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="tipoPerfil" id="administrador"
+                        value="admin">
+                    <label class="form-check-label" for="admin">
+                        Administrador
+                    </label>
+                </div>
+            </div>
+            <button type="submit" class="botao-primario">Entrar</button>
+        </form>
+    </div>
+</div>
