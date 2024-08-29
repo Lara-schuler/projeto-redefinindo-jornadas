@@ -274,7 +274,7 @@ async function criarPerfil(req, res) {
         definirMensagem(req, 'success', 'Perfil criado com sucesso.');
 
         // Redirecionar para a página desejada após a criação do perfil
-        res.redirect('/home');
+        res.redirect('/');
     } catch (error) {
         // Definir mensagem de erro e redirecionar de volta para o formulário
         definirMensagem(req, 'error', error.message);

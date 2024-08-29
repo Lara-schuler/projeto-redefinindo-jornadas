@@ -77,43 +77,88 @@ class Usuario {
     }
 
     static async salvarTipoPerfil(usuarioId, tipoPerfil) {
-        let sql = '';
-        const parametros = [];
+        let sqlVerificar = '';
+        let sqlInserir = '';
+        const parametros = [usuarioId];
     
         switch (tipoPerfil) {
             case 'psr':
-                sql = 'INSERT INTO psr (pessoa_fisica_pessoa_idpessoa) VALUES ((SELECT pessoa_id_pessoa FROM usuario WHERE id_usuario = ?))';
-                parametros.push(usuarioId);
+                sqlVerificar = `
+                    SELECT 1 FROM psr WHERE pessoa_fisica_pessoa_idpessoa = 
+                    (SELECT pessoa_id_pessoa FROM usuario WHERE id_usuario = ?)
+                `;
+                sqlInserir = `
+                    INSERT INTO psr (pessoa_fisica_pessoa_idpessoa) 
+                    SELECT pessoa_id_pessoa FROM usuario WHERE id_usuario = ?
+                `;
                 break;
             case 'instituicao_publica':
-                sql = 'INSERT INTO instituicao_publica (pessoa_juridica_pessoa_idpessoa) VALUES ((SELECT pessoa_id_pessoa FROM usuario WHERE id_usuario = ?))';
-                parametros.push(usuarioId);
+                sqlVerificar = `
+                    SELECT 1 FROM instituicao_publica WHERE pessoa_juridica_pessoa_idpessoa = 
+                    (SELECT pessoa_id_pessoa FROM usuario WHERE id_usuario = ?)
+                `;
+                sqlInserir = `
+                    INSERT INTO instituicao_publica (pessoa_juridica_pessoa_idpessoa) 
+                    SELECT pessoa_id_pessoa FROM usuario WHERE id_usuario = ?
+                `;
                 break;
             case 'ong':
-                sql = 'INSERT INTO ong (pessoa_juridica_pessoa_idpessoa) VALUES ((SELECT pessoa_id_pessoa FROM usuario WHERE id_usuario = ?))';
-                parametros.push(usuarioId);
+                sqlVerificar = `
+                    SELECT 1 FROM ong WHERE pessoa_juridica_pessoa_idpessoa = 
+                    (SELECT pessoa_id_pessoa FROM usuario WHERE id_usuario = ?)
+                `;
+                sqlInserir = `
+                    INSERT INTO ong (pessoa_juridica_pessoa_idpessoa) 
+                    SELECT pessoa_id_pessoa FROM usuario WHERE id_usuario = ?
+                `;
                 break;
             case 'pessoa_fisica':
-                sql = 'INSERT INTO pessoa_fisica (pessoa_idpessoa) VALUES ((SELECT pessoa_id_pessoa FROM usuario WHERE id_usuario = ?))';
-                parametros.push(usuarioId);
+                sqlVerificar = `
+                    SELECT 1 FROM pessoa_fisica WHERE pessoa_idpessoa = 
+                    (SELECT pessoa_id_pessoa FROM usuario WHERE id_usuario = ?)
+                `;
+                sqlInserir = `
+                    INSERT INTO pessoa_fisica (pessoa_idpessoa) 
+                    SELECT pessoa_id_pessoa FROM usuario WHERE id_usuario = ?
+                `;
                 break;
             case 'empresa':
-                sql = 'INSERT INTO empresa (pessoa_juridica_pessoa_idpessoa) VALUES ((SELECT pessoa_id_pessoa FROM usuario WHERE id_usuario = ?))';
-                parametros.push(usuarioId);
+                sqlVerificar = `
+                    SELECT 1 FROM empresa WHERE pessoa_juridica_pessoa_idpessoa = 
+                    (SELECT pessoa_id_pessoa FROM usuario WHERE id_usuario = ?)
+                `;
+                sqlInserir = `
+                    INSERT INTO empresa (pessoa_juridica_pessoa_idpessoa) 
+                    SELECT pessoa_id_pessoa FROM usuario WHERE id_usuario = ?
+                `;
                 break;
             case 'admin':
-                // Aqui pode-se adicionar uma lógica para os administradores, se houver uma tabela separada.
                 throw new Error('Admin não precisa de uma tabela separada.');
             default:
                 throw new Error('Tipo de perfil inválido.');
         }
     
         try {
-            await db.query(sql, parametros);
+            // Verificar se já existe
+            const [rowsVerificar] = await db.query(sqlVerificar, parametros);
+            console.log('rowsVerificar:', rowsVerificar); // Adicionar log para verificar o resultado
+    
+            if (Array.isArray(rowsVerificar) && rowsVerificar.length === 0) {
+                // Registro não existe, então insira
+                const [result] = await db.query(sqlInserir, parametros);
+                console.log('Result:', result); // Adicionar log do resultado da inserção
+    
+                if (result.affectedRows === 0) {
+                    throw new Error('Falha na inserção.');
+                }
+            } else {
+                console.log("Registro já existente.");
+            }
         } catch (error) {
+            console.error('Erro no banco de dados:', error); // Logar o erro detalhado
             throw new Error('Erro ao atualizar tipo de perfil no banco de dados.');
         }
-    }
+    }    
     
 }
 
