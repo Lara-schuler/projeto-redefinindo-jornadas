@@ -76,87 +76,39 @@ class Usuario {
         return await db.query(sql, [email]);
     }
 
-    static async salvarTipoPerfil(usuarioId, tipoPerfil) {
-        let sqlVerificar = '';
-        let sqlInserir = '';
-        const parametros = [usuarioId];
-    
-        switch (tipoPerfil) {
-            case 'psr':
-                sqlVerificar = `
-                    SELECT 1 FROM psr WHERE pessoa_fisica_pessoa_idpessoa = 
-                    (SELECT pessoa_id_pessoa FROM usuario WHERE id_usuario = ?)
-                `;
-                sqlInserir = `
-                    INSERT INTO psr (pessoa_fisica_pessoa_idpessoa) 
-                    SELECT pessoa_id_pessoa FROM usuario WHERE id_usuario = ?
-                `;
-                break;
-            case 'instituicao_publica':
-                sqlVerificar = `
-                    SELECT 1 FROM instituicao_publica WHERE pessoa_juridica_pessoa_idpessoa = 
-                    (SELECT pessoa_id_pessoa FROM usuario WHERE id_usuario = ?)
-                `;
-                sqlInserir = `
-                    INSERT INTO instituicao_publica (pessoa_juridica_pessoa_idpessoa) 
-                    SELECT pessoa_id_pessoa FROM usuario WHERE id_usuario = ?
-                `;
-                break;
-            case 'ong':
-                sqlVerificar = `
-                    SELECT 1 FROM ong WHERE pessoa_juridica_pessoa_idpessoa = 
-                    (SELECT pessoa_id_pessoa FROM usuario WHERE id_usuario = ?)
-                `;
-                sqlInserir = `
-                    INSERT INTO ong (pessoa_juridica_pessoa_idpessoa) 
-                    SELECT pessoa_id_pessoa FROM usuario WHERE id_usuario = ?
-                `;
-                break;
-            case 'pessoa_fisica':
-                sqlVerificar = `
-                    SELECT 1 FROM pessoa_fisica WHERE pessoa_idpessoa = 
-                    (SELECT pessoa_id_pessoa FROM usuario WHERE id_usuario = ?)
-                `;
-                sqlInserir = `
-                    INSERT INTO pessoa_fisica (pessoa_idpessoa) 
-                    SELECT pessoa_id_pessoa FROM usuario WHERE id_usuario = ?
-                `;
-                break;
-            case 'empresa':
-                sqlVerificar = `
-                    SELECT 1 FROM empresa WHERE pessoa_juridica_pessoa_idpessoa = 
-                    (SELECT pessoa_id_pessoa FROM usuario WHERE id_usuario = ?)
-                `;
-                sqlInserir = `
-                    INSERT INTO empresa (pessoa_juridica_pessoa_idpessoa) 
-                    SELECT pessoa_id_pessoa FROM usuario WHERE id_usuario = ?
-                `;
-                break;
-            case 'admin':
-                throw new Error('Admin não precisa de uma tabela separada.');
-            default:
-                throw new Error('Tipo de perfil inválido.');
-        }
+    static async atualizarTipoPerfil(idUsuario, tipoPerfil) {
+        const sql = 'UPDATE usuario SET tipo_perfil = ? WHERE id_usuario = ?';
+        const parametros = [tipoPerfil, idUsuario];
     
         try {
-            // Verificar se já existe
-            const [rowsVerificar] = await db.query(sqlVerificar, parametros);
-            console.log('rowsVerificar:', rowsVerificar); // Adicionar log para verificar o resultado
+            await db.query(sql, parametros);
+            console.log('Tipo de perfil atualizado com sucesso para:', tipoPerfil); // Log para depuração
+        } catch (error) {
+            console.error('Erro ao atualizar tipo de perfil:', error);
+            throw new Error('Erro ao atualizar tipo de perfil.');
+        }
+    }    
     
-            if (Array.isArray(rowsVerificar) && rowsVerificar.length === 0) {
-                // Registro não existe, então insira
-                const [result] = await db.query(sqlInserir, parametros);
-                console.log('Result:', result); // Adicionar log do resultado da inserção
+    static async obterUsuarioPorId(pessoaId) {
+        const sql = 'SELECT * FROM usuario WHERE pessoa_id_pessoa = ?';
+        const parametros = [pessoaId];
     
-                if (result.affectedRows === 0) {
-                    throw new Error('Falha na inserção.');
-                }
+        console.log('Buscando usuário com ID de pessoa:', pessoaId); // Log para depuração
+    
+        try {
+            const [rows] = await db.query(sql, parametros);
+            console.log('Resultado da busca do usuário:', rows); // Log para depuração
+    
+            // Verifica se há resultados na consulta
+            if (rows.length > 0) {
+                return rows[0]; // Retorna o usuário encontrado
             } else {
-                console.log("Registro já existente.");
+                // Se não encontrou resultados, lança a exceção
+                throw new Error('Usuário não encontrado.');
             }
         } catch (error) {
-            console.error('Erro no banco de dados:', error); // Logar o erro detalhado
-            throw new Error('Erro ao atualizar tipo de perfil no banco de dados.');
+            console.error('Erro ao buscar usuário no banco de dados:', error);
+            throw new Error('Erro ao buscar usuário no banco de dados.');
         }
     }    
     

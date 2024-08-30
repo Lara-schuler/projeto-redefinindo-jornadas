@@ -13,11 +13,12 @@ const port = 5000;
 // Configura arquivos estáticos
 app.use(express.static(path.join(__dirname, 'public')));
 
-//Inicia sessão
+// Inicia sessão
 app.use(session({
-    secret: 'rj2024',
-    resave: false, 
-    saveUninitialized: false
+    secret: 'rj2024', // Uma string secreta para assinatura dos cookies
+    resave: false, // Não resave a sessão se não houver alterações
+    saveUninitialized: false, // Não crie uma sessão até que algo seja armazenado
+    cookie: { secure: false } // Defina como true se estiver usando HTTPS
 }));
 
 // Configura o parsing do corpo das requisições
@@ -137,11 +138,20 @@ app.get('/login/apresentacao', (req, res) => {
 
 // Rota para a tela de criação de perfil
 app.get('/criar-perfil', (req, res) => {
-    res.render('usuarios/criar-perfil', {
-        layout: './layouts/default/criar-perfil',
-        title: 'Criar Perfil'
-    });
+    if (req.session.user) {
+        console.log('Usuário logado:', req.session.user);
+        // Renderize a página de criação de perfil com os dados do usuário na sessão
+        res.render('usuarios/criar-perfil', {
+            layout: './layouts/default/criar-perfil',
+            title: 'Criar Perfil',
+            usuario: req.session.user // Passe os dados do usuário para a view
+        });
+    } else {
+        console.log('Nenhum usuário logado.');
+        res.redirect('/login'); // Redirecione para a página de login se o usuário não estiver logado
+    }
 });
+
 
 app.post('/criar-perfil', (req, res) => {
     usuarioController.criarPerfil(req, res);

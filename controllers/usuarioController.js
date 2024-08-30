@@ -37,17 +37,17 @@ function definirMensagem(req, tipo, texto) {
     req.flash(tipo, texto);
 }
 
+// Função autenticar 
 async function autenticar(req, res) {
     const { email, telefone, senha } = req.body;
     try {
         validarEntrada(email, telefone, senha);
-        // Verifique se pelo menos um dos valores email ou telefone está definido
         if (!email && !telefone) {
             throw new Error('O campo de email ou telefone deve estar preenchido');
         }
         const resp = await usuarioModel.autenticar(email || telefone, senha);
         if (resp && resp.length > 0) {
-            req.session.user = resp[0];
+            req.session.user = resp[0];  // Mantenha o nome da propriedade 'user'
             definirMensagem(req, 'success', 'Login realizado com sucesso!');
             res.redirect('/login/apresentacao');
         } else {
@@ -60,8 +60,7 @@ async function autenticar(req, res) {
     }
 }
 
-
-// Controlador de login
+// Função login (ajustada para usar 'req.session.user')
 async function login(req, res) {
     const { email, telefone, senha } = req.body;
     console.log('Email:', email);
@@ -80,7 +79,7 @@ async function login(req, res) {
         console.log('Resultado da autenticação:', usuario);
         
         if (usuario.length > 0) {
-            req.session.usuario = usuario[0];
+            req.session.user = usuario[0];  // Alterado de 'req.session.usuario' para 'req.session.user'
             res.status(200).json({ message: 'Login bem-sucedido', usuario: usuario[0] });
         } else {
             res.status(401).json({ message: 'Email/Telefone ou senha incorretos' });
@@ -249,38 +248,34 @@ async function redefinirSenha(req, res) {
 }
 
 async function criarPerfil(req, res) {
-    const { tipoPerfil } = req.body; // Receba o tipo de perfil do formulário
-    const usuarioId = req.session.user.id; // Obtenha o ID do usuário da sessão
-
-    // Defina uma lista de tipos de perfil válidos
-    const tiposValidos = ['psr', 'instituicao_publica', 'ong', 'pessoa_fisica', 'empresa', 'administrador'];
-
     try {
-        // Validação do tipo de perfil
-        if (!tipoPerfil) {
-            throw new Error('O tipo de perfil deve ser selecionado.');
+        const tipoPerfil = req.body.tipo_perfil;
+        const pessoaId = req.session.user.id_pessoa;
+
+        console.log('ID da pessoa na sessão:', pessoaId); // Log para depuração
+        console.log('Tipo de perfil recebido:', tipoPerfil); // Log para depuração
+
+        const usuario = await usuarioModel.obterUsuarioPorId(pessoaId);
+
+        // Se chegou aqui, o usuário foi encontrado, então não deve lançar exceção
+        if (usuario) {
+            console.log('Usuário encontrado:', usuario);
+
+            // Atualizar o tipo de perfil do usuário
+            await usuarioModel.atualizarTipoPerfil(usuario.id_usuario, tipoPerfil);
+
+            res.status(200).json({ mensagem: 'Perfil criado com sucesso!' });
+        } else {
+            // Se o usuário não foi encontrado (o que não deve acontecer após a modificação), lança o erro
+            throw new Error('Usuário não encontrado.');
         }
-        if (!tiposValidos.includes(tipoPerfil)) {
-            throw new Error('Tipo de perfil inválido.');
-        }
-
-        // Armazenar o tipo de perfil no banco de dados
-        await usuarioModel.salvarTipoPerfil(usuarioId, tipoPerfil);
-
-        // Armazenar o tipo de perfil na sessão para fins de controle de acesso
-        req.session.user.tipoPerfil = tipoPerfil;
-
-        // Definir mensagem de sucesso
-        definirMensagem(req, 'success', 'Perfil criado com sucesso.');
-
-        // Redirecionar para a página desejada após a criação do perfil
-        res.redirect('/');
     } catch (error) {
-        // Definir mensagem de erro e redirecionar de volta para o formulário
-        definirMensagem(req, 'error', error.message);
-        res.redirect('/criar-perfil');
+        console.error('Erro na criação de perfil:', error);
+        res.status(500).json({ erro: 'Erro na criação de perfil: ' + error.message });
     }
 }
+
+
 
 
 
