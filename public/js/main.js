@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function () {
+/*document.addEventListener('DOMContentLoaded', function () {
     const menuIcon = document.querySelector('#menu-icon-apresentacao');
     const navLinks = document.querySelector('#nav-apresentacao ul'); // Seleciona o ul dentro do nav
 
@@ -11,4 +11,4 @@ document.addEventListener('DOMContentLoaded', function () {
     } else {
         console.log('Menu icon or nav links not found');
     }
-});
+});*/

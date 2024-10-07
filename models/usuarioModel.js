@@ -89,27 +89,16 @@ class Usuario {
         }
     }    
     
-    static async obterUsuarioPorId(pessoaId) {
-        const sql = 'SELECT * FROM usuario WHERE pessoa_id_pessoa = ?';
-        const parametros = [pessoaId];
+    static async obterUsuarioPorId(id_pessoa) {
+        const query = 'SELECT * FROM usuario WHERE pessoa_id_pessoa = ?';
+        const result = await db.query(query, [id_pessoa]);
     
-        console.log('Buscando usuário com ID de pessoa:', pessoaId); // Log para depuração
+        console.log('Resultado da consulta de obterUsuarioPorId:', result); // Adicione este log
     
-        try {
-            const [rows] = await db.query(sql, parametros);
-            console.log('Resultado da busca do usuário:', rows); // Log para depuração
-    
-            // Verifica se há resultados na consulta
-            if (rows.length > 0) {
-                return rows[0]; // Retorna o usuário encontrado
-            } else {
-                // Se não encontrou resultados, lança a exceção
-                throw new Error('Usuário não encontrado.');
-            }
-        } catch (error) {
-            console.error('Erro ao buscar usuário no banco de dados:', error);
-            throw new Error('Erro ao buscar usuário no banco de dados.');
+        if (result && result.length > 0) {
+            return result[0]; // Retorne o primeiro usuário encontrado
         }
+        return null; // Se não houver usuário, retorne null
     }    
     
 }

@@ -4,11 +4,27 @@ require("dotenv").config();
 const expressLayouts = require('express-ejs-layouts');
 const session = require('express-session');
 const flash = require('connect-flash');
+const multer = require('multer');
 
 const usuarioController = require('./controllers/usuarioController');
+const psrController = require('./controllers/psrController');
 
 const app = express(); 
 const port = 5000; 
+
+// Configuração do Multer para upload de imagens de perfil
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, 'public/uploads'); // Pasta onde as imagens serão armazenadas
+    },
+    filename: (req, file, cb) => {
+        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+        cb(null, uniqueSuffix + path.extname(file.originalname)); // Define um nome único para o arquivo
+    }
+});
+
+const upload = multer({ storage: storage });
+
 
 // Configura arquivos estáticos
 app.use(express.static(path.join(__dirname, 'public')));
@@ -157,6 +173,25 @@ app.post('/criar-perfil', (req, res) => {
     usuarioController.criarPerfil(req, res);
 });
 
+// Rota para a tela de criação de perfil de PSR
+app.get('/criar-perfil-psr', (req, res) => {
+    if (req.session.user) {
+        console.log('Usuário logado:', req.session.user);
+        res.render('usuarios/perfis/criar-psr', {
+            layout: './layouts/default/criar-psr',
+            title: 'Criar Perfil de PSR',
+            usuario: req.session.user
+        });
+    } else {
+        console.log('Nenhum usuário logado.');
+        res.redirect('/login');
+    }
+});
+
+app.post('/criar-perfil-psr', upload.single('img_perfil'), (req, res) => {
+    // `upload.single('img_perfil')` indica que esperamos um arquivo chamado 'img_perfil'
+    psrController.criarPerfilPsr(req, res);
+});
 
 // Inicializa o servidor
 app.listen(port, () => { 

@@ -80,14 +80,18 @@ async function login(req, res) {
         
         if (usuario.length > 0) {
             req.session.user = usuario[0];  // Alterado de 'req.session.usuario' para 'req.session.user'
+            console.log('Sessão configurada com o usuário:', req.session.user); // Log para depuração
+
             res.status(200).json({ message: 'Login bem-sucedido', usuario: usuario[0] });
         } else {
             res.status(401).json({ message: 'Email/Telefone ou senha incorretos' });
         }
     } catch (error) {
+        console.error('Erro durante o login:', error); // Log de erro
         res.status(400).json({ message: error.message });
     }
 }
+
 
 
 // Função de validação específica para criação de conta
@@ -250,33 +254,39 @@ async function redefinirSenha(req, res) {
 async function criarPerfil(req, res) {
     try {
         const tipoPerfil = req.body.tipo_perfil;
-        const pessoaId = req.session.user.id_pessoa;
+        const pessoaId = req.session.user ? req.session.user.id_pessoa : undefined;
 
-        console.log('ID da pessoa na sessão:', pessoaId); // Log para depuração
-        console.log('Tipo de perfil recebido:', tipoPerfil); // Log para depuração
+        console.log('ID da pessoa na sessão:', pessoaId);
+        console.log('Tipo de perfil recebido:', tipoPerfil);
+
+        if (!pessoaId) {
+            throw new Error('ID da pessoa não está definido na sessão.');
+        }
+        if (!tipoPerfil) {
+            throw new Error('Tipo de perfil não está definido.');
+        }
 
         const usuario = await usuarioModel.obterUsuarioPorId(pessoaId);
+        
+        console.log('Resultado da busca do usuário:', usuario);
 
-        // Se chegou aqui, o usuário foi encontrado, então não deve lançar exceção
-        if (usuario) {
+        // Verificação explícita de null e de objeto válido
+        if (usuario !== null && typeof usuario === 'object') {
             console.log('Usuário encontrado:', usuario);
-
-            // Atualizar o tipo de perfil do usuário
+            
+            // Atualize o tipo de perfil
             await usuarioModel.atualizarTipoPerfil(usuario.id_usuario, tipoPerfil);
 
-            res.status(200).json({ mensagem: 'Perfil criado com sucesso!' });
+            res.status(200).json({ mensagem: 'Usuário direcionado para a página de criar perfil com sucesso!' });
         } else {
-            // Se o usuário não foi encontrado (o que não deve acontecer após a modificação), lança o erro
-            throw new Error('Usuário não encontrado.');
+            console.error('Usuário não encontrado com ID:', pessoaId);
+            res.status(404).json({ erro: 'Usuário não encontrado.' });
         }
     } catch (error) {
         console.error('Erro na criação de perfil:', error);
         res.status(500).json({ erro: 'Erro na criação de perfil: ' + error.message });
     }
 }
-
-
-
 
 
 module.exports = { autenticar, login, criarConta, recuperarSenha, verificarToken, redefinirSenha, criarPerfil };

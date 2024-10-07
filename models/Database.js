@@ -21,6 +21,7 @@ async function connect() {
 async function query(sql, params) {
   const conn = await connect();
   const [rows] = await conn.query(sql, params);
+  console.log('Resultado da query:', rows);
   return rows;
 }
 

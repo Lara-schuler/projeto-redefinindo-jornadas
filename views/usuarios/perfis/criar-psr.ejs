@@ -1,0 +1,103 @@
+<div class="container mt-5">
+    <h2 class="text-center">Cadastro de Perfil</h2>
+
+    <div class="text-center mb-4">
+        <img src="default-profile.png" alt="Foto de Perfil" class="img-fluid rounded-circle" id="profile-image"
+            style="width: 150px; height: 150px;">
+    </div>
+
+    <form action="/salvar" method="POST" enctype="multipart/form-data">
+        <div class="mb-3">
+            <label for="img_perfil" class="form-label">Foto de Perfil</label>
+            <input type="file" class="form-control-file mt-2" id="img_perfil" name="img_perfil" accept="image/*">
+        </div>
+
+        <div class="mb-3">
+            <label for="nome" class="form-label">Nome</label>
+            <input type="text" class="form-control" id="nome" name="nome" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="data_nasc" class="form-label">Data de Nascimento</label>
+            <input type="date" class="form-control" id="data_nasc" name="data_nasc" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="genero" class="form-label">Gênero</label>
+            <select class="form-select" id="genero" name="genero" required>
+                <option value="" disabled selected>Selecione...</option>
+                <option value="masculino">Masculino</option>
+                <option value="feminino">Feminino</option>
+                <option value="outro">Outro</option>
+            </select>
+        </div>
+
+        <h4>Localização Atual</h4>
+        <div class="mb-3">
+            <label for="rua" class="form-label">Rua</label>
+            <input type="text" class="form-control" id="rua" name="rua" required>
+        </div>
+        <div class="mb-3">
+            <label for="numero_end" class="form-label">Número</label>
+            <input type="number" class="form-control" id="numero_end" name="numero_end" required>
+        </div>
+        <div class="mb-3">
+            <label for="cep" class="form-label">CEP</label>
+            <input type="text" class="form-control" id="cep" name="cep" required>
+        </div>
+        <div class="mb-3">
+            <label for="bairro" class="form-label">Bairro</label>
+            <input type="text" class="form-control" id="bairro" name="bairro" required>
+        </div>
+        <div class="mb-3">
+            <label for="municipio" class="form-label">Município</label>
+            <input type="text" class="form-control" id="municipio" name="municipio" required>
+        </div>
+        <div class="mb-3">
+            <label for="uf" class="form-label">UF</label>
+            <input type="text" class="form-control" id="uf" name="uf" required>
+        </div>
+        <div class="mb-3">
+            <label>Status</label><br>
+            <input type="radio" id="ativo" name="status" value="ativo" required>
+            <label for="ativo">Ativo</label><br>
+            <input type="radio" id="inativo" name="status" value="inativo" required>
+            <label for="inativo">Inativo</label>
+        </div>
+
+        <h4>Necessidades Imediatas</h4>
+        <div class="mb-3">
+            <textarea class="form-control" id="necessidades_urg" name="necessidades_urg" rows="3"></textarea>
+        </div>
+
+        <h4>Formação</h4>
+        <div class="mb-3">
+            <input type="text" class="form-control" id="formacao" name="formacao" placeholder="Informe sua formação">
+        </div>
+
+        <h4>Contato</h4>
+        <div class="mb-3">
+            <label for="ddd" class="form-label">DDD</label>
+            <input type="number" class="form-control" id="ddd" name="ddd" required>
+        </div>
+        <div class="mb-3">
+            <label for="numero" class="form-label">Número</label>
+            <input type="number" class="form-control" id="numero" name="numero" required>
+        </div>
+
+        <h4>Interesses</h4>
+        <div class="mb-3">
+            <textarea class="form-control" id="tipo_interesse" name="tipo_interesse" rows="3"></textarea>
+        </div>
+
+        <h4>Histórico de Saúde</h4>
+        <div class="mb-3">
+            <textarea class="form-control" id="historico_medico" name="historico_medico" rows="3"></textarea>
+        </div>
+
+        <div class="d-flex justify-content-between">
+            <button type="submit" class="btn btn-primary">Salvar</button>
+            <a href="/cancelar" class="btn btn-secondary">Cancelar</a>
+        </div>
+    </form>
+</div>
