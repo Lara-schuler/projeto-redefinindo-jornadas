@@ -29,12 +29,6 @@ body {
 }
 
 
-.profile-picture img {
-  width: 4rem;
-  height: 4rem;
-  border-radius: 50%;
-}
-
 .top-nav ul {
   display: flex;
   list-style-type: none;
@@ -53,31 +47,31 @@ body {
   font-weight: 700;
 }
 
+/* Mostrar o ícone do menu hambúrguer e esconder o menu padrão */
 .menu-icon {
-  display: none;
-  cursor: pointer;
-  font-size: 2rem;
-  color: white;
+  display: block;
 }
 
-/* Menu de Navegação */
-#nav-apresentacao ul {
-  display: flex;
-  list-style-type: none;
-  margin-left: auto;
-  padding: 0;
+.navbar {
+  background-color: #004AAD !important;;
 }
 
-#nav-apresentacao ul li {
-  margin-left: 2rem;
-}
-
-#nav-apresentacao ul li a {
-  color: white;
-  text-decoration: none;
+.navbar-nav, .nav-link {
+  color: #ffffff !important;
   font-size: 1rem;
   font-weight: 700;
 }
+
+.navbar-brand img {
+  width: 5.5rem;
+  height: 5.5rem;
+}
+
+/* Ajusta a cor do ícone do menu hamburger */
+.navbar-toggler-icon {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3E%3Cpath stroke='rgba%28255, 255, 255, 1%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E") !important;
+}
+
 
 
 .secao-bem-vindo {
@@ -570,7 +564,7 @@ form {
     padding: 0 1rem;
   }
 
-  .profile-picture img {
+  .navbar-brand img {
     width: 4rem;
     height: 4rem;
   }
@@ -586,42 +580,6 @@ form {
   /* Mostrar o ícone do menu hambúrguer e esconder o menu padrão */
   .menu-icon {
     display: block;
-  }
-
-  /* Menu de Navegação */
-  #nav-apresentacao {
-    display: none;
-    /* Inicialmente escondido */
-  }
-
-  #nav-apresentacao ul {
-    display: flex;
-    flex-direction: column;
-    position: absolute;
-    top: 100%;
-    right: 0;
-    background-color: #004AAD;
-    width: 100%;
-    max-height: 0;
-    /* Começa com max-height 0 */
-    overflow: hidden;
-    transition: max-height 0.3s ease-in-out;
-    padding: 0;
-    z-index: 1000; /* Adiciona z-index */
-  }
-
-  #nav-apresentacao ul.open {
-    max-height: 500px; /* Ajuste conforme necessário */
-    padding: 1rem 0;
-  }
-
-  #nav-apresentacao ul li {
-    margin: 1rem 0;
-    text-align: center;
-  }
-
-  #nav-apresentacao ul li a {
-    font-size: 1.2rem;
   }
   .secao-bem-vindo {
     padding: 0.5rem 0;

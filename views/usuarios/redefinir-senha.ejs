@@ -2,7 +2,7 @@
     <div class="caixa-redefinir-senha">
         <h2>Redefinir Senha</h2>
         <p>Preencha os campos abaixo:</p>
-        <form action="/redefinir-senha" method="POST">
+        <form action="/auth/redefinir-senha" method="POST">
             <input type="hidden" name="token" value="<%= token %>">
             <input type="hidden" name="email" value="<%= email %>">
             <div class="grupo-formulario">

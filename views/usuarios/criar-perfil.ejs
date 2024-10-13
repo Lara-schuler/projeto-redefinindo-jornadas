@@ -1,7 +1,7 @@
 <div class="container-criar-perfil mt-5">
     <div class="caixa-criar-perfil">
         <h2 class="text-center mb-4">Selecione o Tipo de Perfil</h2>
-        <form action="/criar-perfil" method="POST">
+        <form action="/user/criar-perfil" method="POST">
             <div class="form-group">
                 <div class="form-check">
                     <input class="form-check-input" type="radio" name="tipo_perfil" id="situacaoRua"
@@ -45,5 +45,6 @@
             </div>
             <button type="submit" class="botao-primario">Entrar</button>
         </form>
+        <button onclick="window.location.href='/auth/apresentacao'" class="botao-cancelar">Cancelar</button>
     </div>
 </div>

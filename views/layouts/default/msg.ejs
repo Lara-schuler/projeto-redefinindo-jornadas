@@ -1,15 +1,35 @@
 <% if (messages.error && messages.error.length > 0) { %>
     <% messages.error.forEach(message => { %>
-        <div class="alert alert-danger">
+        <div class="alert alert-danger alert-dismissible fade show" role="alert" id="error-message">
             <p><%= message %></p>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     <% }); %>
 <% } %>
 
 <% if (messages.success && messages.success.length > 0) { %>
     <% messages.success.forEach(message => { %>
-        <div class="alert alert-success">
+        <div class="alert alert-success alert-dismissible fade show" role="alert" id="success-message">
             <p><%= message %></p>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     <% }); %>
 <% } %>
+
+<script>
+    // Definir o tempo para ocultar as mensagens após 5 segundos (5000 milissegundos)
+    setTimeout(() => {
+        const errorMessage = document.getElementById('error-message');
+        const successMessage = document.getElementById('success-message');
+
+        // Se a mensagem de erro existir, remover
+        if (errorMessage) {
+            errorMessage.style.display = 'none';
+        }
+
+        // Se a mensagem de sucesso existir, remover
+        if (successMessage) {
+            successMessage.style.display = 'none';
+        }
+    }, 7000); // Tempo em milissegundos (7 segundos)
+</script>

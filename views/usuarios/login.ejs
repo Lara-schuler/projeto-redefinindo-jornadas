@@ -1,7 +1,7 @@
 <div class="container-login">
     <div class="caixa-login">
         <h2>Faça o login para ver mais</h2>
-        <form action="/login" method="POST">
+        <form action="/auth/login" method="POST">
             <div class="grupo-formulario">
                 <label for="email">E-mail ou telefone:</label>
                 <input type="text" id="email" name="email" class="form-control" placeholder="Digite seu e-mail ou telefone" required>
@@ -15,7 +15,7 @@
             </div>
             
             <div class="grupo-formulario">
-                <a href="/recuperar-senha" class="link-senha-esquecida">Esqueceu sua senha?</a>
+                <a href="/auth/recuperar-senha" class="link-senha-esquecida">Esqueceu sua senha?</a>
             </div>
             <button type="submit" class="botao-primario">Entrar</button>
         </form>
@@ -25,7 +25,7 @@
             <p><a href="#">Aviso na coleta de informações</a>;</p>
         </div>
         <div class="criar-conta-p">
-            <p>Ainda não está no Redefinindo Jornadas? <a href="/criar-conta">Crie uma conta.</a></p>
+            <p>Ainda não está no Redefinindo Jornadas? <a href="/auth/criar-conta">Crie uma conta.</a></p>
         </div>
     </div>
     

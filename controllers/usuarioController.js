@@ -49,14 +49,14 @@ async function autenticar(req, res) {
         if (resp && resp.length > 0) {
             req.session.user = resp[0];  // Mantenha o nome da propriedade 'user'
             definirMensagem(req, 'success', 'Login realizado com sucesso!');
-            res.redirect('/login/apresentacao');
+            res.redirect('/auth/apresentacao');
         } else {
             definirMensagem(req, 'error', 'Credenciais inválidas. Tente novamente.');
-            res.redirect('/login');
+            res.redirect('auth/login');
         }
     } catch (error) {
         definirMensagem(req, 'error', error.message);
-        res.redirect('/login');
+        res.redirect('/auth/login');
     }
 }
 
@@ -137,22 +137,22 @@ async function criarConta(req, res) {
         
         if (emailExists.length > 0) {
             definirMensagem(req, 'error', 'Email já está em uso.');
-            res.redirect('/criar-conta');
+            res.redirect('/auth/criar-conta');
             return;
         }
         
         if (telefoneExists.length > 0) {
             definirMensagem(req, 'error', 'Telefone já está em uso.');
-            res.redirect('/criar-conta');
+            res.redirect('/auth/criar-conta');
             return;
         }
 
         await usuarioModel.criarConta(email, telefone, senha);
         definirMensagem(req, 'success', 'Conta criada com sucesso.');
-        res.redirect('/login');
+        res.redirect('/auth/login');
     } catch (error) {
         definirMensagem(req, 'error', error.message);
-        res.redirect('/criar-conta');
+        res.redirect('/auth/criar-conta');
     }
 }
 
@@ -173,14 +173,14 @@ async function recuperarSenha(req, res) {
             await enviarEmail(email, 'Recuperação de Senha', emailConteudo);
 
             definirMensagem(req, 'success', 'Token de recuperação enviado para o seu e-mail.');
-            res.redirect('/verificar-token?email=' + encodeURIComponent(email));
+            res.redirect('/auth/verificar-token?email=' + encodeURIComponent(email));
         } else {
             definirMensagem(req, 'error', 'Email não encontrado');
-            res.redirect('/recuperar-senha');
+            res.redirect('/auth/recuperar-senha');
         }
     } catch (error) {
         definirMensagem(req, 'error', error.message);
-        res.redirect('/recuperar-senha');
+        res.redirect('/auth/recuperar-senha');
     }
 }
 
@@ -209,11 +209,11 @@ async function verificarToken(req, res) {
             }
         } else {
             definirMensagem(req, 'error', 'Email não encontrado');
-            res.redirect('/verificar-token');
+            res.redirect('/auth/verificar-token');
         }
     } catch (error) {
         definirMensagem(req, 'error', error.message);
-        res.redirect('/verificar-token');
+        res.redirect('/auth/verificar-token');
     }
 }
 
@@ -238,7 +238,7 @@ async function redefinirSenha(req, res) {
                 await usuarioModel.atualizarSenha(email, senha);
                 await usuarioModel.limparToken(email);
                 definirMensagem(req, 'success', 'Senha redefinida com sucesso.');
-                res.redirect('/login');
+                res.redirect('/auth/login');
             } else {
                 throw new Error('Token inválido ou expirado');
             }
@@ -247,7 +247,7 @@ async function redefinirSenha(req, res) {
         }
     } catch (error) {
         definirMensagem(req, 'error', error.message);
-        res.redirect('/redefinir-senha?email=' + encodeURIComponent(email) + '&token=' + encodeURIComponent(token));
+        res.redirect('/auth/redefinir-senha?email=' + encodeURIComponent(email) + '&token=' + encodeURIComponent(token));
     }
 }
 
@@ -270,14 +270,35 @@ async function criarPerfil(req, res) {
         
         console.log('Resultado da busca do usuário:', usuario);
 
-        // Verificação explícita de null e de objeto válido
         if (usuario !== null && typeof usuario === 'object') {
             console.log('Usuário encontrado:', usuario);
             
             // Atualize o tipo de perfil
             await usuarioModel.atualizarTipoPerfil(usuario.id_usuario, tipoPerfil);
 
-            res.status(200).json({ mensagem: 'Usuário direcionado para a página de criar perfil com sucesso!' });
+            // Redirecionar com base no tipo de perfil selecionado
+            switch (tipoPerfil) {
+                case 'psr':
+                    res.redirect('/psr/criar-psr');  // Redireciona para a criação de perfil PSR
+                    break;
+                case 'instituicao_publica':
+                    res.redirect('/instituicao/criar');  // Ajuste para a rota da instituição
+                    break;
+                case 'ong':
+                    res.redirect('/ong/criar');  // Ajuste para a rota da ONG
+                    break;
+                case 'empresa':
+                    res.redirect('/empresa/criar');  // Ajuste para a rota da empresa
+                    break;
+                case 'voluntario':
+                    res.redirect('/voluntario/criar');  // Ajuste para a rota do voluntário
+                    break;
+                case 'administrador':
+                    res.redirect('/admin/criar');  // Ajuste para a rota do administrador
+                    break;
+                default:
+                    res.redirect('/auth/apresentacao');  // Rota padrão caso algo não seja esperado
+            }
         } else {
             console.error('Usuário não encontrado com ID:', pessoaId);
             res.status(404).json({ erro: 'Usuário não encontrado.' });
