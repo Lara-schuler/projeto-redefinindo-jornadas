@@ -100,7 +100,38 @@ class Usuario {
         }
         return null; // Se não houver usuário, retorne null
     }    
+
+    static async atualizarStatusPerfil(id_usuario, status) {
+        const query = 'UPDATE usuario SET status_perfil = ? WHERE id_usuario = ?';
+        return await db.query(query, [status, id_usuario]);
+    }
     
+    static async verificarPerfil(usuarioId) {
+        try {
+          const query = `
+            SELECT  
+              tipo_perfil,
+              status_perfil
+            FROM usuario
+            WHERE id_usuario = ?`;
+    
+          const result = await database.query(query, [usuarioId]);
+    
+          // Verifica se o usuário existe
+          if (result.length === 0) {
+            throw new Error('Usuário não encontrado');
+          }
+    
+          // Retorna o status e tipo do perfil
+          return {
+            tipo_perfil: result[0].tipo_perfil,
+            status_perfil: result[0].status_perfil,
+          };
+        } catch (error) {
+          console.error('Erro ao verificar perfil:', error);
+          throw error;
+        }
+    }
 }
 
 module.exports = Usuario;

@@ -547,7 +547,87 @@ form {
   font-size: 1rem;
 }
 
+/* Estilização para o formulário de criação de perfil */
+.container.mt-5 {
+  background-color: #ffffff;
+  margin-bottom: 30px;
+  padding: 2rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 0.125rem 0.5rem rgba(0, 0, 0, 0.1);
+}
 
+h2.text-center {
+  color: #004AAD;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+#profile-image {
+  border: 0.125rem solid #004AAD;
+  border-radius: 50%; /* Deixa a imagem em formato circular */
+  margin-bottom: 1.5rem;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1); /* Adiciona uma sombra leve */
+  width: 150px; /* Ajusta o tamanho */
+  height: 150px; /* Mantém o formato */
+  object-fit: cover; /* Garante que a imagem não deforme */
+}
+
+.form-control-file {
+  display: block;
+  margin: 0 auto;
+  background-color: #f8f9fa; /* Fundo claro */
+  color: #004AAD;
+  border: none;
+  padding: 0.5rem 0.5rem;
+  border-radius: 0.3125rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.form-control-file:hover {
+  background-color: #e0e0e0;
+}
+
+.form-label {
+  color: #004AAD;
+  font-weight: bold;
+}
+
+.form-control, .form-select, .form-control-file {
+  border: 0.0625rem solid #004AAD;
+  border-radius: 0.3125rem;
+  font-size: 0.9375rem;
+}
+
+.form-control:focus, .form-select:focus, .form-control-file:focus {
+  border-color: #002a5c;
+  box-shadow: 0 0 0.1875rem rgba(0, 42, 92, 0.25);
+}
+
+textarea.form-control {
+  resize: vertical;
+}
+
+h4 {
+  color: #004AAD;
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.d-flex.justify-content-between {
+  margin-top: 1.5rem;
+}
+
+input[type="radio"] + label {
+  margin-right: 1rem;
+  font-weight: bold;
+  color: #004AAD;
+}
+
+input[type="radio"]:checked + label {
+  color: #004AAD;
+}
 
 /* Media queries para responsividade */
 @media (max-width: 768px) {
@@ -725,5 +805,15 @@ form {
     width: 100%;
     height: auto;
     padding: 15px;
+  }
+
+  .form-control-file {
+    font-size: 0.675rem; /* Reduz o tamanho da fonte */
+    padding: 0.1rem 0.4rem; /* Reduz o padding */
+  }
+
+  #profile-image {
+    width: 120px; /* Ajusta o tamanho da imagem em dispositivos menores */
+    height: 120px;
   }
 }

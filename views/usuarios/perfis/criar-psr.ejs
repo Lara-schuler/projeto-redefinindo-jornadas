@@ -2,13 +2,12 @@
     <h2 class="text-center">Cadastro de Perfil</h2>
 
     <div class="text-center mb-4">
-        <img src="default-profile.png" alt="Foto de Perfil" class="img-fluid rounded-circle" id="profile-image"
-            style="width: 150px; height: 150px;">
+        <!-- Imagem de perfil -->
+        <img src="default-profile.png" alt="Foto de Perfil" id="profile-image">
     </div>
 
     <form action="/psr/criar-perfil-psr" method="POST" enctype="multipart/form-data">
         <div class="mb-3">
-            <label for="img_perfil" class="form-label">Foto de Perfil</label>
             <input type="file" class="form-control-file mt-2" id="img_perfil" name="img_perfil" accept="image/*">
         </div>
 
@@ -58,7 +57,7 @@
             <input type="text" class="form-control" id="uf" name="uf" required>
         </div>
         <div class="mb-3">
-            <label>Status</label><br>
+            <label class="form-label">Status</label><br>
             <input type="radio" id="ativo" name="status" value="ativo" required>
             <label for="ativo">Ativo</label><br>
             <input type="radio" id="inativo" name="status" value="inativo" required>
@@ -75,16 +74,6 @@
             <input type="text" class="form-control" id="formacao" name="formacao" placeholder="Informe sua formação">
         </div>
 
-        <h4>Contato</h4>
-        <div class="mb-3">
-            <label for="ddd" class="form-label">DDD</label>
-            <input type="number" class="form-control" id="ddd" name="ddd" required>
-        </div>
-        <div class="mb-3">
-            <label for="numero" class="form-label">Número</label>
-            <input type="number" class="form-control" id="numero" name="numero" required>
-        </div>
-
         <h4>Interesses</h4>
         <div class="mb-3">
             <textarea class="form-control" id="tipo_interesse" name="tipo_interesse" rows="3"></textarea>
@@ -95,9 +84,7 @@
             <textarea class="form-control" id="historico_medico" name="historico_medico" rows="3"></textarea>
         </div>
 
-        <div class="d-flex justify-content-between">
-            <button type="submit" class="btn btn-primary">Salvar</button>
-            <a href="/cancelar" class="btn btn-secondary">Cancelar</a>
-        </div>
+        <button type="submit" class="botao-primario">Salvar</button>
     </form>
+    <button onclick="window.location.href='/auth/apresentacao'" class="botao-cancelar">Cancelar</button>
 </div>

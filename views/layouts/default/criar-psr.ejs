@@ -11,6 +11,32 @@
 </body>
     <%- include('msg') %>
     <main><%- body %></main>
+    <script>
+        document.getElementById('img_perfil').addEventListener('change', function(event) {
+            const input = event.target;
+            const imgPreview = document.getElementById('profile-image');
+    
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+    
+                reader.onload = function(e) {
+                    imgPreview.src = e.target.result; // Define a fonte da imagem para o resultado da leitura
+                };
+    
+                reader.readAsDataURL(input.files[0]); // Lê o arquivo como uma URL de dados
+            }
+        });
+
+        function previewImage(event) {
+            const reader = new FileReader();
+            reader.onload = function() {
+                const output = document.getElementById('profilePreview');
+                output.src = reader.result;
+            };
+            reader.readAsDataURL(event.target.files[0]);
+        }
+
+    </script>    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

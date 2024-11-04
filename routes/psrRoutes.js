@@ -24,4 +24,25 @@ router.post('/criar-perfil-psr', upload.single('img_perfil'), (req, res) => {
     psrController.criarPerfilPsr(req, res);
 });
 
+// Nova rota para o feed de PSR
+router.get('/feed/psr', (req, res) => {
+    if (req.session.user) {
+        console.log('Usuário logado:', req.session.user);
+        // Verifica se o usuário tem perfil de PSR, e renderiza a página de feed
+        if (req.session.user.tipo_perfil === 'psr') {
+            res.render('feed/psr', {
+                layout: './layouts/default', // Certifique-se de que o layout existe
+                title: 'Feed PSR',
+                usuario: req.session.user
+            });
+        } else {
+            console.log('Usuário não é do tipo PSR');
+            res.redirect('/auth/apresentacao');  // Caso não seja PSR, redireciona
+        }
+    } else {
+        console.log('Nenhum usuário logado.');
+        res.redirect('/login');
+    }
+});
+
 module.exports = router;

@@ -1,35 +1,32 @@
 <% if (messages.error && messages.error.length > 0) { %>
     <% messages.error.forEach(message => { %>
-        <div class="alert alert-danger alert-dismissible fade show" role="alert" id="error-message">
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
             <p><%= message %></p>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     <% }); %>
 <% } %>
 
 <% if (messages.success && messages.success.length > 0) { %>
     <% messages.success.forEach(message => { %>
-        <div class="alert alert-success alert-dismissible fade show" role="alert" id="success-message">
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
             <p><%= message %></p>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     <% }); %>
 <% } %>
 
+
 <script>
-    // Definir o tempo para ocultar as mensagens após 5 segundos (5000 milissegundos)
-    setTimeout(() => {
-        const errorMessage = document.getElementById('error-message');
-        const successMessage = document.getElementById('success-message');
+    document.addEventListener('DOMContentLoaded', function () {
+        const alertList = document.querySelectorAll('.alert');
 
-        // Se a mensagem de erro existir, remover
-        if (errorMessage) {
-            errorMessage.style.display = 'none';
-        }
-
-        // Se a mensagem de sucesso existir, remover
-        if (successMessage) {
-            successMessage.style.display = 'none';
-        }
-    }, 7000); // Tempo em milissegundos (7 segundos)
+        alertList.forEach(function (alert) {
+            // Adiciona um temporizador para fechar automaticamente
+            setTimeout(() => {
+                alert.classList.remove('show'); // Remove a classe "show" para ocultar a mensagem
+                setTimeout(() => {
+                    alert.remove(); // Remove a mensagem do DOM após o fade-out
+                }, 300); // Tempo para o fade-out (ajustável)
+            }, 5000); // Tempo em milissegundos (7 segundos)
+        });
+    });
 </script>
