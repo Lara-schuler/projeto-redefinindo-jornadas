@@ -18,5 +18,8 @@
   "scripts": {
     "start": "node start.js",
     "dev": "nodemon start.js"
+  },
+  "engines": {
+    "node": "18.12.0"
   }
 }

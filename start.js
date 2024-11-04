@@ -6,8 +6,8 @@ const session = require('express-session');
 const flash = require('connect-flash');
 
 // Importar middlewares
-const sessionMiddleware = require('./middlewares/sessionMiddleware'); // Seu middleware de sessão
-const flashMiddleware = require('./middlewares/flashMiddleware'); // Seu middleware de mensagens flash
+const sessionMiddleware = require('./middlewares/sessionMiddleware'); // middleware de sessão
+const flashMiddleware = require('./middlewares/flashMiddleware'); // middleware de mensagens flash
 const localVariablesMiddleware = require('./middlewares/localVariablesMiddleware'); // Importa o middleware
 
 const app = express();
