@@ -11,7 +11,7 @@ const flashMiddleware = require('./middlewares/flashMiddleware'); // middleware 
 const localVariablesMiddleware = require('./middlewares/localVariablesMiddleware'); // Importa o middleware
 
 const app = express();
-const port = 5000;
+const port = process.env.PORT || 5000;
 
 // Configura arquivos estáticos
 app.use(express.static(path.join(__dirname, 'public')));
