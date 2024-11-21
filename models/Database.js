@@ -18,11 +18,31 @@ async function connect() {
   return connection;
 }
 
-async function query(sql, params) {
+async function beginTransaction() {
   const conn = await connect();
-  const [rows] = await conn.query(sql, params);
+  await conn.beginTransaction();
+  return conn;
+}
+
+async function commitTransaction(conn) {
+  if (conn) {
+    await conn.commit();
+    console.log("Transação confirmada.");
+  }
+}
+
+async function rollbackTransaction(conn) {
+  if (conn) {
+    await conn.rollback();
+    console.log("Transação revertida.");
+  }
+}
+
+async function query(sql, params, conn) {
+  const connection = conn || await connect();
+  const [rows] = await connection.query(sql, params);
   console.log('Resultado da query:', rows);
   return rows;
 }
 
-module.exports = { query };
+module.exports = { query, beginTransaction, commitTransaction, rollbackTransaction };

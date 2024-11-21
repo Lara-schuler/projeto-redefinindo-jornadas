@@ -58,58 +58,76 @@ async function autenticar(req, res) {
     }
 }
 
-
 async function login(req, res) {
     const { emailOuTelefone, senha } = req.body;
   
     try {
-      if (!emailOuTelefone) {
-        throw new Error('O campo de email ou telefone deve estar preenchido');
-      }
-      if (!senha) {
-        throw new Error('A senha não pode estar vazia');
-      }
-  
-      const usuario = await usuarioModel.autenticar(emailOuTelefone, senha);
-  
-      if (usuario.length > 0) {
-        req.session.user = usuario[0];
-        console.log("Usuário autenticado com sucesso:", req.session.user);
-  
-        // Verifica o perfil do usuário
-        const perfil = await usuarioModel.verificarPerfil(req.session.user.id_usuario);
-        console.log("Perfil do usuário verificado:", perfil);
-  
-        // Lógica de redirecionamento
-        if (perfil.status_perfil === 'criado') {
-          // Se o perfil foi criado, redireciona conforme o tipo de perfil
-          if (perfil.tipo_perfil === 'psr') {
-            res.status(200).json({ message: 'Login bem-sucedido', usuario: usuario[0], redirecionar: '/feed/psr' });
-          } else if (perfil.tipo_perfil === 'voluntario') {
-            res.status(200).json({ message: 'Login bem-sucedido', usuario: usuario[0], redirecionar: '/feed/voluntario' });
-          } else if (perfil.tipo_perfil === 'admin') {
-            res.status(200).json({ message: 'Login bem-sucedido', usuario: usuario[0], redirecionar: '/feed/admin' });
-          } else if (perfil.tipo_perfil === 'instituicao_publica') {
-            res.status(200).json({ message: 'Login bem-sucedido', usuario: usuario[0], redirecionar: '/feed/instituicao_publica' });
-          } else if (perfil.tipo_perfil === 'ong') {
-            res.status(200).json({ message: 'Login bem-sucedido', usuario: usuario[0], redirecionar: '/feed/ong' });
-          } else if (perfil.tipo_perfil === 'empresa') {
-            res.status(200).json({ message: 'Login bem-sucedido', usuario: usuario[0], redirecionar: '/feed/empresa' });
-          }
-          
-        } else {
-          // Se o perfil não foi criado, redireciona para a tela de apresentação
-          res.status(200).json({ message: 'Login bem-sucedido, por favor complete seu perfil', usuario: usuario[0], redirecionar: '/auth/apresentacao' });
+        console.log('Dados recebidos no login:', { emailOuTelefone, senha });
+
+        if (!emailOuTelefone) {
+            definirMensagem(req, 'error', 'O campo de email ou telefone deve estar preenchido');
+            return res.redirect('/auth/login');
         }
-      } else {
-        res.status(401).json({ message: 'Email/Telefone ou senha incorretos' });
-      }
+        if (!senha) {
+            definirMensagem(req, 'error', 'A senha não pode estar vazia');
+            return res.redirect('/auth/login');
+        }
+  
+        const usuario = await usuarioModel.autenticar(emailOuTelefone, senha);
+        console.log('Resultado da autenticação:', usuario);
+
+        if (usuario.length > 0) {
+            req.session.user = usuario[0];
+            console.log("Usuário autenticado com sucesso:", req.session.user);
+  
+            // Buscar o id_usuario correspondente ao id_pessoa
+            const usuarioInfo = await usuarioModel.obterUsuarioPorId(req.session.user.id_pessoa);
+            console.log("Informações do usuário:", usuarioInfo);
+
+            if (!usuarioInfo) {
+                definirMensagem(req, 'error', 'Usuário não encontrado');
+                return res.redirect('/auth/login');
+            }
+
+            req.session.user.id_usuario = usuarioInfo.id_usuario;
+  
+            // Verifica o perfil do usuário
+            const perfil = await usuarioModel.verificarPerfil(req.session.user.id_usuario);
+            console.log("Perfil do usuário verificado:", perfil);
+  
+            // Lógica de redirecionamento
+            if (perfil.status_perfil === 'criado') {
+                // Se o perfil foi criado, redireciona conforme o tipo de perfil
+                definirMensagem(req, 'success', 'Login bem-sucedido!');
+                if (perfil.tipo_perfil === 'psr') {
+                    return res.redirect('/feed/psr');
+                } else if (perfil.tipo_perfil === 'voluntario') {
+                    return res.redirect('/feed/voluntario');
+                } else if (perfil.tipo_perfil === 'admin') {
+                    return res.redirect('/feed/admin');
+                } else if (perfil.tipo_perfil === 'instituicao_publica') {
+                    return res.redirect('/feed/instituicao_publica');
+                } else if (perfil.tipo_perfil === 'ong') {
+                    return res.redirect('/feed/ong');
+                } else if (perfil.tipo_perfil === 'empresa') {
+                    return res.redirect('/feed/empresa');
+                }
+            } else {
+                // Se o perfil não foi criado, redireciona para a tela de apresentação
+                definirMensagem(req, 'success', 'Login bem-sucedido, por favor complete seu perfil');
+                return res.redirect('/auth/apresentacao');
+            }
+        } else {
+            definirMensagem(req, 'error', 'Email/Telefone ou senha incorretos');
+            return res.redirect('/auth/login');
+        }
     } catch (error) {
-      console.error('Erro durante o login:', error);
-      res.status(400).json({ message: error.message });
+        console.error('Erro durante o login:', error);
+        definirMensagem(req, 'error', error.message);
+        return res.redirect('/auth/login');
     }
 };
-  
+
 
 // Função de validação específica para criação de conta
 function validarEntradaCriarConta(email, telefone, senha, confirmarSenha) {

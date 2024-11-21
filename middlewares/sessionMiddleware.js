@@ -1,4 +1,4 @@
-const session = require('express-session'); // ou outro pacote de sessão que você esteja usando
+const session = require('express-session'); 
 
 const sessionMiddleware = session({
     secret: process.env.SESSION_SECRET || 'defaultSecret', // Use um segredo para proteger a sessão

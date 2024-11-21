@@ -41,8 +41,9 @@ router.get('/feed/psr', (req, res) => {
         }
     } else {
         console.log('Nenhum usuário logado.');
-        res.redirect('/login');
+        res.redirect('/auth/login');
     }
 });
+
 
 module.exports = router;

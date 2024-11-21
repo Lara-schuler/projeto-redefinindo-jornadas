@@ -1,7 +1,7 @@
 <div class="container-login">
     <div class="caixa-login">
         <h2>Faça o login para ver mais</h2>
-        <form action="/auth/login" method="POST">
+        <form id="loginForm" action="/auth/login" method="POST">
             <div class="grupo-formulario">
                 <label for="emailOuTelefone">E-mail ou telefone:</label>
                 <input type="text" id="emailOuTelefone" name="emailOuTelefone" class="form-control" placeholder="Digite seu e-mail ou telefone" required>
@@ -29,26 +29,76 @@
             <p>Ainda não está no Redefinindo Jornadas? <a href="/auth/criar-conta">Crie uma conta.</a></p>
         </div>
     </div>
-    
 </div>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const toggleSenha = document.getElementById('toggleSenha');
-        const senhaInput = document.getElementById('senha');
-        
-        if (toggleSenha && senhaInput) {
-            toggleSenha.addEventListener('click', function() {
-                if (senhaInput.type === 'password') {
-                    senhaInput.type = 'text';
-                    toggleSenha.classList.remove('bi-eye');
-                    toggleSenha.classList.add('bi-eye-slash');
-                } else {
-                    senhaInput.type = 'password';
-                    toggleSenha.classList.remove('bi-eye-slash');
-                    toggleSenha.classList.add('bi-eye');
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('Script carregado e DOMContentLoaded disparado');
+
+    const toggleSenha = document.getElementById('toggleSenha');
+    const senhaInput = document.getElementById('senha');
+    
+    if (toggleSenha && senhaInput) {
+        toggleSenha.addEventListener('click', function() {
+            if (senhaInput.type === 'password') {
+                senhaInput.type = 'text';
+                toggleSenha.classList.remove('bi-eye');
+                toggleSenha.classList.add('bi-eye-slash');
+            } else {
+                senhaInput.type = 'password';
+                toggleSenha.classList.remove('bi-eye-slash');
+                toggleSenha.classList.add('bi-eye');
+            }
+        });
+    }
+
+    const loginForm = document.getElementById('loginForm');
+    if (loginForm) {
+        console.log('Formulário de login encontrado');
+        loginForm.addEventListener('submit', async function(event) {
+            event.preventDefault();
+            console.log('Evento de envio do formulário interceptado');
+            
+            const form = event.target;
+            const formData = new FormData(form);
+            const data = Object.fromEntries(formData.entries());
+
+            try {
+                console.log('Enviando dados:', data);
+                const response = await fetch(form.action, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                console.log('Resposta recebida:', response);
+
+                // Verificar se a resposta é um redirecionamento
+                if (response.redirected) {
+                    console.log('Redirecionamento detectado para:', response.url);
+                    window.location.href = response.url;
+                    return;
                 }
-            });
-        }
-    });
+
+                const result = await response.json();
+                console.log('Resultado JSON:', result);
+
+                if (response.ok) {
+                    // Redirecionar para a URL fornecida na resposta
+                    window.location.href = result.redirecionar;
+                } else {
+                    // Exibir mensagem de erro
+                    alert(result.message);
+                }
+            } catch (error) {
+                console.error('Erro ao fazer login:', error);
+                alert('Erro ao fazer login. Tente novamente.');
+            }
+        });
+    } else {
+        console.error('Formulário de login não encontrado');
+    }
+});
 </script>

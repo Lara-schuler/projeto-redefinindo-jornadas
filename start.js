@@ -23,6 +23,7 @@ app.use(localVariablesMiddleware); // Verifique se está aqui
 
 // Configura o parsing do corpo das requisições
 app.use(express.urlencoded({ extended: true }));
+app.use(express.json()); // Adicione esta linha para garantir que o servidor possa processar JSON
 
 // Define o template engine e layouts
 app.use(expressLayouts);
@@ -34,7 +35,6 @@ const authRoutes = require('./routes/authRoutes');
 const userRoutes = require('./routes/userRoutes');
 const psrRoutes = require('./routes/psrRoutes');
 const mainRoutes = require('./routes/mainRoutes');
-
 
 app.use('/auth', authRoutes);
 app.use('/user', userRoutes);

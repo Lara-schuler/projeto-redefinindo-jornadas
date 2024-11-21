@@ -2,8 +2,7 @@ const express = require('express');
 const router = express.Router();
 const usuarioController = require('../controllers/usuarioController');
 
-
-// Rotas de login
+// Rota de login
 router.get('/login', (req, res) => {
     res.render('usuarios/login', {
         layout: 'layouts/default/login',
@@ -12,7 +11,7 @@ router.get('/login', (req, res) => {
 });
 
 router.post('/login', (req, res) => {
-    usuarioController.autenticar(req, res);
+    usuarioController.login(req, res); // Certifique-se de que está chamando a função login
 });
 
 // Rotas de criação de conta

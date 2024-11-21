@@ -4,7 +4,7 @@ const usuarioModel = require('../models/usuarioModel');
 const criarPerfilPsr = async (req, res) => {
   try {
     // Verifica se o upload de imagem foi realizado
-    const img_perfil = req.file ? req.file.path : null; // Caminho do arquivo enviado
+    const img_perfil = req.file ? req.file.path : null; 
 
     // Coleta os dados do corpo da requisição
     const {
@@ -21,32 +21,13 @@ const criarPerfilPsr = async (req, res) => {
       necessidades_urg,
       formacao,
       tipo_interesse,
-      historico_medico,
-      status_perfil // Adicione esta linha
+      historico_medico
     } = req.body;
 
-    // Log dos dados recebidos
-    console.log("Dados recebidos:", {
-      img_perfil,
-      nome,
-      data_nasc,
-      genero,
-      rua,
-      numero_end,
-      cep,
-      bairro,
-      municipio,
-      uf,
-      status,
-      necessidades_urg,
-      formacao,
-      tipo_interesse,
-      historico_medico,
-      status_perfil // Adicione isso para ver se está correto
-    });
+    // status_perfil definido como 'nao_criado' por padrão
+    const status_perfil = 'nao_criado';
 
-    // Supondo que o id_pessoa é recuperado de algum lugar
-    const id_pessoa = req.session.user.id_pessoa; // ou outro lugar de onde você obtém isso
+    const id_pessoa = req.session.user.id_pessoa; 
 
     // Organiza os dados para enviar ao model
     const perfilData = {
@@ -66,7 +47,7 @@ const criarPerfilPsr = async (req, res) => {
       formacao,
       tipo_interesse,
       historico_medico,
-      status_perfil // Adicione isso
+      status_perfil 
     };
 
     // Chama a função do model para salvar o perfil
@@ -83,5 +64,6 @@ const criarPerfilPsr = async (req, res) => {
     res.status(500).json({ message: 'Erro ao criar perfil de PSR', error: error.message });
   }
 };
+
 
 module.exports = { criarPerfilPsr }

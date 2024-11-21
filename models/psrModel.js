@@ -21,136 +21,171 @@ class psrModel {
       historico_medico
     } = data;
 
+    let conn;
+
     try {
-      // Log para verificar os dados recebidos
-      console.log("Dados recebidos para criar perfil:", data);
+      console.log("Iniciando transação para criação de perfil...");
+      conn = await db.beginTransaction();
 
       // Atualizar na tabela `pessoa`
+      console.log("Atualizando tabela `pessoa` com:", { nome, data_nasc, id_pessoa });
       const updatePessoaQuery = `
         UPDATE pessoa 
         SET nome = ?, data_nasc = ?
         WHERE id_pessoa = ?;
       `;
-      await db.query(updatePessoaQuery, [nome, data_nasc, id_pessoa]);
-      console.log("Atualização na tabela pessoa concluída.");
+      const pessoaResult = await db.query(updatePessoaQuery, [nome, data_nasc, id_pessoa], conn);
+      console.log("Resultado de atualização em `pessoa`:", pessoaResult);
 
-      // Busca o id_usuario correspondente ao id_pessoa
+      // Buscar o id_usuario correspondente ao id_pessoa
+      console.log("Buscando `id_usuario` para `id_pessoa`:", id_pessoa);
       const usuarioResult = await db.query(
-        `SELECT id_usuario FROM usuario WHERE pessoa_id_pessoa = ?`, 
-        [id_pessoa]
+        `SELECT id_usuario FROM usuario WHERE pessoa_id_pessoa = ?`,
+        [id_pessoa],
+        conn
       );
-      
-      // Log para inspecionar o resultado da consulta
-      console.log("Resultado da query de busca de id_usuario:", usuarioResult);
+      console.log("Resultado de `id_usuario`:", usuarioResult);
 
-      // Verifica se o resultado é válido antes de acessar
       if (!usuarioResult || usuarioResult.length === 0 || !usuarioResult[0]) {
-        throw new Error("Usuário não encontrado ou resultado inesperado ao buscar id_usuario.");
+        throw new Error("Usuário não encontrado.");
       }
-
-      // Acessa corretamente o id_usuario
       const id_usuario = usuarioResult[0].id_usuario;
-      console.log("ID do usuário encontrado:", id_usuario);
 
+      // Definir um valor padrão para `status_perfil` caso ele não seja fornecido
+      const statusPerfil = 'criado'; // Ou use uma lógica para definir se ainda não foi criado
 
-      // Atualizar a tabela `usuario` usando id_usuario
+      console.log("Atualizando tabela `usuario` com:", {
+        img_perfil,
+        status_perfil: statusPerfil, // Passando a variável correta
+        id_usuario
+      });
+
       const updateUsuarioQuery = `
         UPDATE usuario 
         SET img_perfil = ?, status_perfil = ?
         WHERE id_usuario = ?;
       `;
-      await db.query(updateUsuarioQuery, [img_perfil || 'default_path', 'criado', id_usuario]);
-      console.log("Atualização na tabela usuario concluída. Status do perfil definido como 'criado'.");
+
+      const usuarioUpdateResult = await db.query(updateUsuarioQuery, [img_perfil || 'default_path', statusPerfil, id_usuario], conn);
+      console.log("Resultado de atualização em `usuario`:", usuarioUpdateResult);
 
       // Inserir na tabela `pessoa_fisica`
-      await db.query(
+      console.log("Inserindo na tabela `pessoa_fisica`:", { id_pessoa, genero });
+      const pessoaFisicaResult = await db.query(
         `INSERT INTO pessoa_fisica (pessoa_idpessoa, genero) VALUES (?, ?)`,
-        [id_pessoa, genero]
+        [id_pessoa, genero],
+        conn
       );
-      console.log("Inserção na tabela pessoa_fisica concluída.");
+      console.log("Resultado de inserção em `pessoa_fisica`:", pessoaFisicaResult);
 
       // Inserir na tabela `psr`
-      await db.query(
+      console.log("Inserindo na tabela `psr`:", { id_pessoa, necessidades_urg });
+      const psrResult = await db.query(
         `INSERT INTO psr (pessoa_fisica_pessoa_idpessoa, necessidades_urg) VALUES (?, ?)`,
-        [id_pessoa, necessidades_urg]
+        [id_pessoa, necessidades_urg],
+        conn
       );
-      console.log("Inserção na tabela psr concluída.");
+      console.log("Resultado de inserção em `psr`:", psrResult);
 
       // Inserir na tabela `endereco`
-      const [enderecoResult] = await db.query(
+      console.log("Inserindo na tabela `endereco` com:", {
+        rua,
+        numero_end,
+        cep,
+        bairro,
+        municipio,
+        uf,
+        status
+      });
+      const enderecoResult = await db.query(
         `INSERT INTO endereco (rua, numero_end, cep, bairro, municipio, uf, status) VALUES (?, ?, ?, ?, ?, ?, ?)`,
-        [rua, numero_end, cep, bairro, municipio, uf, status]
+        [rua, numero_end, cep, bairro, municipio, uf, status],
+        conn
       );
-      console.log("Inserção na tabela endereco concluída.");
+      console.log("Resultado de `endereco`:", enderecoResult);
 
       if (!enderecoResult.insertId) {
-        throw new Error("Falha ao inserir endereço");
+        throw new Error("Falha ao inserir endereço.");
       }
 
       const enderecoId = enderecoResult.insertId;
-      console.log("ID do endereço inserido:", enderecoId);
 
       // Inserir na tabela de junção `endereco_pessoa`
-      await db.query(
+      console.log("Inserindo na tabela `endereco_pessoa`:", { enderecoId, id_pessoa });
+      const enderecoPessoaResult = await db.query(
         `INSERT INTO endereco_pessoa (endereco_id_endereco, pessoa_id_pessoa) VALUES (?, ?)`,
-        [enderecoId, id_pessoa]
+        [enderecoId, id_pessoa],
+        conn
       );
-      console.log("Inserção na tabela endereco_pessoa concluída.");
+      console.log("Resultado de inserção em `endereco_pessoa`:", enderecoPessoaResult);
 
       // Inserir na tabela `qualificacao`
-      const [qualificacaoResult] = await db.query(
+      console.log("Inserindo na tabela `qualificacao` com:", { formacao });
+      const qualificacaoResult = await db.query(
         `INSERT INTO qualificacao (formacao) VALUES (?)`,
-        [formacao]
+        [formacao],
+        conn
       );
-      console.log("Inserção na tabela qualificacao concluída.");
+      console.log("Resultado de `qualificacao`:", qualificacaoResult);
 
       const qualificacaoId = qualificacaoResult.insertId;
-      console.log("ID da qualificação inserida:", qualificacaoId);
 
       // Inserir na tabela de junção `psr_has_qualificacao`
-      await db.query(
+      console.log("Inserindo na tabela `psr_has_qualificacao`:", { id_pessoa, qualificacaoId });
+      const psrHasQualificacaoResult = await db.query(
         `INSERT INTO psr_has_qualificacao (psr_pessoa_fisica_pessoa_idpessoa, qualificacao_id_qualificacao) VALUES (?, ?)`,
-        [id_pessoa, qualificacaoId]
+        [id_pessoa, qualificacaoId],
+        conn
       );
-      console.log("Inserção na tabela psr_has_qualificacao concluída.");
+      console.log("Resultado de inserção em `psr_has_qualificacao`:", psrHasQualificacaoResult);
 
       // Inserir na tabela `interesse`
-      const [interesseResult] = await db.query(
+      console.log("Inserindo na tabela `interesse` com:", { tipo_interesse });
+      const interesseResult = await db.query(
         `INSERT INTO interesse (tipo_interesse) VALUES (?)`,
-        [tipo_interesse]
+        [tipo_interesse],
+        conn
       );
-      console.log("Inserção na tabela interesse concluída.");
+      console.log("Resultado de `interesse`:", interesseResult);
 
       const interesseId = interesseResult.insertId;
-      console.log("ID do interesse inserido:", interesseId);
 
       // Inserir na tabela de junção `psr_has_interesse`
-      await db.query(
+      console.log("Inserindo na tabela `psr_has_interesse`:", { id_pessoa, interesseId });
+      const psrHasInteresseResult = await db.query(
         `INSERT INTO psr_has_interesse (psr_pessoa_fisica_pessoa_idpessoa, interesse_id_interesse) VALUES (?, ?)`,
-        [id_pessoa, interesseId]
+        [id_pessoa, interesseId],
+        conn
       );
-      console.log("Inserção na tabela psr_has_interesse concluída.");
+      console.log("Resultado de inserção em `psr_has_interesse`:", psrHasInteresseResult);
 
       // Inserir na tabela `condicao_medica`
-      const [condicaoResult] = await db.query(
+      console.log("Inserindo na tabela `condicao_medica` com:", { historico_medico });
+      const condicaoResult = await db.query(
         `INSERT INTO condicao_medica (historico_medico) VALUES (?)`,
-        [historico_medico]
+        [historico_medico],
+        conn
       );
-      console.log("Inserção na tabela condicao_medica concluída.");
+      console.log("Resultado de `condicao_medica`:", condicaoResult);
 
       const condicaoId = condicaoResult.insertId;
-      console.log("ID da condição médica inserida:", condicaoId);
 
       // Inserir na tabela de junção `psr_has_condicao_medica`
-      await db.query(
+      console.log("Inserindo na tabela `psr_has_condicao_medica`:", { id_pessoa, condicaoId });
+      const psrHasCondicaoResult = await db.query(
         `INSERT INTO psr_has_condicao_medica (psr_pessoa_fisica_pessoa_idpessoa, condicao_medica_id_condicao) VALUES (?, ?)`,
-        [id_pessoa, condicaoId]
+        [id_pessoa, condicaoId],
+        conn
       );
-      console.log("Inserção na tabela psr_has_condicao_medica concluída.");
+      console.log("Resultado de inserção em `psr_has_condicao_medica`:", psrHasCondicaoResult);
 
+      // Confirmar transação
+      await db.commitTransaction(conn);
+      console.log("Perfil criado com sucesso!");
       return id_pessoa;
     } catch (error) {
-      console.error('Erro ao inserir dados:', error);
+      if (conn) await db.rollbackTransaction(conn);
+      console.error("Erro ao criar perfil:", error);
       throw error;
     }
   }
