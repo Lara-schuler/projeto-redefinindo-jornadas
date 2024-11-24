@@ -1,5 +1,5 @@
 <div class="container mt-5">
-    <h2 class="text-center">Cadastro de Perfil para PSR</h2>
+    <h2 class="text-center">Cadastro de Perfil para Voluntário</h2>
 
     <div class="text-center mb-4">
         <!-- Imagem de perfil -->
@@ -19,6 +19,11 @@
         <div class="mb-3">
             <label for="data_nasc" class="form-label">Data de Nascimento</label>
             <input type="date" class="form-control" id="data_nasc" name="data_nasc" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="cpf" class="form-label">CPF</label>
+            <input type="text" class="form-control" id="cpf" name="cpf" required>
         </div>
 
         <div class="mb-3">
@@ -64,9 +69,9 @@
             <label for="inativo">Inativo</label>
         </div>
 
-        <h4>Necessidades Imediatas</h4>
+        <h4>Serviços Oferecidos</h4>
         <div class="mb-3">
-            <textarea class="form-control" id="necessidades_urg" name="necessidades_urg" rows="3"></textarea>
+            <textarea class="form-control" id="servicos" name="tipo_servico" rows="3"></textarea>
         </div>
 
         <h4>Formação</h4>
@@ -74,14 +79,14 @@
             <input type="text" class="form-control" id="formacao" name="formacao" placeholder="Informe sua formação">
         </div>
 
-        <h4>Interesses</h4>
+        <h4>Area de Atuação</h4>
         <div class="mb-3">
-            <textarea class="form-control" id="tipo_interesse" name="tipo_interesse" rows="3"></textarea>
+            <input type="text" class="form-control" id="area_atuacao" name="area_atuacao" placeholder="Informe sua Área de Atuação">
         </div>
 
-        <h4>Histórico de Saúde</h4>
+        <h4>Disponibilidade</h4>
         <div class="mb-3">
-            <textarea class="form-control" id="historico_medico" name="historico_medico" rows="3"></textarea>
+            <input type="text" class="form-control" id="disponibilidade" name="disponibilidade" placeholder="Informe sua Disponibilidade">
         </div>
 
         <button type="submit" class="botao-primario">Salvar</button>

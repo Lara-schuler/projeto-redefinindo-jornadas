@@ -25,7 +25,7 @@ router.post('/criar-perfil-psr', upload.single('img_perfil'), (req, res) => {
 });
 
 // Nova rota para o feed de PSR
-router.get('/feed/psr', (req, res) => {
+router.get('/psr/feed-psr', (req, res) => {
     if (req.session.user) {
         console.log('Usuário logado:', req.session.user);
         // Verifica se o usuário tem perfil de PSR, e renderiza a página de feed

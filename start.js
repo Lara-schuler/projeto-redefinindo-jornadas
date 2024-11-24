@@ -34,11 +34,19 @@ app.set('view engine', 'ejs');
 const authRoutes = require('./routes/authRoutes');
 const userRoutes = require('./routes/userRoutes');
 const psrRoutes = require('./routes/psrRoutes');
+const ongRoutes = require('./routes/ongRoutes');
+const voluntarioRoutes = require('./routes/voluntarioRoutes');
+const empresaRoutes = require('./routes/empresaRoutes');
+const parceiroRoutes = require('./routes/parceiroRoutes');
 const mainRoutes = require('./routes/mainRoutes');
 
 app.use('/auth', authRoutes);
 app.use('/user', userRoutes);
 app.use('/psr', psrRoutes);
+app.use('/ong', ongRoutes);
+app.use('/voluntario', voluntarioRoutes);
+app.use('/empresa', empresaRoutes);
+app.use('/parceiro', parceiroRoutes);
 app.use('/', mainRoutes);
 
 // Inicializa o servidor

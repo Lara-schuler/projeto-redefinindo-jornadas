@@ -94,23 +94,27 @@ async function login(req, res) {
             // Verifica o perfil do usuário
             const perfil = await usuarioModel.verificarPerfil(req.session.user.id_usuario);
             console.log("Perfil do usuário verificado:", perfil);
+
+             // Definir tipo_perfil e status_perfil na sessão do usuário
+             req.session.user.tipo_perfil = perfil.tipo_perfil;
+             req.session.user.status_perfil = perfil.status_perfil;
   
             // Lógica de redirecionamento
             if (perfil.status_perfil === 'criado') {
                 // Se o perfil foi criado, redireciona conforme o tipo de perfil
                 definirMensagem(req, 'success', 'Login bem-sucedido!');
                 if (perfil.tipo_perfil === 'psr') {
-                    return res.redirect('/feed/psr');
+                    return res.redirect('/psr/feed-psr');
                 } else if (perfil.tipo_perfil === 'voluntario') {
-                    return res.redirect('/feed/voluntario');
+                    return res.redirect('/parceiro/feed-parceiro');
                 } else if (perfil.tipo_perfil === 'admin') {
-                    return res.redirect('/feed/admin');
+                    return res.redirect('/admin/feed-admin');
                 } else if (perfil.tipo_perfil === 'instituicao_publica') {
-                    return res.redirect('/feed/instituicao_publica');
+                    return res.redirect('/instituicao_publica/feed-instituicao_publica');
                 } else if (perfil.tipo_perfil === 'ong') {
-                    return res.redirect('/feed/ong');
+                    return res.redirect('/ong/feed-ong');
                 } else if (perfil.tipo_perfil === 'empresa') {
-                    return res.redirect('/feed/empresa');
+                    return res.redirect('/parceiro/feed-parceiro');
                 }
             } else {
                 // Se o perfil não foi criado, redireciona para a tela de apresentação
@@ -320,13 +324,13 @@ async function criarPerfil(req, res) {
                     res.redirect('/instituicao/criar');  // Ajuste para a rota da instituição
                     break;
                 case 'ong':
-                    res.redirect('/ong/criar');  // Ajuste para a rota da ONG
+                    res.redirect('/ong/criar-ong');  // Ajuste para a rota da ONG
                     break;
                 case 'empresa':
-                    res.redirect('/empresa/criar');  // Ajuste para a rota da empresa
+                    res.redirect('/empresa/-empresa');  // Ajuste para a rota da empresa
                     break;
                 case 'voluntario':
-                    res.redirect('/voluntario/criar');  // Ajuste para a rota do voluntário
+                    res.redirect('/voluntario/criar-voluntario');  // Ajuste para a rota do voluntário
                     break;
                 case 'administrador':
                     res.redirect('/admin/criar');  // Ajuste para a rota do administrador

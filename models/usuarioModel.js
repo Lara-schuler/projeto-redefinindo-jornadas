@@ -11,33 +11,44 @@ class Usuario {
         console.log(sql);
         return await db.query(sql, [emailOuTelefone, emailOuTelefone.replace(/\D/g, ''), md5(senha)]);
     }
-    
 
     static async criarConta(email, telefone, senha) {
-        // Inserir na tabela pessoa
-        let sqlPessoa = `INSERT INTO pessoa (email) VALUES (?)`;
-        console.log(sqlPessoa);
-        await db.query(sqlPessoa, [email]);
+        let conn;
+        try {
+            conn = await db.beginTransaction();
 
-        // Obter o ID da pessoa recém inserida
-        let sqlGetPessoaId = `SELECT id_pessoa FROM pessoa WHERE email = ?`;
-        console.log(sqlGetPessoaId);
-        let result = await db.query(sqlGetPessoaId, [email]);
-        let pessoaId = result[0].id_pessoa;
+            // Inserir na tabela pessoa
+            let sqlPessoa = `INSERT INTO pessoa (email) VALUES (?)`;
+            console.log(sqlPessoa);
+            await db.query(sqlPessoa, [email], conn);
 
-        // Inserir na tabela usuario
-        let sqlUsuario = `INSERT INTO usuario (pessoa_id_pessoa, senha) VALUES (?, ?)`;
-        console.log(sqlUsuario);
-        await db.query(sqlUsuario, [pessoaId, md5(senha)]);
+            // Obter o ID da pessoa recém inserida
+            let sqlGetPessoaId = `SELECT id_pessoa FROM pessoa WHERE email = ?`;
+            console.log(sqlGetPessoaId);
+            let result = await db.query(sqlGetPessoaId, [email], conn);
+            let pessoaId = result[0].id_pessoa;
 
-        // Inserir na tabela telefone se fornecido
-        if (telefone) {
-            let sqlTelefone = `INSERT INTO telefone (ddd, numero, pessoa_id_pessoa) VALUES (?, ?, ?)`;
-            console.log(sqlTelefone);
-            
-            let ddd = telefone.substring(0, 2); 
-            let numero = telefone.substring(2); 
-            await db.query(sqlTelefone, [ddd, numero, pessoaId]);
+            // Inserir na tabela usuario
+            let sqlUsuario = `INSERT INTO usuario (pessoa_id_pessoa, senha) VALUES (?, ?)`;
+            console.log(sqlUsuario);
+            await db.query(sqlUsuario, [pessoaId, md5(senha)], conn);
+
+            // Inserir na tabela telefone se fornecido
+            if (telefone) {
+                let sqlTelefone = `INSERT INTO telefone (ddd, numero, pessoa_id_pessoa) VALUES (?, ?, ?)`;
+                console.log(sqlTelefone);
+                
+                let ddd = telefone.substring(0, 2); 
+                let numero = telefone.substring(2); 
+                await db.query(sqlTelefone, [ddd, numero, pessoaId], conn);
+            }
+
+            await db.commitTransaction(conn);
+            console.log("Conta criada com sucesso!");
+        } catch (error) {
+            if (conn) await db.rollbackTransaction(conn);
+            console.error("Erro ao criar conta:", error);
+            throw error;
         }
     }
 
@@ -58,8 +69,6 @@ class Usuario {
         console.log(sql);
         return await db.query(sql, [token, expiration.toISOString(), email]);
     }
-    
-    
 
     static async atualizarSenha(email, senha) {
         let sql = `UPDATE usuario u
@@ -87,8 +96,8 @@ class Usuario {
             console.error('Erro ao atualizar tipo de perfil:', error);
             throw new Error('Erro ao atualizar tipo de perfil.');
         }
-    }    
-    
+    }
+
     static async obterUsuarioPorId(id_pessoa) {
         const query = 'SELECT * FROM usuario WHERE pessoa_id_pessoa = ?';
         const result = await db.query(query, [id_pessoa]);
@@ -99,7 +108,7 @@ class Usuario {
             return result[0]; // Retorne o primeiro usuário encontrado
         }
         return null; // Se não houver usuário, retorne null
-    }    
+    }
 
     static async atualizarStatusPerfil(id_usuario, status) {
         const query = 'UPDATE usuario SET status_perfil = ? WHERE id_usuario = ?';

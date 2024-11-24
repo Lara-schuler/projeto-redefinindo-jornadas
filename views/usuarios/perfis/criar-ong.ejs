@@ -1,12 +1,12 @@
 <div class="container mt-5">
-    <h2 class="text-center">Cadastro de Perfil para PSR</h2>
+    <h2 class="text-center">Cadastro de Perfil para ONG</h2>
 
     <div class="text-center mb-4">
         <!-- Imagem de perfil -->
         <img src="default-profile.png" alt="Foto de Perfil" id="profile-image">
     </div>
 
-    <form action="/psr/criar-perfil-psr" method="POST" enctype="multipart/form-data">
+    <form action="/ong/criar-perfil-ong" method="POST" enctype="multipart/form-data">
         <div class="mb-3">
             <input type="file" class="form-control-file mt-2" id="img_perfil" name="img_perfil" accept="image/*">
         </div>
@@ -17,21 +17,16 @@
         </div>
 
         <div class="mb-3">
-            <label for="data_nasc" class="form-label">Data de Nascimento</label>
-            <input type="date" class="form-control" id="data_nasc" name="data_nasc" required>
+            <label for="nome" class="form-label">Razão Social</label>
+            <input type="text" class="form-control" id="razao_social" name="razao_social" required>
         </div>
 
         <div class="mb-3">
-            <label for="genero" class="form-label">Gênero</label>
-            <select class="form-select" id="genero" name="genero" required>
-                <option value="" disabled selected>Selecione...</option>
-                <option value="masculino">Masculino</option>
-                <option value="feminino">Feminino</option>
-                <option value="outro">Outro</option>
-            </select>
+            <label for="cnpj" class="form-label">CNPJ</label>
+            <input type="text" class="form-control" id="cnpj" name="cnpj" required>
         </div>
 
-        <h4>Localização Atual</h4>
+        <h4>Localização</h4>
         <div class="mb-3">
             <label for="rua" class="form-label">Rua</label>
             <input type="text" class="form-control" id="rua" name="rua" required>
@@ -64,24 +59,32 @@
             <label for="inativo">Inativo</label>
         </div>
 
-        <h4>Necessidades Imediatas</h4>
         <div class="mb-3">
-            <textarea class="form-control" id="necessidades_urg" name="necessidades_urg" rows="3"></textarea>
+            <label for="missao" class="form-label">Missão</label>
+            <input type="text" class="form-control" id="missao" name="missao" placeholder="Informe sua Missão">
         </div>
 
-        <h4>Formação</h4>
         <div class="mb-3">
-            <input type="text" class="form-control" id="formacao" name="formacao" placeholder="Informe sua formação">
+            <label for="tipo_servicos" class="form-label">Serviços Disponibilizados</label>
+            <textarea class="form-control" id="servicos" name="tipo_servico" rows="3"></textarea>
         </div>
 
-        <h4>Interesses</h4>
         <div class="mb-3">
-            <textarea class="form-control" id="tipo_interesse" name="tipo_interesse" rows="3"></textarea>
+            <label for="publico_alvo" class="form-label">Público Alvo</label>
+            <input type="text" class="form-control" id="publico_alvo" name="publico_alvo" required>
         </div>
-
-        <h4>Histórico de Saúde</h4>
+        
         <div class="mb-3">
-            <textarea class="form-control" id="historico_medico" name="historico_medico" rows="3"></textarea>
+            <label for="dias_atendimento" class="form-label">Dias de Atendimento</label>
+            <input type="text" class="form-control" id="dias_atendimento" name="dias_atendimento" placeholder="Ex: Segunda a Sexta">
+         </div>
+        <div class="mb-3"> 
+            <label for="horario_inicio" class="form-label">Horário de Início</label> 
+            <input type="time" class="form-control" id="horario_inicio" name="horario_inicio"> 
+        </div> 
+        <div class="mb-3"> 
+            <label for="horario_final" class="form-label">Horário de Término</label> 
+            <input type="time" class="form-control" id="horario_final" name="horario_final"> 
         </div>
 
         <button type="submit" class="botao-primario">Salvar</button>
