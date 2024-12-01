@@ -1,5 +1,6 @@
 const ongModel = require('../models/ongModel');
 const usuarioModel = require('../models/usuarioModel');
+const eventoModel = require('../models/eventoModel');
 
 const criarPerfilOng = async (req, res) => {
   try {
@@ -23,8 +24,7 @@ const criarPerfilOng = async (req, res) => {
         publico_alvo,
         dias_atendimento,
         horario_inicio,
-        horario_final,
-        horario
+        horario_final
     } = req.body;
 
     // status_perfil definido como 'nao_criado' por padrão
@@ -67,8 +67,31 @@ const criarPerfilOng = async (req, res) => {
   } catch (error) {
     console.error('Erro ao criar perfil de ONG:', error);
     res.status(500).json({ message: 'Erro ao criar perfil de ONG', error: error.message });
-  }
-};
+    }
+  };
 
-
-module.exports = { criarPerfilOng }
+  const exibirFeedOng = async (req, res) => {
+    try {
+      const conteudosRecentes = await eventoModel.buscarConteudosRecentes();
+      console.log('Conteúdos recentes encontrados:', conteudosRecentes); // Adicione este log para verificar os conteúdos
+  
+      // Verificar se conteudosRecentes é uma lista (array)
+      if (Array.isArray(conteudosRecentes)) {
+        console.log('conteudosRecentes é uma lista:', conteudosRecentes);
+      } else {
+        console.log('conteudosRecentes não é uma lista:', conteudosRecentes);
+      }
+  
+      res.render('usuarios/ong/feed-ong', {
+        layout: './layouts/default/feed-ong',
+        title: 'Feed ONG',
+        usuario: req.session.user,
+        conteudos: conteudosRecentes // Certifique-se de passar a variável conteudos como uma lista
+      });
+    } catch (error) {
+      console.error('Erro ao buscar conteúdos recentes:', error);
+      res.status(500).json({ message: 'Erro ao buscar conteúdos recentes', error: error.message });
+    }
+  };
+  
+  module.exports = { criarPerfilOng, exibirFeedOng };

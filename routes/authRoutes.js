@@ -70,12 +70,7 @@ router.post('/redefinir-senha', (req, res) => {
 });
 
 // Rota para a tela de Apresentação
-router.get('/apresentacao', (req, res) => {
-    res.render('apresentacao', {
-        layout: 'layouts/default/apresentacao',
-        title: 'Apresentação'
-    });
-});
+router.get('/apresentacao', usuarioController.exibirApresentacao);
 
 
 module.exports = router

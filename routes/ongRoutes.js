@@ -3,7 +3,6 @@ const router = express.Router();
 const ongController = require('../controllers/ongController');
 const upload = require('../middlewares/uploadConfig'); // Importando o Multer configurado
 
-
 // Rota para a tela de criação de perfil de Ong
 router.get('/criar-ong', (req, res) => {
     if (req.session.user) {
@@ -29,11 +28,7 @@ router.get('/feed-ong', (req, res) => {
         console.log('Usuário logado:', req.session.user);
         // Verifica se o usuário tem perfil de ONG, e renderiza a página de feed
         if (req.session.user.tipo_perfil === 'ong') {
-            res.render('usuarios/ong/feed-ong', {
-                layout: './layouts/default/feed-ong', // Certifique-se de que o layout existe
-                title: 'Feed ONG',
-                usuario: req.session.user
-            });
+            ongController.exibirFeedOng(req, res);
         } else {
             console.log('Usuário não é do tipo ONG');
             res.redirect('/auth/apresentacao');  
@@ -43,6 +38,5 @@ router.get('/feed-ong', (req, res) => {
         res.redirect('/auth/login');
     }
 });
-
 
 module.exports = router;

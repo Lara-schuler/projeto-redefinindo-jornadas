@@ -1,4 +1,5 @@
 const usuarioModel = require('../models/usuarioModel');
+const eventoModel = require('../models/eventoModel'); 
 const { enviarEmail } = require('../utils/mailer');
 const crypto = require('crypto');
 
@@ -318,25 +319,25 @@ async function criarPerfil(req, res) {
             // Redirecionar com base no tipo de perfil selecionado
             switch (tipoPerfil) {
                 case 'psr':
-                    res.redirect('/psr/criar-psr');  // Redireciona para a criação de perfil PSR
+                    res.redirect('/psr/criar-psr');  
                     break;
                 case 'instituicao_publica':
-                    res.redirect('/instituicao/criar');  // Ajuste para a rota da instituição
+                    res.redirect('/instituicao/criar');  
                     break;
                 case 'ong':
-                    res.redirect('/ong/criar-ong');  // Ajuste para a rota da ONG
+                    res.redirect('/ong/criar-ong');  
                     break;
                 case 'empresa':
-                    res.redirect('/empresa/-empresa');  // Ajuste para a rota da empresa
+                    res.redirect('/empresa/-empresa');  
                     break;
                 case 'voluntario':
-                    res.redirect('/voluntario/criar-voluntario');  // Ajuste para a rota do voluntário
+                    res.redirect('/voluntario/criar-voluntario');  
                     break;
                 case 'administrador':
-                    res.redirect('/admin/criar');  // Ajuste para a rota do administrador
+                    res.redirect('/admin/criar');  
                     break;
                 default:
-                    res.redirect('/auth/apresentacao');  // Rota padrão caso algo não seja esperado
+                    res.redirect('/auth/apresentacao');  
             }
         } else {
             console.error('Usuário não encontrado com ID:', pessoaId);
@@ -348,5 +349,29 @@ async function criarPerfil(req, res) {
     }
 }
 
+const exibirApresentacao = async (req, res) => {
+    try {
+      const conteudosRecentes = await eventoModel.buscarConteudosRecentes();
+      console.log('Conteúdos recentes encontrados:', conteudosRecentes); // Adicione este log para verificar os conteúdos
+  
+      // Verificar se conteudosRecentes é uma lista (array)
+      if (Array.isArray(conteudosRecentes)) {
+        console.log('conteudosRecentes é uma lista:', conteudosRecentes);
+      } else {
+        console.log('conteudosRecentes não é uma lista:', conteudosRecentes);
+      }
+  
+      res.render('apresentacao', {
+        layout: 'layouts/default/apresentacao',
+        title: 'Apresentação',
+        usuario: req.session.user,
+        conteudos: conteudosRecentes // Certifique-se de passar a variável conteudos como uma lista
+      });
+    } catch (error) {
+      console.error('Erro ao buscar conteúdos recentes:', error);
+      res.status(500).json({ message: 'Erro ao buscar conteúdos recentes', error: error.message });
+    }
+  };
+  
 
-module.exports = { autenticar, login, criarConta, recuperarSenha, verificarToken, redefinirSenha, criarPerfil };
+module.exports = { autenticar, login, criarConta, recuperarSenha, verificarToken, redefinirSenha, criarPerfil, exibirApresentacao };

@@ -19,11 +19,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Usar middlewares
 app.use(sessionMiddleware);
 app.use(flash());
-app.use(localVariablesMiddleware); // Verifique se está aqui
+app.use(localVariablesMiddleware); 
 
 // Configura o parsing do corpo das requisições
 app.use(express.urlencoded({ extended: true }));
-app.use(express.json()); // Adicione esta linha para garantir que o servidor possa processar JSON
+app.use(express.json()); 
 
 // Define o template engine e layouts
 app.use(expressLayouts);
@@ -38,6 +38,7 @@ const ongRoutes = require('./routes/ongRoutes');
 const voluntarioRoutes = require('./routes/voluntarioRoutes');
 const empresaRoutes = require('./routes/empresaRoutes');
 const parceiroRoutes = require('./routes/parceiroRoutes');
+const eventoRoutes = require('./routes/eventoRoutes');
 const mainRoutes = require('./routes/mainRoutes');
 
 app.use('/auth', authRoutes);
@@ -46,6 +47,7 @@ app.use('/psr', psrRoutes);
 app.use('/ong', ongRoutes);
 app.use('/voluntario', voluntarioRoutes);
 app.use('/empresa', empresaRoutes);
+app.use('/eventos', eventoRoutes);
 app.use('/parceiro', parceiroRoutes);
 app.use('/', mainRoutes);
 

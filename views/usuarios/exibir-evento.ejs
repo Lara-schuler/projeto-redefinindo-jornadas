@@ -1,0 +1,20 @@
+<div class="container mt-5">
+    <div class="row">
+      <div class="col-md-8 offset-md-2">
+        <div class="card">
+          <img src="<%= evento.imagem %>" class="card-img-top" alt="<%= evento.titulo %>">
+          <div class="card-body">
+            <h5 class="card-title"><%= evento.titulo %></h5>
+            <p class="card-text"><%= evento.descricao %></p>
+            <p class="card-text"><small class="text-muted">Local: <%= evento.local %></small></p>
+            <p class="card-text"><small class="text-muted">Data do Evento: <%= new Date(evento.data_evento).toLocaleString() %></small></p>
+            <div class="d-flex justify-content-between">
+              <button class="btn btn-primary">Curtir</button>
+              <button class="btn btn-secondary">Compartilhar</button>
+              <button class="btn btn-success">Vou Participar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
