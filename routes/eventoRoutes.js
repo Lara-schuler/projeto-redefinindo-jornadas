@@ -23,6 +23,6 @@ router.post('/criar-evento', upload.single('imagem'), (req, res) => {
 });
 
 // Rota para exibir um evento específico
-router.get('/evento/:id', eventoController.exibirEvento);
+router.get('/:id', eventoController.exibirEvento);
 
 module.exports = router;

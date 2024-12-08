@@ -39,7 +39,7 @@ function definirMensagem(req, tipo, texto) {
 }
 
 async function autenticar(req, res) {
-    const { emailOuTelefone, senha } = req.body;  // Ajuste para capturar um campo único
+    const { emailOuTelefone, senha } = req.body;  
     try {
         if (!emailOuTelefone || !senha) {
             throw new Error('O campo de email ou telefone e a senha devem estar preenchidos');
@@ -328,13 +328,13 @@ async function criarPerfil(req, res) {
                     res.redirect('/ong/criar-ong');  
                     break;
                 case 'empresa':
-                    res.redirect('/empresa/-empresa');  
+                    res.redirect('/empresa/criar-empresa');  
                     break;
                 case 'voluntario':
                     res.redirect('/voluntario/criar-voluntario');  
                     break;
                 case 'administrador':
-                    res.redirect('/admin/criar');  
+                    res.redirect('/admin/criar-admin');  
                     break;
                 default:
                     res.redirect('/auth/apresentacao');  
@@ -374,4 +374,4 @@ const exibirApresentacao = async (req, res) => {
   };
   
 
-module.exports = { autenticar, login, criarConta, recuperarSenha, verificarToken, redefinirSenha, criarPerfil, exibirApresentacao };
+module.exports = { validarEntrada, definirMensagem, autenticar, login, criarConta, recuperarSenha, verificarToken, redefinirSenha, criarPerfil, exibirApresentacao };

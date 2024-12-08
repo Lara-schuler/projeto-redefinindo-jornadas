@@ -1,28 +1,51 @@
 <div class="container mt-5">
   <h2 class="text-center">Feed de Conteúdos Recentes</h2>
   <div id="conteudos-container" class="row">
-    <% if (conteudos && conteudos.length > 0) { %>
-      <% conteudos.forEach(conteudo => { %>
+    <% if (conteudos && conteudos.length> 0) { %>
+      <% conteudos.forEach(conteudo=> { %>
         <div class="col-md-4 mb-4">
           <div class="card">
-            <img src="/<%= conteudo.imagem.replace('public\\', '') %>" class="card-img-top" alt="<%= conteudo.titulo %>">
+            <div class="card-header d-flex align-items-center">
+              <img
+                src="/<%= conteudo.img_perfil_usuario ? conteudo.img_perfil_usuario.replace('public\\', '') : 'caminho/para/imagem/default.jpg' %>"
+                class="rounded-circle" alt="<%= conteudo.nome_usuario %>" width="40" height="40">
+              <span class="ml-2">
+                <%= conteudo.nome_usuario %>
+              </span>
+            </div>
+            <img
+              src="/<%= conteudo.imagem ? conteudo.imagem.replace('public\\', '') : 'caminho/para/imagem/default.jpg' %>"
+              class="card-img-top" alt="<%= conteudo.titulo %>">
             <div class="card-body">
-              <h5 class="card-title"><%= conteudo.titulo %></h5>
-              <p class="card-text"><%= conteudo.descricao %></p>
+              <h5 class="card-title">
+                <% if (conteudo.titulo.length> 30) { %>
+                  <%= conteudo.titulo.substring(0, 30) %>...
+                    <% } else { %>
+                      <%= conteudo.titulo %>
+                        <% } %>
+              </h5>
+              <p class="card-text card-text-resumo">
+                <% if (conteudo.descricao.length> 100) { %>
+                  <%= conteudo.descricao.substring(0, 100) %>...
+                    <% } else { %>
+                      <%= conteudo.descricao %>
+                        <% } %>
+              </p>
               <p class="card-text"><small class="text-muted">Local: <%= conteudo.local %></small></p>
-              <p class="card-text"><small class="text-muted">Data do Evento: <%= new Date(conteudo.data_evento).toLocaleString() %></small></p>
-              <a href="/evento/<%= conteudo.id_evento %>" class="btn btn-primary">Ver Detalhes</a>
+              <p class="card-text"><small class="text-muted">Data do Evento: <%= new
+                    Date(conteudo.data_evento).toLocaleString() %></small></p>
+              <a href="/eventos/<%= conteudo.id_evento %>" class="btn btn-primary">Detalhes</a>
               <div class="d-flex justify-content-between mt-2">
-                <button class="btn btn-primary">Curtir</button>
-                <button class="btn btn-secondary">Compartilhar</button>
-                <button class="btn btn-success">Vou Participar</button>
+                <button class="btn btn-primary btn-sm">Curtir</button>
+                <button class="btn btn-secondary btn-sm">Compartilhar</button>
+                <button class="btn btn-success btn-sm">Participar</button>
               </div>
             </div>
           </div>
         </div>
-      <% }) %>
-    <% } else { %>
-      <p class="text-center">Nenhum conteúdo recente encontrado.</p>
-    <% } %>
+        <% }) %>
+          <% } else { %>
+            <p class="text-center">Nenhum conteúdo recente encontrado.</p>
+            <% } %>
   </div>
 </div>

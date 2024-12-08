@@ -1,5 +1,6 @@
 const psrModel = require('../models/psrModel');
 const usuarioModel = require('../models/usuarioModel');
+const { definirMensagem } = require('./usuarioController');
 
 const criarPerfilPsr = async (req, res) => {
   try {
@@ -57,11 +58,23 @@ const criarPerfilPsr = async (req, res) => {
     // Atualiza o status do perfil na tabela usuario
     await usuarioModel.atualizarStatusPerfil(req.session.user.id_usuario, 'criado');
 
-    // Responde com sucesso
-    res.status(201).json({ message: 'Perfil de PSR criado com sucesso!', usuarioId });
+    // Mensagem de sucesso usando a função definirMensagem
+    definirMensagem(req, 'success', 'Perfil de PSR criado com sucesso!');
+
+    // Atualizando a sessão
+    req.session.user.tipo_perfil = 'psr';  
+    req.session.user.status_perfil = 'criado';  
+
+    // Redireciona após o sucesso
+    res.redirect('/psr/feed-psr');
   } catch (error) {
     console.error('Erro ao criar perfil de PSR:', error);
-    res.status(500).json({ message: 'Erro ao criar perfil de PSR', error: error.message });
+
+    // Mensagem de erro usando a função definirMensagem
+    definirMensagem(req, 'error', 'Erro ao criar perfil de PSR: ' + error.message);
+
+    // Redireciona após o erro
+    res.redirect('/psr/criar-perfil');
   }
 };
 

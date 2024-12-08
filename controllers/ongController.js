@@ -1,6 +1,7 @@
 const ongModel = require('../models/ongModel');
 const usuarioModel = require('../models/usuarioModel');
 const eventoModel = require('../models/eventoModel');
+const { definirMensagem } = require('./usuarioController');
 
 const criarPerfilOng = async (req, res) => {
   try {
@@ -62,31 +63,46 @@ const criarPerfilOng = async (req, res) => {
     // Atualiza o status do perfil na tabela usuario
     await usuarioModel.atualizarStatusPerfil(req.session.user.id_usuario, 'criado');
 
-    // Responde com sucesso
-    res.status(201).json({ message: 'Perfil de ONG criado com sucesso!', usuarioId });
+    // Mensagem de sucesso usando a função definirMensagem
+    definirMensagem(req, 'success', 'Perfil de ONG criado com sucesso!');
+
+    // Atualizando a sessão
+    req.session.user.tipo_perfil = 'ong';  
+    req.session.user.status_perfil = 'criado';  
+
+    console.log('Sessão após atualização:', req.session.user);  
+    // Redireciona após o sucesso
+    res.redirect('/ong/feed-ong');
   } catch (error) {
     console.error('Erro ao criar perfil de ONG:', error);
-    res.status(500).json({ message: 'Erro ao criar perfil de ONG', error: error.message });
-    }
-  };
+
+    // Mensagem de erro usando a função definirMensagem
+    definirMensagem(req, 'error', 'Erro ao criar perfil de ONG: ' + error.message);
+
+    // Redireciona após o erro
+    res.redirect('/ong/criar-perfil');
+  }
+};
+
 
   const exibirFeedOng = async (req, res) => {
     try {
+      // Buscar os conteúdos recentes
       const conteudosRecentes = await eventoModel.buscarConteudosRecentes();
       console.log('Conteúdos recentes encontrados:', conteudosRecentes); // Adicione este log para verificar os conteúdos
   
-      // Verificar se conteudosRecentes é uma lista (array)
-      if (Array.isArray(conteudosRecentes)) {
-        console.log('conteudosRecentes é uma lista:', conteudosRecentes);
-      } else {
-        console.log('conteudosRecentes não é uma lista:', conteudosRecentes);
-      }
+      // Garantir que conteudosRecentes seja sempre um array
+      const conteudos = Array.isArray(conteudosRecentes) ? conteudosRecentes : (conteudosRecentes ? [conteudosRecentes] : []);
   
+      // Verifique no log se a variável é uma lista
+      console.log('Conteúdos (como array):', conteudos);
+  
+      // Renderize a view, passando os conteúdos como um array
       res.render('usuarios/ong/feed-ong', {
         layout: './layouts/default/feed-ong',
         title: 'Feed ONG',
         usuario: req.session.user,
-        conteudos: conteudosRecentes // Certifique-se de passar a variável conteudos como uma lista
+        conteudos: conteudos
       });
     } catch (error) {
       console.error('Erro ao buscar conteúdos recentes:', error);

@@ -6,7 +6,7 @@ html, body {
 }
 
 body {
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Inter', sans-serif;
   margin: 0;
   padding: 0;
   background-color: #ffffff;
@@ -81,7 +81,42 @@ main {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3E%3Cpath stroke='rgba%28255, 255, 255, 1%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E") !important;
 }
 
+.card-text-resumo {
+  overflow: hidden; /* Impede que o texto transborde */
+  display: -webkit-box; /* Define um contêiner flexível */
+  -webkit-box-orient: vertical; /* Orienta o conteúdo verticalmente */
+  -webkit-line-clamp: 1; /* Limita o texto a 3 linhas */
+  line-clamp: 1; /* Limita o texto a 3 linhas */
+}
 
+.card-text-completo {
+  overflow: visible; /* Permite que o texto seja exibido completamente */
+  display: block; /* Exibe o texto normalmente */
+}
+
+.card-img-top {
+  width: 100%; /* Ocupa toda a largura do card */
+  height: 200px; /* Define uma altura fixa */
+  object-fit: cover; /* Garante que a imagem preencha o espaço sem distorcer */
+  object-position: center; /* Centraliza o conteúdo da imagem */
+}
+
+.detalhes-img {
+  width: 100%; /* Faz a imagem ocupar toda a largura disponível */
+  height: auto; /* Mantém a proporção original da imagem */
+  max-height: 400px; /* Limita a altura máxima da imagem */
+  object-fit: contain; /* Mostra a imagem inteira sem cortar */
+  margin: 0 auto; /* Centraliza a imagem */
+}
+
+.card-header img {
+  margin-right: 10px;
+  border: 2px solid #ccc;
+}
+
+.card-header span {
+  font-size: 1.2em;
+}
 
 .secao-bem-vindo {
   text-align: center;

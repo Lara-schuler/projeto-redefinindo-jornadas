@@ -22,7 +22,7 @@ router.post('/criar-perfil-ong', upload.single('img_perfil'), (req, res) => {
     ongController.criarPerfilOng(req, res);
 });
 
-// Nova rota para o feed de ONG
+// rota para o feed de ONG
 router.get('/feed-ong', (req, res) => {
     if (req.session.user) {
         console.log('Usuário logado:', req.session.user);
