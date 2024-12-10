@@ -18,6 +18,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Usar middlewares
 app.use(sessionMiddleware);
+// Middleware global para inspecionar a sessão
+app.use((req, res, next) => {
+    console.log("Sessão atual:", req.session);
+    next();
+});
 app.use(flash());
 app.use(localVariablesMiddleware); 
 
