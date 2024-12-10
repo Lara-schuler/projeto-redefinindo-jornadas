@@ -65,16 +65,38 @@ main {
   background-color: #004AAD !important;;
 }
 
-.navbar-nav, .nav-link {
-  color: #ffffff !important;
+.navbar-nav .nav-link {
+  color:#ffffff !important;
   font-size: 1rem;
   font-weight: 700;
+  text-transform: uppercase; /* Maiúsculas para dar mais destaque */
 }
 
 .navbar-brand img {
   width: 5.5rem;
   height: 5.5rem;
 }
+
+.navbar-nav {
+  display: flex;
+  justify-content: flex-end; /* Alinha os itens à direita */
+  width: 100%;
+}
+
+.navbar-nav .nav-item {
+  margin-left: 1.5rem;
+  margin-right: 1.5rem; /* Ajuste para espaçamento equilibrado */
+}
+
+.navbar-nav .nav-link {
+  transition: all 0.3s ease-in-out;
+}
+
+.navbar-nav .nav-link:hover {
+  color: #FFD700; /* Ou qualquer cor que combine com seu esquema de cores */
+  transform: scale(1.05); /* Efeito de aumento suave */
+}
+
 
 /* Ajusta a cor do ícone do menu hamburger */
 .navbar-toggler-icon {
@@ -686,6 +708,15 @@ input[type="radio"]:checked + label {
   .top-bar {
     height: 10vh;
     padding: 0 1rem;
+  }
+
+  .navbar-nav {
+    width: 100%;
+    text-align: flex-end; /* Centraliza os itens na tela pequena */
+  }
+
+  .navbar-nav .nav-item {
+    margin: 0.5rem 0; /* Espaço mais amplo entre os itens */
   }
 
   .navbar-brand img {

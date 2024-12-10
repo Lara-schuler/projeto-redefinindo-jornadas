@@ -39,6 +39,7 @@ const voluntarioRoutes = require('./routes/voluntarioRoutes');
 const empresaRoutes = require('./routes/empresaRoutes');
 const parceiroRoutes = require('./routes/parceiroRoutes');
 const eventoRoutes = require('./routes/eventoRoutes');
+const servicoRoutes = require('./routes/servicoRoutes');
 const mainRoutes = require('./routes/mainRoutes');
 
 app.use('/auth', authRoutes);
@@ -48,6 +49,7 @@ app.use('/ong', ongRoutes);
 app.use('/voluntario', voluntarioRoutes);
 app.use('/empresa', empresaRoutes);
 app.use('/eventos', eventoRoutes);
+app.use('/servicos', servicoRoutes);
 app.use('/parceiro', parceiroRoutes);
 app.use('/', mainRoutes);
 
