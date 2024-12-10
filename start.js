@@ -25,9 +25,12 @@ app.use(localVariablesMiddleware);
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json()); 
 
+// Define o caminho absoluto para as views
+app.set('views', path.join(__dirname, 'views'));  // Caminho absoluto para o diretório de views
+
 // Define o template engine e layouts
 app.use(expressLayouts);
-app.set('layout', './layouts/default/index');
+app.set('layout', path.join(__dirname, 'views', 'layouts', 'default', 'index')); // Usando caminho absoluto para o layout
 app.set('view engine', 'ejs');
 
 // Usar as rotas
