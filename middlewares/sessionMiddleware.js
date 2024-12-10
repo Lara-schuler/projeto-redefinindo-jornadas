@@ -5,7 +5,7 @@ const sessionMiddleware = session({
     resave: false,
     saveUninitialized: true,
     cookie: {
-        secure: false, // Altere para true se estiver usando HTTPS
+        secure: true, // Altere para true se estiver usando HTTPS
     },
 });
 
