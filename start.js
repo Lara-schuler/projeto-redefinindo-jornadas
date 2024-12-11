@@ -2,7 +2,6 @@ const express = require('express');
 const path = require('path');
 require("dotenv").config();
 const expressLayouts = require('express-ejs-layouts');
-const session = require('express-session');
 const flash = require('connect-flash');
 
 // Importar middlewares
@@ -18,20 +17,15 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Usar middlewares
 app.use(sessionMiddleware);
-// Middleware global para inspecionar a sessão
-app.use((req, res, next) => {
-    console.log("Sessão atual:", req.session);
-    next();
-});
 app.use(flash());
-app.use(localVariablesMiddleware); 
+app.use(localVariablesMiddleware);
 
 // Configura o parsing do corpo das requisições
 app.use(express.urlencoded({ extended: true }));
-app.use(express.json()); 
+app.use(express.json());
 
 // Define o caminho absoluto para as views
-app.set('views', path.join(__dirname, 'views'));  // Caminho absoluto para o diretório de views
+app.set('views', path.join(__dirname, 'views')); // Caminho absoluto para o diretório de views
 
 // Define o template engine e layouts
 app.use(expressLayouts);
@@ -62,6 +56,6 @@ app.use('/parceiro', parceiroRoutes);
 app.use('/', mainRoutes);
 
 // Inicializa o servidor
-app.listen(port, () => { 
-    console.log(`Servidor rodando em http://localhost:${port}`);
+app.listen(port, () => {
+  console.log(`Servidor rodando em http://localhost:${port}`);
 });
