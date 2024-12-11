@@ -80,4 +80,22 @@ const participarEvento = async (req, res) => {
   // Lógica para indicar participação no evento
 };
 
-module.exports = { criarEvento, exibirEvento, curtirEvento, compartilharEvento, participarEvento };
+const exibirHome = async (req, res) => {
+  try {
+    // Buscar eventos recentes ou futuros
+    const eventos = await eventoModel.buscarConteudosRecentes();
+
+    // Renderizar a view 'home' com os eventos e o layout configurado
+    res.render('home', {
+      layout: 'layouts/default/index', // Usando o layout configurado
+      title: 'Home - Redefinindo Jornadas',
+      eventos, // Passa os eventos para a view
+    });
+  } catch (error) {
+    console.error('Erro ao exibir a home:', error);
+    res.status(500).send('Erro ao carregar a página inicial.');
+  }
+};
+
+
+module.exports = { criarEvento, exibirEvento, curtirEvento, compartilharEvento, participarEvento, exibirHome };

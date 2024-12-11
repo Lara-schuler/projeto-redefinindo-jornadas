@@ -1,17 +1,57 @@
 <div class="container">
-    <div class="secao-bem-vindo">
-      <h1>Bem-vindo(a) ao Redefinindo Jornadas!</h1>
-      <p>Seja bem-vindo(a) à nossa comunidade solidária dedicada a transformar vidas e redefinir jornadas. Estamos aqui para ajudar e apoiar aqueles que mais precisam, construindo uma rede de esperança e oportunidades.</p>
+  <div id="eventoCarrossel" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-inner">
+      <!-- Primeiro Slide: Boas-vindas -->
+      <div class="carousel-item active primeiro-slide">
+        <div class="d-flex justify-content-center align-items-center flex-column">
+          <h1>Bem-vindo(a) ao Redefinindo Jornadas!</h1>
+          <p class="text-center">Seja bem-vindo(a) à nossa comunidade solidária dedicada a transformar vidas e redefinir
+            jornadas. Estamos aqui para ajudar e apoiar aqueles que mais precisam, construindo uma rede de esperança e
+            oportunidades.</p>
+          <img src="img/logo.png" alt="Logotipo Grande" class="img-fluid mt-3" style="max-height: 150px;">
+        </div>
+      </div>
+
+      <!-- Demais Slides: Eventos -->
+      <% if (eventos && eventos.length> 0) { %>
+        <% eventos.slice(0, 7).forEach(function(evento, index){ %>
+          <div class="carousel-item">
+            <div class="card mx-auto event-card">
+              <div class="image-container">
+                <img src="<%= evento.imagem.replace('public\\', '').replace(/\\/g, '/') %>" class="carrossel-imagem"
+                  alt="Imagem do evento">
+              </div>
+              <div class="card-body text-center">
+                <h5 class="card-title">
+                  <%= evento.titulo %>
+                </h5>
+              </div>
+            </div>
+          </div>
+          <% }); %>
+            <% } %>
+
+
+
+              <!-- Controles do Carrossel -->
+              <button class="carousel-control-prev" type="button" data-bs-target="#eventoCarrossel"
+                data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Anterior</span>
+              </button>
+              <button class="carousel-control-next" type="button" data-bs-target="#eventoCarrossel"
+                data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Próximo</span>
+              </button>
     </div>
-  
-    <div class="logo-grande">
-      <img src="img/logo.png" alt="Logotipo Grande">
-    </div>
-  
+
     <div class="novo-texto">
-      <p>Junte-se a nós para fazer a diferença! Cadastre-se agora ou faça login para explorar todas as possibilidades que oferecemos.</p>
+      <p>Junte-se a nós para fazer a diferença! Cadastre-se agora ou faça login para explorar todas as possibilidades
+        que
+        oferecemos.</p>
     </div>
-  
+
     <div class="secao-cta">
       <div class="botao-cta">
         <a href="/auth/login">Login</a>
@@ -20,10 +60,11 @@
         <a href="/auth/criar-conta">Criar conta</a>
       </div>
     </div>
-  
+
     <div class="declaracao-missao">
-      <p>No Redefinindo Jornadas, acreditamos no poder da solidariedade e na importância de oferecer apoio mútuo. Nossa missão é proporcionar uma plataforma onde todos possam encontrar ajuda, oferecer suporte e contribuir para a reintegração social da população em situação de rua. Juntos, podemos transformar vidas e criar um futuro mais inclusivo e compassivo para todos.</p>
+      <p>No Redefinindo Jornadas, acreditamos no poder da solidariedade e na importância de oferecer apoio mútuo. Nossa
+        missão é proporcionar uma plataforma onde todos possam encontrar ajuda, oferecer suporte e contribuir para a
+        reintegração social da população em situação de rua. Juntos, podemos transformar vidas e criar um futuro mais
+        inclusivo e compassivo para todos.</p>
     </div>
   </div>
-  
-  

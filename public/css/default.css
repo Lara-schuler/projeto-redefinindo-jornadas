@@ -163,6 +163,15 @@ main {
   /* Reduzido para diminuir o espaço */
 }
 
+/* Estilo específico para a imagem de perfil */
+img.rounded-circle {
+  width: 50px !important; /* Garante que o tamanho seja 40px */
+  height: 50px !important; /* Garante que o tamanho seja 40px */
+  object-fit: cover; /* Garante que a imagem seja ajustada sem distorcer */
+}
+
+
+
 .logo-grande img {
   width: 25vw;
   height: auto;
@@ -170,6 +179,96 @@ main {
   margin: 1rem auto;
   /* Ajustado para reduzir o espaço ao redor do logo */
 }
+/*carrossel*/
+#eventoCarrossel {
+  max-width: 90%;
+  margin: auto;
+}
+
+.carousel-item .card-img-top {
+  width: 100%;
+  height: 250px; /* Ajuste para o tamanho desejado */
+  object-fit: cover;
+}
+
+.card img {
+  object-fit: cover;
+  height: 300px;
+}
+
+
+.carrossel-imagem {
+  max-width: 100%; /* A imagem nunca será maior que o container */
+  max-height: 300px; /* Limita a altura máxima da imagem */
+  object-fit: cover; /* Ajusta a imagem para cobrir o espaço sem distorção */
+  width: auto; /* Garante que a largura se ajuste automaticamente */
+}
+
+.primeiro-slide {
+  background-color: #ffffff; /* Fundo branco */
+}
+
+.primeiro-slide h1 {
+  color: #004AAD;
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.primeiro-slide p{
+  color: #004AAD;
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.carousel-control-prev-icon, .carousel-control-next-icon {
+  filter: invert(1); /* Inverte as cores para que fiquem visíveis em fundo escuro */
+}
+
+/* Ajuste geral do card */
+.event-card {
+  max-width: 300px; /* Ajuste o tamanho máximo do card */
+  margin: 0 auto;
+  border: none;
+}
+
+/* Contêiner para a imagem */
+.image-container {
+  width: 100%;
+  aspect-ratio: 4 / 3; /* Garante a proporção 4x3 */
+  overflow: hidden; /* Esconde excesso de imagem */
+  border-radius: 8px; /* Adiciona bordas arredondadas, opcional */
+}
+
+/* Imagem dentro do contêiner */
+.image-container img {
+  width: 100%; /* Ocupa toda a largura */
+  height: 100%; /* Ocupa toda a altura */
+  object-fit: cover; /* Garante que a imagem preencha o espaço mantendo a proporção */
+}
+
+
+.card-title {
+  font-family: 'Roboto', sans-serif; /* Fonte moderna e limpa */
+  font-size: 1.2rem; /* Tamanho ajustável */
+  font-weight: bold; /* Destaque */
+  color: #004AAD; /* Azul que combina com o tema */
+  text-align: center; /* Centralizado */
+  margin: 0.5rem 0; /* Espaçamento ao redor */
+  text-transform: capitalize; /* Primeira letra de cada palavra em maiúsculo */
+  word-wrap: break-word; /* Quebra de texto para títulos longos */
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2); /* Sombra sutil para destaque */
+}
+
+.card-title:hover {
+  color: #002D6A; /* Cor mais escura no hover */
+  text-decoration: underline; /* Adiciona sublinhado ao passar o mouse */
+  transition: color 0.3s ease, text-decoration 0.3s ease; /* Efeito suave */
+}
+
+
 
 .novo-texto {
   text-align: center;
@@ -736,6 +835,17 @@ input[type="radio"]:checked + label {
   .menu-icon {
     display: block;
   }
+
+  .carousel-item .card-img-top {
+    height: 200px; /* Tamanho menor para dispositivos móveis */
+  }
+  .primeiro-slide h1 {
+    text-align: center;
+    font-size: 1.75rem;
+    margin: 0.5rem 0;
+    /* Ajustado para reduzir espaço */
+  }
+
   .secao-bem-vindo {
     padding: 0.5rem 0;
     /* Ajustado para telas menores */
