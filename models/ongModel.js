@@ -81,10 +81,10 @@ class ongModel {
       console.log("Resultado de inserção em `pessoa_juridica`:", pessoaJuridicaResult);
 
       // Inserir na tabela `ong`
-      console.log("Inserindo na tabela `ong`:", { id_pessoa, publico_alvo });
+      console.log("Inserindo na tabela `ong`:", { id_pessoa, publico_alvo, tipo_servico });
       const ongResult = await db.query(
-        `INSERT INTO ong (pessoa_juridica_pessoa_idpessoa, publico_alvo) VALUES (?, ?)`,
-        [id_pessoa, publico_alvo],
+        `INSERT INTO ong (pessoa_juridica_pessoa_idpessoa, publico_alvo, tipo_servico) VALUES (?, ?, ?)`,
+        [id_pessoa, publico_alvo, tipo_servico],
         conn
       );
       console.log("Resultado de inserção em `ong`:", ongResult);
@@ -121,26 +121,6 @@ class ongModel {
       );
       console.log("Resultado de inserção em `endereco_pessoa`:", enderecoPessoaResult);
 
-      // Inserir na tabela `servico`
-      console.log("Inserindo na tabela `servico` com:", { tipo_servico });
-      const servicoResult = await db.query(
-        `INSERT INTO servico (tipo_servico) VALUES (?)`,
-        [tipo_servico],
-        conn
-      );
-      console.log("Resultado de `servico`:", servicoResult);
-
-      const servicoId = servicoResult.insertId;
-
-      // Inserir na tabela de junção `servico_has_pessoa`
-      console.log("Inserindo na tabela `servico_has_pessoa`:", { id_pessoa, servicoId });
-      const servicoHasPessoaResult = await db.query(
-        `INSERT INTO servico_has_pessoa (pessoa_id_pessoa, servico_id_servico) VALUES (?, ?)`,
-        [id_pessoa, servicoId],
-        conn
-      );
-      console.log("Resultado de inserção em `servico_has_pessoa`:", servicoHasPessoaResult);
-
       // Confirmar transação
       await db.commitTransaction(conn);
       console.log("Perfil criado com sucesso!");
@@ -152,7 +132,66 @@ class ongModel {
     }
   }
 
-  
+  static async buscarPerfilOng(id_pessoa) {
+    const query = `
+        SELECT p.nome, pj.razao_social, pj.cnpj, e.rua, e.numero_end, e.cep, 
+               e.bairro, e.municipio, e.uf, u.img_perfil, u.status_perfil, 
+               pj.missao, o.tipo_servico, o.publico_alvo, pj.dias_atendimento, 
+               pj.horario_inicio, pj.horario_final
+        FROM pessoa p
+        JOIN pessoa_juridica pj ON p.id_pessoa = pj.pessoa_idpessoa
+        JOIN ong o ON pj.pessoa_idpessoa = o.pessoa_juridica_pessoa_idpessoa
+        JOIN endereco_pessoa ep ON p.id_pessoa = ep.pessoa_id_pessoa
+        JOIN endereco e ON ep.endereco_id_endereco = e.id_endereco
+        JOIN usuario u ON p.id_pessoa = u.pessoa_id_pessoa
+        WHERE p.id_pessoa = ?;
+    `;
+
+    const resultados = await db.query(query, [id_pessoa]);
+    return resultados[0] || null;
+  }
+
+  static async atualizarPerfilOng(dados) {
+    const {
+      id_pessoa, nome, razao_social, cnpj, rua, numero_end, cep, bairro, municipio, uf,
+      img_perfil, status, missao, tipo_servico, publico_alvo, dias_atendimento, horario_inicio, horario_final
+    } = dados;
+
+    let conn;
+    try {
+      conn = await db.beginTransaction();
+
+      const updatePessoa = `UPDATE pessoa SET nome = ? WHERE id_pessoa = ?;`;
+      await db.query(updatePessoa, [nome, id_pessoa], conn);
+
+      const updateUsuario = `UPDATE usuario SET img_perfil = ? WHERE pessoa_id_pessoa = ?;`;
+      await db.query(updateUsuario, [img_perfil, id_pessoa], conn);
+
+      const updateEndereco = `
+            UPDATE endereco e
+            JOIN endereco_pessoa ep ON e.id_endereco = ep.endereco_id_endereco
+            SET e.rua = ?, e.numero_end = ?, e.cep = ?, e.bairro = ?, e.municipio = ?, e.uf = ?
+            WHERE ep.pessoa_id_pessoa = ?;
+        `;
+      await db.query(updateEndereco, [rua, numero_end, cep, bairro, municipio, uf, id_pessoa], conn);
+
+      const updatePessoaJuridica = `
+            UPDATE pessoa_juridica 
+            SET razao_social = ?, cnpj = ?, missao = ?, dias_atendimento = ?, horario_inicio = ?, horario_final = ?
+            WHERE pessoa_idpessoa = ?;
+        `;
+      await db.query(updatePessoaJuridica, [razao_social, cnpj, missao, dias_atendimento, horario_inicio, horario_final, id_pessoa], conn);
+
+      const updateOng = `UPDATE ong SET tipo_servico = ?, publico_alvo = ? WHERE pessoa_juridica_pessoa_idpessoa = ?;`;
+      await db.query(updateOng, [tipo_servico, publico_alvo, id_pessoa], conn);
+
+      await db.commitTransaction(conn);
+    } catch (error) {
+      if (conn) await db.rollbackTransaction(conn);
+      throw error;
+    }
+  }
+
 }
 
 module.exports = ongModel;

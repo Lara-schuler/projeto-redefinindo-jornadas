@@ -1,24 +1,26 @@
 <div class="container">
-    <h2 class="text-center">Criar Serviço</h2>
-    <form action="/servicos/criar-servico" method="POST" enctype="multipart/form-data" class="formulario">
-      <div class="form-group">
-        <label for="titulo" class="form-label">Título:</label>
-        <input type="text" id="titulo" name="titulo" class="form-control" required>
-      </div>
-      <div class="form-group">
-        <label for="descricao" class="form-label">Descrição:</label>
-        <textarea id="descricao" name="descricao" class="form-control" rows="5" required></textarea>
-      </div>
-      <div class="form-group">
-        <label for="local" class="form-label">Local (Opcional):</label>
-        <input type="text" id="local" name="local" class="form-control" placeholder="Informe o local, se aplicável">
-      </div>
-      <div class="form-group">
-        <label for="imagem" class="form-label">Imagem (Opcional):</label>
-        <input type="file" id="imagem" name="imagem" class="form-control-file">
-      </div>
-      <button type="submit" class="btn btn-primary botao-primario">Salvar Serviço</button>
-      <button type="button" class="btn btn-secondary botao-cancelar" onclick="window.location.href='/ong/feed-ong'">Cancelar</button>
-    </form>
-  </div>
-  
+  <h2 class="text-center">Criar Serviço</h2>
+  <form action="/servicos/criar-servico" method="POST" enctype="multipart/form-data" class="formulario">
+    <!-- Campo oculto para pessoa_id -->
+    <input type="hidden" name="pessoa_id" value="<%= usuario.id_pessoa %>">
+
+    <div class="form-group">
+      <label for="titulo" class="form-label">Título:</label>
+      <input type="text" id="titulo" name="titulo" class="form-control" required>
+    </div>
+    <div class="form-group">
+      <label for="descricao" class="form-label">Descrição:</label>
+      <textarea id="descricao" name="descricao" class="form-control" rows="5" required></textarea>
+    </div>
+    <div class="form-group">
+      <label for="local" class="form-label">Local (Opcional):</label>
+      <input type="text" id="local" name="local" class="form-control" placeholder="Informe o local, se aplicável">
+    </div>
+    <div class="form-group">
+      <label for="imagem" class="form-label">Imagem (Opcional):</label>
+      <input type="file" id="imagem" name="imagem" class="form-control-file">
+    </div>
+    <button type="submit" class="btn btn-primary botao-primario">Salvar Serviço</button>
+    <button type="button" class="btn btn-secondary botao-cancelar" onclick="window.location.href='/ong/feed-ong'">Cancelar</button>
+  </form>
+</div>

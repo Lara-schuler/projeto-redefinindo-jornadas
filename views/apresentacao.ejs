@@ -1,8 +1,8 @@
 <div class="container">
   <h2 class="text-center">Apresentação</h2>
   <div id="conteudos-container" class="row">
-    <% if (conteudos && conteudos.length> 0) { %>
-      <% conteudos.forEach(conteudo=> { %>
+    <% if (conteudos && conteudos.length > 0) { %>
+      <% conteudos.forEach(conteudo => { %>
         <div class="col-md-4 mb-4">
           <div class="card">
             <div class="card-header d-flex align-items-center">
@@ -18,29 +18,72 @@
               class="card-img-top" alt="<%= conteudo.titulo %>">
             <div class="card-body">
               <h5 class="card-title">
-                <% if (conteudo.titulo.length> 30) { %>
+                <% if (conteudo.titulo && conteudo.titulo.length > 30) { %>
                   <%= conteudo.titulo.substring(0, 30) %>...
-                    <% } else { %>
-                      <%= conteudo.titulo %>
-                        <% } %>
+                <% } else { %>
+                  <%= conteudo.titulo %>
+                <% } %>
               </h5>
               <p class="card-text card-text-resumo">
-                <% if (conteudo.descricao.length> 100) { %>
+                <% if (conteudo.descricao && conteudo.descricao.length > 100) { %>
                   <%= conteudo.descricao.substring(0, 100) %>...
-                    <% } else { %>
-                      <%= conteudo.descricao %>
-                        <% } %>
+                <% } else { %>
+                  <%= conteudo.descricao %>
+                <% } %>
               </p>
               <p class="card-text"><small class="text-muted">Local: <%= conteudo.local %></small></p>
-              <p class="card-text"><small class="text-muted">Data do Evento: <%= new
-                    Date(conteudo.data_evento).toLocaleString() %></small></p>
-              <a href="/eventos/<%= conteudo.id_evento %>" class="btn btn-primary btn-sm">Detalhes</a>
+              <p class="card-text"><small class="text-muted">Data do Evento: <%= conteudo.data_evento ? new Date(conteudo.data_evento).toLocaleString() : 'Data não disponível' %></small></p>
+              <a href="/eventos/<%= conteudo.id_evento %>" class="btn btn-primary btn-sm">
+                <i class="bi bi-plus-circle"></i>
+              </a>
             </div>
           </div>
         </div>
-        <% }) %>
-          <% } else { %>
-            <p class="text-center">Nenhum conteúdo recente encontrado.</p>
-            <% } %>
+      <% }) %>
+    <% } %>
+
+    <% if (servicos && servicos.length > 0) { %>
+      <% servicos.forEach(servico => { %>
+        <div class="col-md-4 mb-4">
+          <div class="card">
+            <div class="card-header d-flex align-items-center">
+              <img
+                src="/<%= servico.img_perfil_usuario ? servico.img_perfil_usuario.replace('public\\', '') : 'caminho/para/imagem/default.jpg' %>"
+                class="rounded-circle" alt="<%= servico.nome_usuario %>" width="40" height="40">
+              <span class="ml-2">
+                <%= servico.nome_usuario %>
+              </span>
+            </div>
+            <img
+              src="/<%= servico.imagem ? servico.imagem.replace('public\\', '') : 'caminho/para/imagem/default.jpg' %>"
+              class="card-img-top" alt="<%= servico.titulo %>">
+            <div class="card-body">
+              <h5 class="card-title">
+                <% if (servico.titulo && servico.titulo.length > 30) { %>
+                  <%= servico.titulo.substring(0, 30) %>...
+                <% } else { %>
+                  <%= servico.titulo %>
+                <% } %>
+              </h5>
+              <p class="card-text card-text-resumo">
+                <% if (servico.descricao && servico.descricao.length > 100) { %>
+                  <%= servico.descricao.substring(0, 100) %>...
+                <% } else { %>
+                  <%= servico.descricao %>
+                <% } %>
+              </p>
+              <p class="card-text"><small class="text-muted">Local: <%= servico.local %></small></p>
+              <a href="/servicos/<%= servico.id_servico %>" class="btn btn-primary btn-sm">
+                <i class="bi bi-plus-circle"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      <% }) %>
+    <% } %>
+
+    <% if ((!conteudos || conteudos.length === 0) && (!servicos || servicos.length === 0)) { %>
+      <p class="text-center">Nenhum conteúdo recente encontrado.</p>
+    <% } %>
   </div>
 </div>

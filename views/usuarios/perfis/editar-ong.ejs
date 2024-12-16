@@ -1,0 +1,93 @@
+<div class="container mt-5">
+    <h2 class="text-center">Edição de Perfil da ONG</h2>
+
+    <div class="text-center mb-4">
+        <!-- Exibe a imagem de perfil atual -->
+        <img src="<%= ong.img_perfil || 'default-profile.png' %>" alt="Foto de Perfil" id="profile-image">
+    </div>
+
+    <form action="/ong/editar-ong" method="POST" enctype="multipart/form-data">
+        <div class="mb-3">
+            <input type="file" class="form-control-file mt-2" id="img_perfil" name="img_perfil" accept="image/*">
+        </div>
+
+        <div class="mb-3">
+            <label for="nome" class="form-label">Nome</label>
+            <input type="text" class="form-control" id="nome" name="nome" value="<%= ong.nome %>" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="razao_social" class="form-label">Razão Social</label>
+            <input type="text" class="form-control" id="razao_social" name="razao_social" value="<%= ong.razao_social %>" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="cnpj" class="form-label">CNPJ</label>
+            <input type="text" class="form-control" id="cnpj" name="cnpj" value="<%= ong.cnpj %>" required>
+        </div>
+
+        <h4>Localização</h4>
+        <div class="mb-3">
+            <label for="rua" class="form-label">Rua</label>
+            <input type="text" class="form-control" id="rua" name="rua" value="<%= ong.rua %>" required>
+        </div>
+        <div class="mb-3">
+            <label for="numero_end" class="form-label">Número</label>
+            <input type="number" class="form-control" id="numero_end" name="numero_end" value="<%= ong.numero_end %>" required>
+        </div>
+        <div class="mb-3">
+            <label for="cep" class="form-label">CEP</label>
+            <input type="text" class="form-control" id="cep" name="cep" value="<%= ong.cep %>" required>
+        </div>
+        <div class="mb-3">
+            <label for="bairro" class="form-label">Bairro</label>
+            <input type="text" class="form-control" id="bairro" name="bairro" value="<%= ong.bairro %>" required>
+        </div>
+        <div class="mb-3">
+            <label for="municipio" class="form-label">Município</label>
+            <input type="text" class="form-control" id="municipio" name="municipio" value="<%= ong.municipio %>" required>
+        </div>
+        <div class="mb-3">
+            <label for="uf" class="form-label">UF</label>
+            <input type="text" class="form-control" id="uf" name="uf" value="<%= ong.uf %>" required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Status</label><br>
+            <input type="radio" id="ativo" name="status" value="ativo" <%= ong.status === 'ativo' ? 'checked' : '' %> required>
+            <label for="ativo">Ativo</label><br>
+            <input type="radio" id="inativo" name="status" value="inativo" <%= ong.status === 'inativo' ? 'checked' : '' %> required>
+            <label for="inativo">Inativo</label>
+        </div>
+
+        <div class="mb-3">
+            <label for="missao" class="form-label">Missão</label>
+            <input type="text" class="form-control" id="missao" name="missao" value="<%= ong.missao %>" placeholder="Informe sua Missão">
+        </div>
+
+        <div class="mb-3">
+            <label for="tipo_servicos" class="form-label">Serviços Disponibilizados</label>
+            <textarea class="form-control" id="servicos" name="tipo_servico" rows="3"><%= ong.tipo_servico %></textarea>
+        </div>
+
+        <div class="mb-3">
+            <label for="publico_alvo" class="form-label">Público Alvo</label>
+            <input type="text" class="form-control" id="publico_alvo" name="publico_alvo" value="<%= ong.publico_alvo %>" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="dias_atendimento" class="form-label">Dias de Atendimento</label>
+            <input type="text" class="form-control" id="dias_atendimento" name="dias_atendimento" value="<%= ong.dias_atendimento %>" placeholder="Ex: Segunda a Sexta">
+        </div>
+        <div class="mb-3"> 
+            <label for="horario_inicio" class="form-label">Horário de Início</label> 
+            <input type="time" class="form-control" id="horario_inicio" name="horario_inicio" value="<%= ong.horario_inicio %>"> 
+        </div> 
+        <div class="mb-3"> 
+            <label for="horario_final" class="form-label">Horário de Término</label> 
+            <input type="time" class="form-control" id="horario_final" name="horario_final" value="<%= ong.horario_final %>"> 
+        </div>
+
+        <button type="submit" class="botao-primario">Salvar Alterações</button>
+    </form>
+    <button onclick="window.location.href='/auth/apresentacao'" class="botao-cancelar">Cancelar</button>
+</div>

@@ -1,5 +1,6 @@
 const usuarioModel = require('../models/usuarioModel');
 const eventoModel = require('../models/eventoModel'); 
+const servicoModel = require('../models/servicoModel'); 
 const { enviarEmail } = require('../utils/mailer');
 const crypto = require('crypto');
 
@@ -352,6 +353,7 @@ async function criarPerfil(req, res) {
 const exibirApresentacao = async (req, res) => {
     try {
       const conteudosRecentes = await eventoModel.buscarConteudosRecentes();
+      const servicosRecentes = await servicoModel.buscarServicosRecentes();
       console.log('Conteúdos recentes encontrados:', conteudosRecentes); // Adicione este log para verificar os conteúdos
   
       // Verificar se conteudosRecentes é uma lista (array)
@@ -360,13 +362,20 @@ const exibirApresentacao = async (req, res) => {
       } else {
         console.log('conteudosRecentes não é uma lista:', conteudosRecentes);
       }
+      // Verificar se conteudosRecentes é uma lista (array)
+      if (Array.isArray(servicosRecentes)) {
+        console.log('conteudosRecentes é uma lista:', servicosRecentes);
+      } else {
+        console.log('servicosRecentes não é uma lista:', servicosRecentes);
+      }
   
-      res.render('apresentacao', {
-        layout: 'layouts/default/apresentacao',
-        title: 'Apresentação',
-        usuario: req.session.user,
-        conteudos: conteudosRecentes // Certifique-se de passar a variável conteudos como uma lista
-      });
+    res.render('apresentacao', {
+      layout: 'layouts/default/apresentacao',
+      title: 'Apresentação',
+      usuario: req.session.user,
+      conteudos: conteudosRecentes,
+      servicos: servicosRecentes // Certifique-se de passar a variável servicosRecentes corretamente
+    });
     } catch (error) {
       console.error('Erro ao buscar conteúdos recentes:', error);
       res.status(500).json({ message: 'Erro ao buscar conteúdos recentes', error: error.message });

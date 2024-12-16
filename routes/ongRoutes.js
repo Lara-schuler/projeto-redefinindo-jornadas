@@ -22,6 +22,24 @@ router.post('/criar-perfil-ong', upload.single('img_perfil'), (req, res) => {
     ongController.criarPerfilOng(req, res);
 });
 
+// Rota para exibir a página de edição de perfil de ONG
+router.get('/editar-ong', (req, res) => {
+    if (req.session.user) {
+        console.log('Usuário logado:', req.session.user);
+        // Carregar os dados do perfil da ONG e renderizar a view
+        ongController.exibirEditarPerfil(req, res);
+    } else {
+        console.log('Nenhum usuário logado.');
+        res.redirect('/login');
+    }
+});
+
+// Rota para processar a edição do perfil de ONG
+router.post('/editar-ong', upload.single('img_perfil'), (req, res) => {
+    ongController.editarPerfilOng(req, res);
+});
+
+
 // rota para o feed de ONG
 router.get('/feed-ong', (req, res) => {
     if (req.session.user) {

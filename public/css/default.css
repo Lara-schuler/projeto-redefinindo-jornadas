@@ -103,6 +103,17 @@ main {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3E%3Cpath stroke='rgba%28255, 255, 255, 1%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E") !important;
 }
 
+.card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.card-body {
+  flex-grow: 1; /* Faz com que a área do corpo do card ocupe todo o espaço disponível */
+}
+
+
 .card-text-resumo {
   overflow: hidden; /* Impede que o texto transborde */
   display: -webkit-box; /* Define um contêiner flexível */
@@ -140,6 +151,19 @@ main {
   font-size: 1.2em;
 }
 
+.btn-light {
+  border: 1px solid #ddd; /* Cor do borda para os botões */
+  padding: 10px 15px; /* Espaçamento dentro do botão */
+  border-radius: 5px; /* Borda arredondada */
+  color: #555; /* Cor do texto e ícone */
+  font-size: 16px; /* Tamanho da fonte para o texto e ícones */
+}
+
+.btn-light:hover {
+  background-color: #f8f9fa; /* Cor de fundo ao passar o mouse */
+  color: #007bff; /* Cor ao passar o mouse */
+}
+
 .secao-bem-vindo {
   text-align: center;
   padding: 1rem 0;
@@ -169,8 +193,6 @@ img.rounded-circle {
   height: 50px !important; /* Garante que o tamanho seja 40px */
   object-fit: cover; /* Garante que a imagem seja ajustada sem distorcer */
 }
-
-
 
 .logo-grande img {
   width: 25vw;
@@ -345,7 +367,8 @@ footer {
 
 /* Estilos da página de login */
 .container-login {
-  max-width: 360px;
+  width: 100%;
+  max-width: 400px;
   margin: auto;
   padding: 3rem 1rem 1rem 1rem;
 }
@@ -471,9 +494,9 @@ footer {
 }
 
 /* Estilos específicos para a página de criação de conta */
-.container-criar-conta, .container-criar-perfil {
+.container-criar-conta {
   width: 100%;
-  max-width: 320px;
+  max-width: 400px;
   padding: 1rem;
   background: white;
   box-shadow: 0 1px 20px rgba(0, 0, 0, 0.25);
@@ -483,13 +506,26 @@ footer {
   /* Centraliza horizontalmente */
 }
 
+/* Estilos específicos para a página de criação de conta */
+.container-criar-perfil {
+  width: 100%;
+  max-width: 500px;
+  padding: 1rem;
+  background: white;
+  box-shadow: 0 1px 20px rgba(0, 0, 0, 0.25);
+  border-radius: 10px;
+  box-sizing: border-box;
+  margin: 40px auto;
+  /* Centraliza horizontalmente */
+}
 .caixa-login h2,
-.container-redefinir-senha h2,
-.caixa-criar-conta h2, .caixa-criar-perfil h2 {
+.container-redefinir-senha h2, .container-recuperar-senha h2,
+.caixa-criar-conta h2, .caixa-criar-perfil h2, .caixa-verificar-token h2 {
   color: #004AAD;
   text-align: center;
   font-size: 24px;
   margin-bottom: 1rem;
+  font-weight: bold;
 }
 
 .input-container {
@@ -597,6 +633,7 @@ input:focus {
 /* verificar token */
 
 .container-verificar-token {
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;

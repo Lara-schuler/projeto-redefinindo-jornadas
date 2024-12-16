@@ -1,51 +1,100 @@
 <div class="container">
   <h2 class="text-center">Feed de Conteúdos Recentes</h2>
   <div id="conteudos-container" class="row">
-    <% if (conteudos && conteudos.length> 0) { %>
-      <% conteudos.forEach(conteudo=> { %>
+
+    <!-- Exibindo os eventos -->
+    <% if (eventos && eventos.length > 0) { %>
+      <% eventos.forEach(evento => { %>
         <div class="col-md-4 mb-4">
           <div class="card">
             <div class="card-header d-flex align-items-center">
               <img
-                src="/<%= conteudo.img_perfil_usuario ? conteudo.img_perfil_usuario.replace('public\\', '') : 'caminho/para/imagem/default.jpg' %>"
-                class="rounded-circle " alt="<%= conteudo.nome_usuario %>" width="40" height="40">
+                src="/<%= evento.img_perfil_usuario ? evento.img_perfil_usuario.replace('public\\', '') : 'caminho/para/imagem/default.jpg' %>"
+                class="rounded-circle" alt="<%= evento.nome_usuario %>" width="40" height="40">
               <span class="ml-2">
-                <%= conteudo.nome_usuario %>
+                <%= evento.nome_usuario %>
               </span>
             </div>
             <img
-              src="/<%= conteudo.imagem ? conteudo.imagem.replace('public\\', '') : 'caminho/para/imagem/default.jpg' %>"
-              class="card-img-top" alt="<%= conteudo.titulo %>">
+              src="/<%= evento.imagem ? evento.imagem.replace('public\\', '') : 'caminho/para/imagem/default.jpg' %>"
+              class="card-img-top" alt="<%= evento.titulo %>">
             <div class="card-body">
               <h5 class="card-title">
-                <% if (conteudo.titulo.length> 30) { %>
-                  <%= conteudo.titulo.substring(0, 30) %>...
-                    <% } else { %>
-                      <%= conteudo.titulo %>
-                        <% } %>
+                <% if (evento.titulo.length > 30) { %>
+                  <%= evento.titulo.substring(0, 30) %>...
+                <% } else { %>
+                  <%= evento.titulo %>
+                <% } %>
               </h5>
               <p class="card-text card-text-resumo">
-                <% if (conteudo.descricao.length> 100) { %>
-                  <%= conteudo.descricao.substring(0, 100) %>...
-                    <% } else { %>
-                      <%= conteudo.descricao %>
-                        <% } %>
+                <% if (evento.descricao.length > 100) { %>
+                  <%= evento.descricao.substring(0, 100) %>...
+                <% } else { %>
+                  <%= evento.descricao %>
+                <% } %>
               </p>
-              <p class="card-text"><small class="text-muted">Local: <%= conteudo.local %></small></p>
+              <p class="card-text"><small class="text-muted">Local: <%= evento.local %></small></p>
               <p class="card-text"><small class="text-muted">Data do Evento: <%= new
-                    Date(conteudo.data_evento).toLocaleString() %></small></p>
-              <a href="/eventos/<%= conteudo.id_evento %>" class="btn btn-primary">Detalhes</a>
+                    Date(evento.data_evento).toLocaleString() %></small></p>
+              <a href="/eventos/<%= evento.id_evento %>" class="btn btn-primary"><i class="bi bi-plus-circle"></i></a>
               <div class="d-flex justify-content-between mt-2">
-                <button class="btn btn-primary btn-sm">Curtir</button>
-                <button class="btn btn-secondary btn-sm">Compartilhar</button>
-                <button class="btn btn-success btn-sm">Participar</button>
+                <button class="btn btn-primary btn-sm"><i class="bi bi-heart"></i> </button>
+                <button class="btn btn-secondary btn-sm"><i class="bi bi-send"></i></button>
+                <button class="btn btn-success btn-sm"><i class="bi bi-check-circle"></i></button>
               </div>
             </div>
           </div>
         </div>
-        <% }) %>
-          <% } else { %>
-            <p class="text-center">Nenhum conteúdo recente encontrado.</p>
-            <% } %>
+      <% }) %>
+    <% } %>
+
+    <!-- Exibindo os serviços -->
+    <% if (servicos && servicos.length > 0) { %>
+      <% servicos.forEach(servico => { %>
+        <div class="col-md-4 mb-4">
+          <div class="card">
+            <div class="card-header d-flex align-items-center">
+              <img
+                src="/<%= servico.img_perfil_usuario ? servico.img_perfil_usuario.replace('public\\', '') : 'caminho/para/imagem/default.jpg' %>"
+                class="rounded-circle" alt="<%= servico.nome_usuario %>" width="40" height="40">
+              <span class="ml-2">
+                <%= servico.nome_usuario %>
+              </span>
+            </div>
+            <img
+              src="/<%= servico.imagem ? servico.imagem.replace('public\\', '') : 'caminho/para/imagem/default.jpg' %>"
+              class="card-img-top" alt="<%= servico.titulo %>">
+            <div class="card-body">
+              <h5 class="card-title">
+                <% if (servico.titulo.length > 30) { %>
+                  <%= servico.titulo.substring(0, 30) %>...
+                <% } else { %>
+                  <%= servico.titulo %>
+                <% } %>
+              </h5>
+              <p class="card-text card-text-resumo">
+                <% if (servico.descricao.length > 100) { %>
+                  <%= servico.descricao.substring(0, 100) %>...
+                <% } else { %>
+                  <%= servico.descricao %>
+                <% } %>
+              </p>
+              <p class="card-text"><small class="text-muted">Local: <%= servico.local %></small></p>
+              <a href="/servicos/<%= servico.id_servico %>" class="btn btn-primary"><i class="bi bi-plus-circle"></i></a>
+              <div class="d-flex justify-content-between mt-2">
+                <button class="btn btn-primary btn-sm"><i class="bi bi-heart"></i></button>
+                <button class="btn btn-secondary btn-sm"><i class="bi bi-send"></i></i></button>
+                <button class="btn btn-info btn-sm"><i class="bi bi-person-plus"></i></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% }) %>
+    <% } %>
+
+    <!-- Mensagem caso não haja eventos ou serviços -->
+    <% if ((!eventos || eventos.length === 0) && (!servicos || servicos.length === 0)) { %>
+      <p class="text-center">Nenhum conteúdo recente encontrado.</p>
+    <% } %>
   </div>
 </div>
