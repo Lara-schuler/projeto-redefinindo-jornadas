@@ -19,10 +19,33 @@
         <%- include('msg') %>
             <main><%- body %></main>
             <%- include('footer') %>
+
+                <!-- Scripts JS no final do body -->
                 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
                     crossorigin="anonymous"></script>
                 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
                     crossorigin="anonymous"></script>
+
+                <!-- Aqui você pode colocar seu código JS personalizado -->
+                <script>
+                    document.querySelectorAll('.nav-item.dropdown').forEach(function (item) {
+                        item.addEventListener('click', function (e) {
+                            // Verifica se o clique foi em um link e não no submenu em si
+                            if (e.target.tagName.toLowerCase() === 'a') {
+                                // Não impede o comportamento padrão de navegação se for um link
+                                return;
+                            }
+
+                            // Impede a navegação do link caso o clique não tenha sido no link
+                            e.preventDefault();
+
+                            // Alterna a classe "show" no submenu
+                            this.classList.toggle('show');
+                        });
+                    });
+
+
+                </script>
 
 </body>
 

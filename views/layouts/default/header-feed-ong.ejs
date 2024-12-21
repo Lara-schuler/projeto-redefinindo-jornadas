@@ -17,11 +17,16 @@
         <li class="nav-item">
           <a class="nav-link" href="/servicos/criar-servico">Serviço</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/ong/editar-ong">Perfil</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/">Sair</a>
+        <!-- Submenu Perfil -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Perfil
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" href="/ong/editar-ong">Editar Perfil</a></li>
+            <li><a class="dropdown-item" href="/auth/editar-conta">Configurações</a></li>
+            <li><a class="dropdown-item" href="/">Sair</a></li>
+          </ul>
         </li>
       </ul>
     </nav>

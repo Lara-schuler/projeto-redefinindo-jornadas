@@ -4,11 +4,11 @@
             <div class="card">
                 <div class="card-header d-flex align-items-center">
                     <% if (servico.img_perfil_usuario) { %>
-                        <img src="/<%= servico.img_perfil_usuario ? servico.img_perfil_usuario.replace('public\\', '') : 'caminho/para/imagem/default.jpg' %>"
-                            class="rounded-circle" alt="<%= servico.nome_usuario %>" width="40" height="40">
+                        <img src="/<%= servico.img_perfil_usuario.replace('public\\', '') %>" class="rounded-circle"
+                            alt="<%= servico.nome_usuario %>" width="40" height="40">
                         <% } else { %>
-                            <img src="/caminho/para/imagem/default.jpg" class="rounded-circle"
-                                alt="Imagem de perfil padrão" width="40" height="40">
+                            <img src="/img/default-user.jpg" class="rounded-circle" alt="Imagem de perfil padrão"
+                                width="40" height="40">
                             <% } %>
                                 <span class="ml-2">
                                     <%= servico.nome_usuario %>
@@ -17,16 +17,18 @@
                 <% if (servico.imagem) { %>
                     <img src="/<%= servico.imagem.replace('public\\', '') %>" class="card-img-top detalhes-img"
                         alt="<%= servico.titulo %>">
-                    <% } %>
-                        <div class="card-body">
-                            <h5 class="card-title">
-                                <%= servico.titulo %>
-                            </h5>
-                            <p class="card-text">
-                                <%= servico.descricao %>
-                            </p>
-                            <p class="card-text"><small class="text-muted">Local: <%= servico.local %></small></p>
-                        </div>
+                    <% } else { %>
+                        <img src="/img/default-image.png" class="card-img-top detalhes-img" alt="Imagem padrão">
+                        <% } %>
+                            <div class="card-body">
+                                <h5 class="card-title">
+                                    <%= servico.titulo %>
+                                </h5>
+                                <p class="card-text">
+                                    <%= servico.descricao %>
+                                </p>
+                                <p class="card-text"><small class="text-muted">Local: <%= servico.local %></small></p>
+                            </div>
             </div>
         </div>
     </div>

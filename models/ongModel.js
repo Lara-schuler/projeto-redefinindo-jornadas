@@ -1,4 +1,5 @@
 const db = require('./Database');
+const path = require('path');
 
 class ongModel {
   static async criarPerfilOng(data) {
@@ -54,11 +55,11 @@ class ongModel {
       const id_usuario = usuarioResult[0].id_usuario;
 
       // Definir um valor padrão para `status_perfil` caso ele não seja fornecido
-      const statusPerfil = 'criado'; // Ou use uma lógica para definir se ainda não foi criado
+      const statusPerfil = 'criado'; 
 
       console.log("Atualizando tabela `usuario` com:", {
         img_perfil,
-        status_perfil: statusPerfil, // Passando a variável correta
+        status_perfil: statusPerfil, 
         id_usuario
       });
 
@@ -68,7 +69,7 @@ class ongModel {
         WHERE id_usuario = ?;
       `;
 
-      const usuarioUpdateResult = await db.query(updateUsuarioQuery, [img_perfil || 'default_path', statusPerfil, id_usuario], conn);
+      const usuarioUpdateResult = await db.query(updateUsuarioQuery, [path.posix.normalize(img_perfil || 'img/default-user.jpg'), statusPerfil, id_usuario], conn);
       console.log("Resultado de atualização em `usuario`:", usuarioUpdateResult);
 
       // Inserir na tabela `pessoa_fisica`
@@ -137,7 +138,7 @@ class ongModel {
         SELECT p.nome, pj.razao_social, pj.cnpj, e.rua, e.numero_end, e.cep, 
                e.bairro, e.municipio, e.uf, u.img_perfil, u.status_perfil, 
                pj.missao, o.tipo_servico, o.publico_alvo, pj.dias_atendimento, 
-               pj.horario_inicio, pj.horario_final
+               pj.horario_inicio, pj.horario_final, e.status AS endereco_status
         FROM pessoa p
         JOIN pessoa_juridica pj ON p.id_pessoa = pj.pessoa_idpessoa
         JOIN ong o ON pj.pessoa_idpessoa = o.pessoa_juridica_pessoa_idpessoa
@@ -146,11 +147,11 @@ class ongModel {
         JOIN usuario u ON p.id_pessoa = u.pessoa_id_pessoa
         WHERE p.id_pessoa = ?;
     `;
-
+  
     const resultados = await db.query(query, [id_pessoa]);
     return resultados[0] || null;
   }
-
+  
   static async atualizarPerfilOng(dados) {
     const {
       id_pessoa, nome, razao_social, cnpj, rua, numero_end, cep, bairro, municipio, uf,
@@ -164,8 +165,12 @@ class ongModel {
       const updatePessoa = `UPDATE pessoa SET nome = ? WHERE id_pessoa = ?;`;
       await db.query(updatePessoa, [nome, id_pessoa], conn);
 
-      const updateUsuario = `UPDATE usuario SET img_perfil = ? WHERE pessoa_id_pessoa = ?;`;
-      await db.query(updateUsuario, [img_perfil, id_pessoa], conn);
+      const updateUsuario = `
+        UPDATE usuario 
+        SET img_perfil = COALESCE(?, img_perfil) 
+        WHERE pessoa_id_pessoa = ?;
+      `;
+      await db.query(updateUsuario, [path.posix.normalize(img_perfil || 'img/default-user.jpg'), id_pessoa], conn);
 
       const updateEndereco = `
             UPDATE endereco e

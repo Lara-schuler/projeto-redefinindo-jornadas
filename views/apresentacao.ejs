@@ -7,14 +7,14 @@
           <div class="card">
             <div class="card-header d-flex align-items-center">
               <img
-                src="/<%= conteudo.img_perfil_usuario ? conteudo.img_perfil_usuario.replace('public\\', '') : 'caminho/para/imagem/default.jpg' %>"
+                src="/<%= conteudo.img_perfil_usuario ? conteudo.img_perfil_usuario.replace('public\\', '') : 'img/defaultUser.jpg' %>"
                 class="rounded-circle" alt="<%= conteudo.nome_usuario %>" width="40" height="40">
               <span class="ml-2">
                 <%= conteudo.nome_usuario %>
               </span>
             </div>
             <img
-              src="/<%= conteudo.imagem ? conteudo.imagem.replace('public\\', '') : 'caminho/para/imagem/default.jpg' %>"
+              src="/<%= conteudo.imagem ? conteudo.imagem.replace('public\\', '') : 'img/default-image.png' %>"
               class="card-img-top" alt="<%= conteudo.titulo %>">
             <div class="card-body">
               <h5 class="card-title">
@@ -48,14 +48,14 @@
           <div class="card">
             <div class="card-header d-flex align-items-center">
               <img
-                src="/<%= servico.img_perfil_usuario ? servico.img_perfil_usuario.replace('public\\', '') : 'caminho/para/imagem/default.jpg' %>"
+                src="/<%= servico.img_perfil_usuario ? servico.img_perfil_usuario.replace('public\\', '') : 'img/default-user.jpg' %>"
                 class="rounded-circle" alt="<%= servico.nome_usuario %>" width="40" height="40">
               <span class="ml-2">
                 <%= servico.nome_usuario %>
               </span>
             </div>
             <img
-              src="/<%= servico.imagem ? servico.imagem.replace('public\\', '') : 'caminho/para/imagem/default.jpg' %>"
+              src="/<%= servico.imagem ? servico.imagem.replace('public\\', '') : 'img/default-image.png' %>"
               class="card-img-top" alt="<%= servico.titulo %>">
             <div class="card-body">
               <h5 class="card-title">

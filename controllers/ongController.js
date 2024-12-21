@@ -3,11 +3,14 @@ const usuarioModel = require('../models/usuarioModel');
 const eventoModel = require('../models/eventoModel');
 const servicoModel = require('../models/servicoModel');
 const { definirMensagem } = require('./usuarioController');
+const path = require('path');
 
 const criarPerfilOng = async (req, res) => {
   try {
-    // Verifica se o upload de imagem foi realizado
-    const img_perfil = req.file ? req.file.path : null;
+    const img_perfil = req.file
+      ? `uploads/${path.basename(req.file.path)}` 
+      : req.body.img_atual || 'img/default-user.jpg'; 
+
 
     // Coleta os dados do corpo da requisição
     const {
@@ -110,23 +113,32 @@ const exibirEditarPerfil = async (req, res) => {
 const editarPerfilOng = async (req, res) => {
   try {
     const id_pessoa = req.session.user.id_pessoa;
-    const img_perfil = req.file ? req.file.path : req.body.img_atual; // Manter a imagem atual se não houver upload
+    const img_perfil = req.file
+      ? `uploads/${path.basename(req.file.path)}` // Caminho relativo, sem "public"
+      : req.body.img_atual || 'img/default-user.jpg'; // Valor padrão
+
+
+
     const dadosAtualizados = {
       ...req.body,
       id_pessoa,
       img_perfil
     };
 
+    // Atualiza o perfil da ONG no banco de dados
     await ongModel.atualizarPerfilOng(dadosAtualizados);
 
+    // Mensagem de sucesso
     req.flash('success', 'Perfil atualizado com sucesso!');
-    res.redirect('/ong/feed-ong');
+    res.redirect('/ong/feed-ong'); // Redireciona para o feed da ONG
   } catch (error) {
+    // Mensagem de erro caso algo falhe
     console.error('Erro ao atualizar o perfil de ONG:', error);
     req.flash('error', 'Erro ao atualizar o perfil.');
-    res.redirect('/ong/editar-perfil-ong');
+    res.redirect('/ong/editar-perfil-ong'); // Redireciona de volta para a edição de perfil
   }
 };
+
 
 
 

@@ -1,0 +1,63 @@
+<div class="container-criar-conta">
+    <div class="caixa-criar-conta">
+        <h2>Edite sua conta</h2>
+        <form action="/auth/editar-conta" method="POST">
+            <div class="grupo-formulario">
+                <label for="email">E-mail:</label>
+                <input type="email" id="email" name="email" class="form-control" placeholder="Digite seu e-mail" value="<%= usuario.email %>" required>
+            </div>
+            <div class="grupo-formulario">
+                <label for="telefone">Telefone:</label>
+                <input type="tel" id="telefone" name="telefone" class="form-control" placeholder="Digite seu telefone" value="<%= usuario.telefone %>" required>
+            </div>
+            <div class="grupo-formulario">
+                <label for="senhaAtual">Senha Atual:</label>
+                <input type="password" id="senhaAtual" name="senhaAtual" class="form-control" placeholder="Digite sua senha atual">
+            </div>
+            <div class="grupo-formulario">
+                <label for="novaSenha">Nova Senha:</label>
+                <input type="password" id="novaSenha" name="novaSenha" class="form-control" placeholder="Digite sua nova senha">
+            </div>
+            <button type="submit" class="botao-primario">Salvar Alterações</button>
+        </form>
+        <button onclick="window.location.href='/'" class="btn btn-link w-100 mt-3">Cancelar</button>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const toggleSenha = document.getElementById('toggleSenha');
+        const senhaInput = document.getElementById('senha');
+
+        if (toggleSenha && senhaInput) {
+            toggleSenha.addEventListener('click', function() {
+                if (senhaInput.type === 'password') {
+                    senhaInput.type = 'text';
+                    toggleSenha.classList.remove('bi-eye');
+                    toggleSenha.classList.add('bi-eye-slash');
+                } else {
+                    senhaInput.type = 'password';
+                    toggleSenha.classList.remove('bi-eye-slash');
+                    toggleSenha.classList.add('bi-eye');
+                }
+            });
+        }
+
+        const toggleConfirmarSenha = document.getElementById('toggleConfirmarSenha');
+        const confirmarSenhaInput = document.getElementById('confirmar-senha');
+
+        if (toggleConfirmarSenha && confirmarSenhaInput) {
+            toggleConfirmarSenha.addEventListener('click', function() {
+                if (confirmarSenhaInput.type === 'password') {
+                    confirmarSenhaInput.type = 'text';
+                    toggleConfirmarSenha.classList.remove('bi-eye');
+                    toggleConfirmarSenha.classList.add('bi-eye-slash');
+                } else {
+                    confirmarSenhaInput.type = 'password';
+                    toggleConfirmarSenha.classList.remove('bi-eye-slash');
+                    toggleConfirmarSenha.classList.add('bi-eye');
+                }
+            });
+        }
+    });
+</script>

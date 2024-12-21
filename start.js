@@ -24,6 +24,9 @@ app.use(localVariablesMiddleware);
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
+// Configuração para servir arquivos estáticos da pasta 'public'
+app.use('/public', express.static(path.join(__dirname, 'public')));
+
 // Define o caminho absoluto para as views
 app.set('views', path.join(__dirname, 'views')); // Caminho absoluto para o diretório de views
 

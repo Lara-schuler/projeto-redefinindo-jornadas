@@ -26,6 +26,18 @@ router.post('/criar-conta', (req, res) => {
     usuarioController.criarConta(req, res);
 });
 
+// Rota para exibir o formulário de edição de conta
+router.get('/editar-conta', (req, res) => {
+    usuarioController.exibirFormularioEdicao(req, res);
+});
+
+// Rota para processar a edição de conta
+router.post('/editar-conta', (req, res) => {
+    usuarioController.editarConta(req, res);
+});
+
+
+
 // Rotas para recuperação de senha
 router.get('/recuperar-senha', (req, res) => {
     res.render('usuarios/recuperar-senha', {

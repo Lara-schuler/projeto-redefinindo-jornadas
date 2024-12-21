@@ -6,7 +6,7 @@ const crypto = require('crypto');
 
 function validarEntrada(email, telefone, senha) {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    const telefoneRegex = /^\d{10,11}$/; // Ajuste conforme o formato necessário para o telefone
+    const telefoneRegex = /^\d{2}\d{8,9}$/;
 
     if (!email && !telefone) {
         throw new Error('O campo de email ou telefone deve estar preenchido');
@@ -171,29 +171,89 @@ function validarEntradaCriarConta(email, telefone, senha, confirmarSenha) {
 
 async function criarConta(req, res) {
     const { email, telefone, senha, confirmarSenha } = req.body;
+
     try {
         validarEntradaCriarConta(email, telefone, senha, confirmarSenha);
+
+        // Verificar se o email já existe
         const emailExists = email ? await usuarioModel.buscarPorEmail(email) : [];
-        const telefoneExists = telefone ? await usuarioModel.buscarPorTelefone(telefone) : [];
         
+        // Verificar se o telefone já existe
+        const telefoneExists = telefone ? await usuarioModel.buscarPorTelefone(telefone.replace(/\D/g, '')) : [];
+
         if (emailExists.length > 0) {
             definirMensagem(req, 'error', 'Email já está em uso.');
-            res.redirect('/auth/criar-conta');
-            return;
-        }
-        
-        if (telefoneExists.length > 0) {
-            definirMensagem(req, 'error', 'Telefone já está em uso.');
-            res.redirect('/auth/criar-conta');
-            return;
+            return res.redirect('/auth/criar-conta');
         }
 
-        await usuarioModel.criarConta(email, telefone, senha);
+        if (telefoneExists.length > 0) {
+            definirMensagem(req, 'error', 'Telefone já está em uso.');
+            return res.redirect('/auth/criar-conta');
+        }
+
+        // Criar a conta
+        await usuarioModel.criarConta(email, telefone.replace(/\D/g, ''), senha);
+
         definirMensagem(req, 'success', 'Conta criada com sucesso.');
-        res.redirect('/auth/login');
+        return res.redirect('/auth/login');
     } catch (error) {
         definirMensagem(req, 'error', error.message);
-        res.redirect('/auth/criar-conta');
+        return res.redirect('/auth/criar-conta');
+    }
+}
+
+async function exibirFormularioEdicao(req, res) {
+    try {
+        const usuarioId = req.session.usuarioId; // Supondo que o ID do usuário esteja na sessão
+        const usuario = await usuarioModel.obterUsuarioPorId(usuarioId);
+        console.log('Sessão antes de editar conta:', req.session);
+        if (!usuario) {
+            req.flash('error', 'Usuário não encontrado.');
+            return res.redirect('/auth/login');
+        }
+
+        res.render('usuarios/editar-conta', {
+            layout: 'layouts/default/criar-conta',
+            title: 'Editar Conta',
+            usuario,
+        });
+    } catch (error) {
+        req.flash('error', 'Erro ao carregar o formulário.');
+        res.redirect('/');
+    }
+}
+
+async function editarConta(req, res) {
+    const { email, telefone, senhaAtual, novaSenha } = req.body;
+    const usuarioId = req.session.usuarioId;
+    console.log('Sessão antes de editar conta:', req.session);
+
+    try {
+        // Lógica para verificar e atualizar os dados
+        const usuario = await usuarioModel.obterUsuarioPorId(usuarioId);
+
+        if (!usuario) {
+            req.flash('error', 'Usuário não encontrado.');
+            return res.redirect('/auth/editar-conta');
+        }
+
+        if (senhaAtual && novaSenha) {
+            // Verifique a senha atual e atualize para a nova senha
+            const senhaCorreta = await usuarioModel.verificarSenha(usuarioId, senhaAtual);
+            if (!senhaCorreta) {
+                req.flash('error', 'Senha atual incorreta.');
+                return res.redirect('/auth/editar-conta');
+            }
+
+            await usuarioModel.atualizarSenha(usuario.email, novaSenha);
+        }
+
+        await usuarioModel.atualizarDados(usuarioId, email, telefone);
+        req.flash('success', 'Conta atualizada com sucesso.');
+        res.redirect('/auth/editar-conta');
+    } catch (error) {
+        req.flash('error', 'Erro ao atualizar conta.');
+        res.redirect('/auth/editar-conta');
     }
 }
 
@@ -383,4 +443,4 @@ const exibirApresentacao = async (req, res) => {
   };
   
 
-module.exports = { validarEntrada, definirMensagem, autenticar, login, criarConta, recuperarSenha, verificarToken, redefinirSenha, criarPerfil, exibirApresentacao };
+module.exports = { validarEntrada, definirMensagem, autenticar, login, criarConta, recuperarSenha, verificarToken, redefinirSenha, criarPerfil, exibirApresentacao, exibirFormularioEdicao, editarConta };

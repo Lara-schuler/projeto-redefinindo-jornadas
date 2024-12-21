@@ -56,20 +56,22 @@ main {
   font-weight: 700;
 }
 
-/* Mostrar o ícone do menu hambúrguer e esconder o menu padrão */
-.menu-icon {
-  display: block;
-}
-
+/* Navbar */
 .navbar {
-  background-color: #004AAD !important;;
+  background-color: #004AAD !important;
 }
 
 .navbar-nav .nav-link {
-  color:#ffffff !important;
+  color: #ffffff !important;
   font-size: 1rem;
   font-weight: 700;
   text-transform: uppercase; /* Maiúsculas para dar mais destaque */
+  transition: all 0.3s ease-in-out; /* Animação de transição para hover */
+}
+
+.navbar-nav .nav-link:hover {
+  color: #FFD700; /* Ou qualquer cor que combine com seu esquema de cores */
+  transform: scale(1.05); /* Efeito de aumento suave */
 }
 
 .navbar-brand img {
@@ -77,6 +79,7 @@ main {
   height: 5.5rem;
 }
 
+/* Configurações do Menu */
 .navbar-nav {
   display: flex;
   justify-content: flex-end; /* Alinha os itens à direita */
@@ -88,20 +91,36 @@ main {
   margin-right: 1.5rem; /* Ajuste para espaçamento equilibrado */
 }
 
-.navbar-nav .nav-link {
-  transition: all 0.3s ease-in-out;
+/* Ajustes do Submenu (Dropdown) */
+.navbar-nav .nav-item.dropdown:hover .dropdown-menu {
+  display: block;
 }
 
-.navbar-nav .nav-link:hover {
-  color: #FFD700; /* Ou qualquer cor que combine com seu esquema de cores */
-  transform: scale(1.05); /* Efeito de aumento suave */
+.navbar-nav .nav-item .dropdown-menu {
+  display: none;
+  position: absolute;
+  background-color: #004AAD;
+  border-radius: 5px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  width: 200px; /* Ajuste o tamanho do dropdown se necessário */
 }
 
+.navbar-nav .nav-item .dropdown-item {
+  color: #fff;
+  padding: 10px 20px;
+  text-transform: capitalize;
+}
 
-/* Ajusta a cor do ícone do menu hamburger */
+.navbar-nav .nav-item .dropdown-item:hover {
+  background-color: #FFD700;
+}
+
+/* Ajusta o ícone do menu hamburger */
 .navbar-toggler-icon {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3E%3Cpath stroke='rgba%28255, 255, 255, 1%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E") !important;
 }
+
+
 
 .card {
   display: flex;
@@ -189,8 +208,15 @@ main {
 
 /* Estilo específico para a imagem de perfil */
 img.rounded-circle {
-  width: 50px !important; /* Garante que o tamanho seja 40px */
-  height: 50px !important; /* Garante que o tamanho seja 40px */
+  width: 40px !important; /* Garante que o tamanho seja 40px */
+  height: 40px !important; /* Garante que o tamanho seja 40px */
+  object-fit: cover; /* Garante que a imagem seja ajustada sem distorcer */
+}
+
+/* Estilo específico para a imagem de perfil */
+#imagem-perfil {
+  width: 150px !important; /* Garante que o tamanho seja 40px */
+  height: 150px !important; /* Garante que o tamanho seja 40px */
   object-fit: cover; /* Garante que a imagem seja ajustada sem distorcer */
 }
 
@@ -846,33 +872,27 @@ input[type="radio"]:checked + label {
     padding: 0 1rem;
   }
 
-  .navbar-nav {
+  .navbar-nav .dropdown-menu {
+    display: none; /* Esconde o submenu inicialmente */
+    position: static;
+    box-shadow: none;
     width: 100%;
-    text-align: flex-end; /* Centraliza os itens na tela pequena */
   }
 
-  .navbar-nav .nav-item {
-    margin: 0.5rem 0; /* Espaço mais amplo entre os itens */
-  }
-
-  .navbar-brand img {
-    width: 4rem;
-    height: 4rem;
-  }
-
-  .top-nav ul li {
-    margin-left: 1.5rem;
-  }
-
-  .top-nav ul li a {
-    font-size: 1rem;
-  }
-
-  /* Mostrar o ícone do menu hambúrguer e esconder o menu padrão */
-  .menu-icon {
+  .navbar-nav .dropdown.show .dropdown-menu {
     display: block;
   }
 
+  /* Para o dropdown no mobile */
+  .navbar-nav .nav-item .dropdown-item {
+    text-align: left;
+    padding: 12px 20px;
+  }
+
+  .navbar-nav .nav-item .dropdown-toggle {
+    padding: 16px 20px;
+  }
+  
   .carousel-item .card-img-top {
     height: 200px; /* Tamanho menor para dispositivos móveis */
   }

@@ -3,7 +3,8 @@
 
     <div class="text-center mb-4">
         <!-- Imagem de perfil -->
-        <img src="default-profile.png" alt="Foto de Perfil" id="profile-image">
+        <img src="/img/default-user.jpg" alt="Foto de Perfil" id="profile-image"
+            style="width: 250px; height: 250px; object-fit: cover; border-radius: 50%;">
     </div>
 
     <form action="/ong/criar-perfil-ong" method="POST" enctype="multipart/form-data">
@@ -73,21 +74,39 @@
             <label for="publico_alvo" class="form-label">Público Alvo</label>
             <input type="text" class="form-control" id="publico_alvo" name="publico_alvo" required>
         </div>
-        
+
         <div class="mb-3">
             <label for="dias_atendimento" class="form-label">Dias de Atendimento</label>
-            <input type="text" class="form-control" id="dias_atendimento" name="dias_atendimento" placeholder="Ex: Segunda a Sexta">
-         </div>
-        <div class="mb-3"> 
-            <label for="horario_inicio" class="form-label">Horário de Início</label> 
-            <input type="time" class="form-control" id="horario_inicio" name="horario_inicio"> 
-        </div> 
-        <div class="mb-3"> 
-            <label for="horario_final" class="form-label">Horário de Término</label> 
-            <input type="time" class="form-control" id="horario_final" name="horario_final"> 
+            <input type="text" class="form-control" id="dias_atendimento" name="dias_atendimento"
+                placeholder="Ex: Segunda a Sexta">
+        </div>
+        <div class="mb-3">
+            <label for="horario_inicio" class="form-label">Horário de Início</label>
+            <input type="time" class="form-control" id="horario_inicio" name="horario_inicio">
+        </div>
+        <div class="mb-3">
+            <label for="horario_final" class="form-label">Horário de Término</label>
+            <input type="time" class="form-control" id="horario_final" name="horario_final">
         </div>
 
         <button type="submit" class="botao-primario">Salvar</button>
     </form>
     <button onclick="window.location.href='/auth/apresentacao'" class="botao-cancelar">Cancelar</button>
 </div>
+
+<script>
+    document.getElementById('img_perfil').addEventListener('change', function (event) {
+        const file = event.target.files[0];
+        const profileImage = document.getElementById('profile-image');
+
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                profileImage.src = e.target.result; // Atualiza a imagem com o arquivo escolhido
+            }
+            reader.readAsDataURL(file);
+        } else {
+            profileImage.src = '/img/default-user.jpg'; // Se nenhum arquivo for selecionado
+        }
+    });
+</script>
