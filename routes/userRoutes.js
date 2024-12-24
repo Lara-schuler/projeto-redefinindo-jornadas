@@ -5,6 +5,7 @@ const usuarioController = require('../controllers/usuarioController');
 // Rota para a criação de perfil
 router.get('/criar-perfil', (req, res) => {
     if (req.session.user) {
+        console.log('Usuário logado na sessão ao criar perfil:', req.session.user);
         res.render('usuarios/criar-perfil', {
             layout: './layouts/default/criar-perfil',
             title: 'Criar Perfil',

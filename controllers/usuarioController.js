@@ -204,9 +204,10 @@ async function criarConta(req, res) {
 
 async function exibirFormularioEdicao(req, res) {
     try {
-        const usuarioId = req.session.usuarioId; // Supondo que o ID do usuário esteja na sessão
+        const usuarioId = req.session.usuarioId; 
         const usuario = await usuarioModel.obterUsuarioPorId(usuarioId);
         console.log('Sessão antes de editar conta:', req.session);
+
         if (!usuario) {
             req.flash('error', 'Usuário não encontrado.');
             return res.redirect('/auth/login');
@@ -223,39 +224,36 @@ async function exibirFormularioEdicao(req, res) {
     }
 }
 
-async function editarConta(req, res) {
-    const { email, telefone, senhaAtual, novaSenha } = req.body;
-    const usuarioId = req.session.usuarioId;
-    console.log('Sessão antes de editar conta:', req.session);
-
+const editarConta = async (req, res) => {
     try {
-        // Lógica para verificar e atualizar os dados
-        const usuario = await usuarioModel.obterUsuarioPorId(usuarioId);
+        // Certifique-se de que a sessão está populada
+        if (!req.session.user || !req.session.user.id_pessoa) {
+            console.error('Sessão não inicializada corretamente.');
+            req.flash('error', 'Sessão expirada ou inválida. Faça login novamente.');
+            return res.redirect('/login');
+        }
 
-        if (!usuario) {
+        console.log('Sessão antes de editar conta:', req.session);
+
+        const id_pessoa = req.session.user.id_pessoa;
+        const usuario = await obterUsuarioPorId(id_pessoa);
+
+        console.log('Resultado da consulta de obterUsuarioPorId:', usuario);
+
+        if (!usuario || usuario.length === 0) {
+            console.error('Nenhum usuário encontrado no banco de dados.');
             req.flash('error', 'Usuário não encontrado.');
-            return res.redirect('/auth/editar-conta');
+            return res.redirect('/login');
         }
 
-        if (senhaAtual && novaSenha) {
-            // Verifique a senha atual e atualize para a nova senha
-            const senhaCorreta = await usuarioModel.verificarSenha(usuarioId, senhaAtual);
-            if (!senhaCorreta) {
-                req.flash('error', 'Senha atual incorreta.');
-                return res.redirect('/auth/editar-conta');
-            }
-
-            await usuarioModel.atualizarSenha(usuario.email, novaSenha);
-        }
-
-        await usuarioModel.atualizarDados(usuarioId, email, telefone);
-        req.flash('success', 'Conta atualizada com sucesso.');
-        res.redirect('/auth/editar-conta');
+        res.render('editarConta', { usuario });
     } catch (error) {
-        req.flash('error', 'Erro ao atualizar conta.');
-        res.redirect('/auth/editar-conta');
+        console.error('Erro na rota de edição de conta:', error);
+        req.flash('error', 'Erro ao acessar a página de edição.');
+        res.redirect('/');
     }
-}
+};
+
 
 async function recuperarSenha(req, res) {
     const { email } = req.body;
@@ -376,6 +374,7 @@ async function criarPerfil(req, res) {
             
             // Atualize o tipo de perfil
             await usuarioModel.atualizarTipoPerfil(usuario.id_usuario, tipoPerfil);
+            console.log('Usuário atualizado na sessão:', req.session.user);
 
             // Redirecionar com base no tipo de perfil selecionado
             switch (tipoPerfil) {
@@ -416,18 +415,18 @@ const exibirApresentacao = async (req, res) => {
       const servicosRecentes = await servicoModel.buscarServicosRecentes();
       console.log('Conteúdos recentes encontrados:', conteudosRecentes); // Adicione este log para verificar os conteúdos
   
-      // Verificar se conteudosRecentes é uma lista (array)
+      /* Verificar se conteudosRecentes é uma lista (array)
       if (Array.isArray(conteudosRecentes)) {
-        console.log('conteudosRecentes é uma lista:', conteudosRecentes);
+        //console.log('conteudosRecentes é uma lista:', conteudosRecentes);
       } else {
-        console.log('conteudosRecentes não é uma lista:', conteudosRecentes);
+        //console.log('conteudosRecentes não é uma lista:', conteudosRecentes);
       }
       // Verificar se conteudosRecentes é uma lista (array)
       if (Array.isArray(servicosRecentes)) {
         console.log('conteudosRecentes é uma lista:', servicosRecentes);
       } else {
         console.log('servicosRecentes não é uma lista:', servicosRecentes);
-      }
+      }*/
   
     res.render('apresentacao', {
       layout: 'layouts/default/apresentacao',

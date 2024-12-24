@@ -7,21 +7,17 @@ class ServicoModel {
         let conn;
 
         try {
-            console.log("Iniciando transação para criação de servico...");
             conn = await db.beginTransaction();
 
             // Inserir na tabela `evento`
-            console.log("Inserindo na tabela `servico` com:", { titulo, descricao, local, imagem, pessoa_id });
             const servicoResult = await db.query(
                 `INSERT INTO servico (titulo, descricao, local, imagem, pessoa_id) VALUES (?, ?, ?, ?, ?)`,
                 [titulo, descricao, local, imagem, pessoa_id],
                 conn
             );
-            console.log("Resultado de inserção em `evento`:", servicoResult);
 
             // Confirmar transação
             await db.commitTransaction(conn);
-            console.log("Evento criado com sucesso!");
             return servicoResult.insertId;
         } catch (error) {
             if (conn) await db.rollbackTransaction(conn);

@@ -21,8 +21,7 @@ const criarEvento = async (req, res) => {
 
     // Chama a função do model para salvar o evento
     const eventoId = await eventoModel.criarEvento(eventoData);
-    console.log('ID do evento criado:', eventoId);
-
+    
     // Mensagem de sucesso usando a função definirMensagem
     definirMensagem(req, 'success', 'Evento criado com sucesso!');
 
@@ -50,8 +49,6 @@ const exibirEvento = async (req, res) => {
       console.error('Evento não encontrado');
       return res.status(404).json({ message: 'Evento não encontrado' });
     }
-
-    console.log('Evento antes de passar para a view:', evento); // Verificar os dados do evento
 
     // Passar para a view
     res.render('usuarios/exibir-evento', {

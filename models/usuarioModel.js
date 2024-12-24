@@ -8,52 +8,52 @@ class Usuario {
                    JOIN usuario u ON u.pessoa_id_pessoa = p.id_pessoa
                    LEFT JOIN telefone t ON p.id_pessoa = t.pessoa_id_pessoa
                    WHERE (p.email = ? OR (CONCAT(t.ddd, t.numero) = ?)) AND u.senha = ?`;
-        console.log(sql);
+
         return await db.query(sql, [emailOuTelefone, emailOuTelefone.replace(/\D/g, ''), md5(senha)]);
     }
 
     static async criarConta(email, telefone, senha) {
-        const [ddd, numero] = [telefone.substring(0, 2), telefone.substring(2)];
-        const conn = await db.beginTransaction();
-    
-        try {
-            const pessoaResult = await db.query(
-                `INSERT INTO pessoa (email) VALUES (?)`,
-                [email],
-                conn
-            );
-    
-            const idPessoa = pessoaResult.insertId;
-    
-            await db.query(
-                `INSERT INTO telefone (ddd, numero, pessoa_id_pessoa) VALUES (?, ?, ?)`,
-                [ddd, numero, idPessoa],
-                conn
-            );
-    
-            await db.query(
-                `INSERT INTO usuario (senha, pessoa_id_pessoa) VALUES (?, ?)`,
-                [md5(senha), idPessoa],
-                conn
-            );
-    
-            await db.commitTransaction(conn);
-        } catch (error) {
-            await db.rollbackTransaction(conn);
-            throw error;
-        }
+    const [ddd, numero] = [telefone.substring(0, 2), telefone.substring(2)];
+    const conn = await db.beginTransaction();
+
+    try {
+        const pessoaResult = await db.query(
+            `INSERT INTO pessoa (email) VALUES (?)`,
+            [email],
+            conn
+        );
+
+        const idPessoa = pessoaResult.insertId;
+
+        await db.query(
+            `INSERT INTO telefone (ddd, numero, pessoa_id_pessoa) VALUES (?, ?, ?)`,
+            [ddd, numero, idPessoa],
+            conn
+        );
+
+        await db.query(
+            `INSERT INTO usuario (senha, pessoa_id_pessoa) VALUES (?, ?)`,
+            [md5(senha), idPessoa],
+            conn
+        );
+
+        await db.commitTransaction(conn);
+    } catch (error) {
+        await db.rollbackTransaction(conn);
+        throw error;
     }
-    
+}
+
     static async buscarPorEmail(email) {
         let sql = `SELECT * FROM pessoa WHERE email = ?`;
-        console.log(sql);
+        
         return await db.query(sql, [email]);
     }
 
     static async buscarPorTelefone(telefone) {
         const [ddd, numero] = [telefone.substring(0, 2), telefone.substring(2)];
         let sql = `SELECT * FROM telefone WHERE ddd = ? AND numero = ?`;
-        console.log(sql);
+        
         const result = await db.query(sql, [ddd, numero]);
         return result.length > 0 ? result : [];
     }
@@ -79,7 +79,7 @@ class Usuario {
 
     static async atualizarToken(email, token, expiration) {
         let sql = `UPDATE pessoa SET reset_token = ?, token_expiration = ? WHERE email = ?`;
-        console.log(sql);
+
         return await db.query(sql, [token, expiration.toISOString(), email]);
     }
 
@@ -88,13 +88,13 @@ class Usuario {
                    JOIN pessoa p ON u.pessoa_id_pessoa = p.id_pessoa
                    SET u.senha = ?
                    WHERE p.email = ?`;
-        console.log(sql);
+    
         return await db.query(sql, [md5(senha), email]);
     }
 
     static async limparToken(email) {
         let sql = `UPDATE pessoa SET reset_token = NULL, token_expiration = NULL WHERE email = ?`;
-        console.log(sql);
+    
         return await db.query(sql, [email]);
     }
 

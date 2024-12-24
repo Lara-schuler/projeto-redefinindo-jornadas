@@ -27,7 +27,7 @@ router.post('/criar-perfil-psr', upload.single('img_perfil'), (req, res) => {
 // rota para o feed de PSR
 router.get('/psr/feed-psr', (req, res) => {
     if (req.session.user) {
-        console.log('Usuário logado:', req.session.user);
+        console.log('Usuário logado na sessão ao criar perfil psr:', req.session.user);
         // Verifica se o usuário tem perfil de PSR, e renderiza a página de feed
         if (req.session.user.tipo_perfil === 'psr') {
             res.render('feed/psr', {

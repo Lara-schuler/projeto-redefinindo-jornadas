@@ -6,7 +6,7 @@ const upload = require('../middlewares/uploadConfig');
 // Rota para a tela de criação de serviço
 router.get('/criar-servico', (req, res) => {
     if (req.session.user) {
-        console.log('Usuário logado:', req.session.user);
+        console.log('Usuário logado na sessão ao criar serviço:', req.session.user);
         res.render('usuarios/criar-servico', {
             layout: './layouts/default/criar-servico',
             title: 'Criar Serviço',

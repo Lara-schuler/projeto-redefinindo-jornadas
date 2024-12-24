@@ -6,7 +6,7 @@ const upload = require('../middlewares/uploadConfig');
 // Rota para a tela de criação de evento
 router.get('/criar-evento', (req, res) => {
     if (req.session.user) {
-        console.log('Usuário logado:', req.session.user);
+        console.log('Usuário logado na sessão ao criar evento:', req.session.user);
         res.render('usuarios/criar-evento', {
             layout: './layouts/default/criar-evento',
             title: 'Criar Evento',
