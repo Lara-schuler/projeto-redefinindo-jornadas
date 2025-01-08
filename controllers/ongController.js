@@ -1,16 +1,15 @@
+const path = require('path');
 const ongModel = require('../models/ongModel');
 const usuarioModel = require('../models/usuarioModel');
 const eventoModel = require('../models/eventoModel');
 const servicoModel = require('../models/servicoModel');
 const { definirMensagem } = require('./usuarioController');
-const path = require('path');
 
 const criarPerfilOng = async (req, res) => {
   try {
     const img_perfil = req.file
-      ? `uploads/${path.basename(req.file.path)}` 
-      : req.body.img_atual || 'img/default-user.jpg'; 
-
+      ? `uploads/${path.basename(req.file.path)}`
+      : req.body.img_atual || 'img/default-user.jpg';
 
     // Coleta os dados do corpo da requisição
     const {
@@ -29,13 +28,13 @@ const criarPerfilOng = async (req, res) => {
       publico_alvo,
       dias_atendimento,
       horario_inicio,
-      horario_final
+      horario_final,
     } = req.body;
 
     // status_perfil definido como 'nao_criado' por padrão
     const status_perfil = 'nao_criado';
 
-    const id_pessoa = req.session.user.id_pessoa;
+    const { id_pessoa } = req.session.user;
 
     // Organiza os dados para enviar ao model
     const perfilData = {
@@ -57,7 +56,7 @@ const criarPerfilOng = async (req, res) => {
       dias_atendimento,
       horario_inicio,
       horario_final,
-      status_perfil
+      status_perfil,
     };
 
     // Chama a função do model para salvar o perfil
@@ -81,7 +80,7 @@ const criarPerfilOng = async (req, res) => {
     console.error('Erro ao criar perfil de ONG:', error);
 
     // Mensagem de erro usando a função definirMensagem
-    definirMensagem(req, 'error', 'Erro ao criar perfil de ONG: ' + error.message);
+    definirMensagem(req, 'error', `Erro ao criar perfil de ONG: ${error.message}`);
 
     // Redireciona após o erro
     res.redirect('/ong/criar-perfil');
@@ -90,7 +89,7 @@ const criarPerfilOng = async (req, res) => {
 
 const exibirEditarPerfil = async (req, res) => {
   try {
-    const id_pessoa = req.session.user.id_pessoa;
+    const { id_pessoa } = req.session.user;
     const dadosPerfil = await ongModel.buscarPerfilOng(id_pessoa);
 
     if (!dadosPerfil) {
@@ -101,46 +100,41 @@ const exibirEditarPerfil = async (req, res) => {
       layout: './layouts/default/editar-ong',
       title: 'Editar Perfil de ONG',
       usuario: req.session.user,
-      ong: dadosPerfil
+      ong: dadosPerfil,
     });
   } catch (error) {
     console.error('Erro ao carregar o perfil para edição:', error);
-    req.flash('error', 'Erro ao carregar o perfil para edição.');
+    definirMensagem(req, 'error', 'Erro ao carregar o perfil para edição.');
     res.redirect('/ong/feed-ong');
   }
 };
 
 const editarPerfilOng = async (req, res) => {
   try {
-    const id_pessoa = req.session.user.id_pessoa;
+    const { id_pessoa } = req.session.user;
     const img_perfil = req.file
       ? `uploads/${path.basename(req.file.path)}` // Caminho relativo, sem "public"
       : req.body.img_atual || 'img/default-user.jpg'; // Valor padrão
 
-
-
     const dadosAtualizados = {
       ...req.body,
       id_pessoa,
-      img_perfil
+      img_perfil,
     };
 
     // Atualiza o perfil da ONG no banco de dados
     await ongModel.atualizarPerfilOng(dadosAtualizados);
 
     // Mensagem de sucesso
-    req.flash('success', 'Perfil atualizado com sucesso!');
+    definirMensagem(req, 'success', 'Perfil atualizado com sucesso!');
     res.redirect('/ong/feed-ong'); // Redireciona para o feed da ONG
   } catch (error) {
     // Mensagem de erro caso algo falhe
     console.error('Erro ao atualizar o perfil de ONG:', error);
-    req.flash('error', 'Erro ao atualizar o perfil.');
+    definirMensagem(req, 'error', 'Erro ao atualizar o perfil.');
     res.redirect('/ong/editar-perfil-ong'); // Redireciona de volta para a edição de perfil
   }
 };
-
-
-
 
 const exibirFeedOng = async (req, res) => {
   try {
@@ -158,7 +152,7 @@ const exibirFeedOng = async (req, res) => {
       title: 'Feed ONG',
       usuario: req.session.user,
       eventos,
-      servicos
+      servicos,
     });
   } catch (error) {
     console.error('Erro ao buscar conteúdos para o feed:', error);
@@ -166,5 +160,6 @@ const exibirFeedOng = async (req, res) => {
   }
 };
 
-
-module.exports = { criarPerfilOng, exibirFeedOng, exibirEditarPerfil, editarPerfilOng };
+module.exports = {
+  criarPerfilOng, exibirFeedOng, exibirEditarPerfil, editarPerfilOng,
+};

@@ -7,7 +7,9 @@ const criarEvento = async (req, res) => {
     const imagem = req.file ? req.file.path : null;
 
     // Coleta os dados do corpo da requisição
-    const { titulo, descricao, data_evento, local } = req.body;
+    const {
+      titulo, descricao, data_evento, local,
+    } = req.body;
 
     // Organiza os dados para enviar ao model
     const eventoData = {
@@ -16,12 +18,12 @@ const criarEvento = async (req, res) => {
       imagem,
       criadoPor: req.session.user.id_pessoa,
       dataEvento: data_evento,
-      local
+      local,
     };
 
     // Chama a função do model para salvar o evento
     const eventoId = await eventoModel.criarEvento(eventoData);
-    
+
     // Mensagem de sucesso usando a função definirMensagem
     definirMensagem(req, 'success', 'Evento criado com sucesso!');
 
@@ -31,11 +33,10 @@ const criarEvento = async (req, res) => {
     console.error('Erro ao criar evento:', error);
 
     // Mensagem de erro usando a função definirMensagem
-    definirMensagem(req, 'error', 'Erro ao criar evento: ' + error.message);
+    definirMensagem(req, 'error', `Erro ao criar evento: ${error.message}`);
     res.status(500).json({ message: 'Erro ao criar evento', error: error.message });
   }
 };
-
 
 const exibirEvento = async (req, res) => {
   try {
@@ -52,18 +53,16 @@ const exibirEvento = async (req, res) => {
 
     // Passar para a view
     res.render('usuarios/exibir-evento', {
-      layout: false, 
+      layout: false,
       title: evento.titulo,
       usuario: req.session.user,
-      evento: evento
-    });       
+      evento,
+    });
   } catch (error) {
     console.error('Erro ao buscar evento:', error);
     res.status(500).json({ message: 'Erro ao buscar evento', error: error.message });
   }
 };
-
-
 
 const curtirEvento = async (req, res) => {
   // Lógica para curtir evento
@@ -94,5 +93,6 @@ const exibirHome = async (req, res) => {
   }
 };
 
-
-module.exports = { criarEvento, exibirEvento, curtirEvento, compartilharEvento, participarEvento, exibirHome };
+module.exports = {
+  criarEvento, exibirEvento, curtirEvento, compartilharEvento, participarEvento, exibirHome,
+};

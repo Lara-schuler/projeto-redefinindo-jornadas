@@ -1,6 +1,6 @@
 const express = require('express');
 const path = require('path');
-require("dotenv").config();
+require('dotenv').config();
 const expressLayouts = require('express-ejs-layouts');
 const flash = require('connect-flash');
 

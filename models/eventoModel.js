@@ -2,7 +2,9 @@ const db = require('./Database');
 
 class eventoModel {
   static async criarEvento(data) {
-    const { titulo, descricao, imagem, criadoPor, dataEvento, local } = data;
+    const {
+      titulo, descricao, imagem, criadoPor, dataEvento, local,
+    } = data;
 
     let conn;
 
@@ -11,9 +13,9 @@ class eventoModel {
 
       // Inserir na tabela `evento`
       const eventoResult = await db.query(
-        `INSERT INTO evento (titulo, descricao, imagem, pessoa_juridica_pessoa_idpessoa, data_evento, local) VALUES (?, ?, ?, ?, ?, ?)`,
+        'INSERT INTO evento (titulo, descricao, imagem, pessoa_juridica_pessoa_idpessoa, data_evento, local) VALUES (?, ?, ?, ?, ?, ?)',
         [titulo, descricao, imagem, criadoPor, dataEvento, local],
-        conn
+        conn,
       );
 
       // Confirmar transação
@@ -21,7 +23,7 @@ class eventoModel {
       return eventoResult.insertId;
     } catch (error) {
       if (conn) await db.rollbackTransaction(conn);
-      console.error("Erro ao criar evento:", error);
+      console.error('Erro ao criar evento:', error);
       throw error;
     }
   }
@@ -92,7 +94,7 @@ class eventoModel {
           JOIN usuario u ON p.id_pessoa = u.pessoa_id_pessoa
           WHERE e.id_evento = ?
           `,
-        [eventoId]
+        [eventoId],
       );
       return Array.isArray(evento) ? evento : [evento];
     } catch (error) {
@@ -101,6 +103,5 @@ class eventoModel {
     }
   }
 }
-
 
 module.exports = eventoModel;

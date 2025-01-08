@@ -1,5 +1,5 @@
-const db = require('./Database');
 const path = require('path');
+const db = require('./Database');
 
 class ongModel {
   static async criarPerfilOng(data) {
@@ -21,46 +21,46 @@ class ongModel {
       publico_alvo,
       dias_atendimento,
       horario_inicio,
-      horario_final
+      horario_final,
     } = data;
 
     let conn;
 
     try {
-      console.log("Iniciando transação para criação de perfil...");
+      console.log('Iniciando transação para criação de perfil...');
       conn = await db.beginTransaction();
 
       // Atualizar na tabela `pessoa`
-      console.log("Atualizando tabela `pessoa` com:", { nome, id_pessoa });
+      console.log('Atualizando tabela `pessoa` com:', { nome, id_pessoa });
       const updatePessoaQuery = `
         UPDATE pessoa 
         SET nome = ?
         WHERE id_pessoa = ?;
       `;
       const pessoaResult = await db.query(updatePessoaQuery, [nome, id_pessoa], conn);
-      console.log("Resultado de atualização em `pessoa`:", pessoaResult);
+      console.log('Resultado de atualização em `pessoa`:', pessoaResult);
 
       // Buscar o id_usuario correspondente ao id_pessoa
-      console.log("Buscando `id_usuario` para `id_pessoa`:", id_pessoa);
+      console.log('Buscando `id_usuario` para `id_pessoa`:', id_pessoa);
       const usuarioResult = await db.query(
-        `SELECT id_usuario FROM usuario WHERE pessoa_id_pessoa = ?`,
+        'SELECT id_usuario FROM usuario WHERE pessoa_id_pessoa = ?',
         [id_pessoa],
-        conn
+        conn,
       );
-      console.log("Resultado de `id_usuario`:", usuarioResult);
+      console.log('Resultado de `id_usuario`:', usuarioResult);
 
       if (!usuarioResult || usuarioResult.length === 0 || !usuarioResult[0]) {
-        throw new Error("Usuário não encontrado.");
+        throw new Error('Usuário não encontrado.');
       }
-      const id_usuario = usuarioResult[0].id_usuario;
+      const { id_usuario } = usuarioResult[0];
 
       // Definir um valor padrão para `status_perfil` caso ele não seja fornecido
-      const statusPerfil = 'criado'; 
+      const statusPerfil = 'criado';
 
-      console.log("Atualizando tabela `usuario` com:", {
+      console.log('Atualizando tabela `usuario` com:', {
         img_perfil,
-        status_perfil: statusPerfil, 
-        id_usuario
+        status_perfil: statusPerfil,
+        id_usuario,
       });
 
       const updateUsuarioQuery = `
@@ -70,65 +70,67 @@ class ongModel {
       `;
 
       const usuarioUpdateResult = await db.query(updateUsuarioQuery, [path.posix.normalize(img_perfil || 'img/default-user.jpg'), statusPerfil, id_usuario], conn);
-      console.log("Resultado de atualização em `usuario`:", usuarioUpdateResult);
+      console.log('Resultado de atualização em `usuario`:', usuarioUpdateResult);
 
       // Inserir na tabela `pessoa_fisica`
-      console.log("Inserindo na tabela `pessoa_juridica`:", { id_pessoa, cnpj, missao, razao_social, dias_atendimento, horario_inicio, horario_final });
+      console.log('Inserindo na tabela `pessoa_juridica`:', {
+        id_pessoa, cnpj, missao, razao_social, dias_atendimento, horario_inicio, horario_final,
+      });
       const pessoaJuridicaResult = await db.query(
-        `INSERT INTO pessoa_juridica (pessoa_idpessoa, cnpj, missao, razao_social, dias_atendimento, horario_inicio, horario_final) VALUES ( ?, ?, ?, ?, ?, ?, ?)`,
+        'INSERT INTO pessoa_juridica (pessoa_idpessoa, cnpj, missao, razao_social, dias_atendimento, horario_inicio, horario_final) VALUES ( ?, ?, ?, ?, ?, ?, ?)',
         [id_pessoa, cnpj, missao, razao_social, dias_atendimento, horario_inicio, horario_final],
-        conn
+        conn,
       );
-      console.log("Resultado de inserção em `pessoa_juridica`:", pessoaJuridicaResult);
+      console.log('Resultado de inserção em `pessoa_juridica`:', pessoaJuridicaResult);
 
       // Inserir na tabela `ong`
-      console.log("Inserindo na tabela `ong`:", { id_pessoa, publico_alvo, tipo_servico });
+      console.log('Inserindo na tabela `ong`:', { id_pessoa, publico_alvo, tipo_servico });
       const ongResult = await db.query(
-        `INSERT INTO ong (pessoa_juridica_pessoa_idpessoa, publico_alvo, tipo_servico) VALUES (?, ?, ?)`,
+        'INSERT INTO ong (pessoa_juridica_pessoa_idpessoa, publico_alvo, tipo_servico) VALUES (?, ?, ?)',
         [id_pessoa, publico_alvo, tipo_servico],
-        conn
+        conn,
       );
-      console.log("Resultado de inserção em `ong`:", ongResult);
+      console.log('Resultado de inserção em `ong`:', ongResult);
 
       // Inserir na tabela `endereco`
-      console.log("Inserindo na tabela `endereco` com:", {
+      console.log('Inserindo na tabela `endereco` com:', {
         rua,
         numero_end,
         cep,
         bairro,
         municipio,
         uf,
-        status
+        status,
       });
       const enderecoResult = await db.query(
-        `INSERT INTO endereco (rua, numero_end, cep, bairro, municipio, uf, status) VALUES (?, ?, ?, ?, ?, ?, ?)`,
+        'INSERT INTO endereco (rua, numero_end, cep, bairro, municipio, uf, status) VALUES (?, ?, ?, ?, ?, ?, ?)',
         [rua, numero_end, cep, bairro, municipio, uf, status],
-        conn
+        conn,
       );
-      console.log("Resultado de `endereco`:", enderecoResult);
+      console.log('Resultado de `endereco`:', enderecoResult);
 
       if (!enderecoResult.insertId) {
-        throw new Error("Falha ao inserir endereço.");
+        throw new Error('Falha ao inserir endereço.');
       }
 
       const enderecoId = enderecoResult.insertId;
 
       // Inserir na tabela de junção `endereco_pessoa`
-      console.log("Inserindo na tabela `endereco_pessoa`:", { enderecoId, id_pessoa });
+      console.log('Inserindo na tabela `endereco_pessoa`:', { enderecoId, id_pessoa });
       const enderecoPessoaResult = await db.query(
-        `INSERT INTO endereco_pessoa (endereco_id_endereco, pessoa_id_pessoa) VALUES (?, ?)`,
+        'INSERT INTO endereco_pessoa (endereco_id_endereco, pessoa_id_pessoa) VALUES (?, ?)',
         [enderecoId, id_pessoa],
-        conn
+        conn,
       );
-      console.log("Resultado de inserção em `endereco_pessoa`:", enderecoPessoaResult);
+      console.log('Resultado de inserção em `endereco_pessoa`:', enderecoPessoaResult);
 
       // Confirmar transação
       await db.commitTransaction(conn);
-      console.log("Perfil criado com sucesso!");
+      console.log('Perfil criado com sucesso!');
       return id_pessoa;
     } catch (error) {
       if (conn) await db.rollbackTransaction(conn);
-      console.error("Erro ao criar perfil:", error);
+      console.error('Erro ao criar perfil:', error);
       throw error;
     }
   }
@@ -147,22 +149,22 @@ class ongModel {
         JOIN usuario u ON p.id_pessoa = u.pessoa_id_pessoa
         WHERE p.id_pessoa = ?;
     `;
-  
+
     const resultados = await db.query(query, [id_pessoa]);
     return resultados[0] || null;
   }
-  
+
   static async atualizarPerfilOng(dados) {
     const {
       id_pessoa, nome, razao_social, cnpj, rua, numero_end, cep, bairro, municipio, uf,
-      img_perfil, status, missao, tipo_servico, publico_alvo, dias_atendimento, horario_inicio, horario_final
+      img_perfil, status, missao, tipo_servico, publico_alvo, dias_atendimento, horario_inicio, horario_final,
     } = dados;
 
     let conn;
     try {
       conn = await db.beginTransaction();
 
-      const updatePessoa = `UPDATE pessoa SET nome = ? WHERE id_pessoa = ?;`;
+      const updatePessoa = 'UPDATE pessoa SET nome = ? WHERE id_pessoa = ?;';
       await db.query(updatePessoa, [nome, id_pessoa], conn);
 
       const updateUsuario = `
@@ -187,7 +189,7 @@ class ongModel {
         `;
       await db.query(updatePessoaJuridica, [razao_social, cnpj, missao, dias_atendimento, horario_inicio, horario_final, id_pessoa], conn);
 
-      const updateOng = `UPDATE ong SET tipo_servico = ?, publico_alvo = ? WHERE pessoa_juridica_pessoa_idpessoa = ?;`;
+      const updateOng = 'UPDATE ong SET tipo_servico = ?, publico_alvo = ? WHERE pessoa_juridica_pessoa_idpessoa = ?;';
       await db.query(updateOng, [tipo_servico, publico_alvo, id_pessoa], conn);
 
       await db.commitTransaction(conn);
@@ -196,7 +198,6 @@ class ongModel {
       throw error;
     }
   }
-
 }
 
 module.exports = ongModel;

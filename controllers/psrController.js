@@ -5,7 +5,7 @@ const { definirMensagem } = require('./usuarioController');
 const criarPerfilPsr = async (req, res) => {
   try {
     // Verifica se o upload de imagem foi realizado
-    const img_perfil = req.file ? req.file.path : null; 
+    const img_perfil = req.file ? req.file.path : null;
 
     // Coleta os dados do corpo da requisição
     const {
@@ -22,13 +22,13 @@ const criarPerfilPsr = async (req, res) => {
       necessidades_urg,
       formacao,
       tipo_interesse,
-      historico_medico
+      historico_medico,
     } = req.body;
 
     // status_perfil definido como 'nao_criado' por padrão
     const status_perfil = 'nao_criado';
 
-    const id_pessoa = req.session.user.id_pessoa; 
+    const { id_pessoa } = req.session.user;
 
     // Organiza os dados para enviar ao model
     const perfilData = {
@@ -48,7 +48,7 @@ const criarPerfilPsr = async (req, res) => {
       formacao,
       tipo_interesse,
       historico_medico,
-      status_perfil 
+      status_perfil,
     };
 
     // Chama a função do model para salvar o perfil
@@ -62,8 +62,8 @@ const criarPerfilPsr = async (req, res) => {
     definirMensagem(req, 'success', 'Perfil de PSR criado com sucesso!');
 
     // Atualizando a sessão
-    req.session.user.tipo_perfil = 'psr';  
-    req.session.user.status_perfil = 'criado';  
+    req.session.user.tipo_perfil = 'psr';
+    req.session.user.status_perfil = 'criado';
 
     // Redireciona após o sucesso
     res.redirect('/psr/feed-psr');
@@ -71,12 +71,11 @@ const criarPerfilPsr = async (req, res) => {
     console.error('Erro ao criar perfil de PSR:', error);
 
     // Mensagem de erro usando a função definirMensagem
-    definirMensagem(req, 'error', 'Erro ao criar perfil de PSR: ' + error.message);
+    definirMensagem(req, 'error', `Erro ao criar perfil de PSR: ${error.message}`);
 
     // Redireciona após o erro
     res.redirect('/psr/criar-perfil');
   }
 };
 
-
-module.exports = { criarPerfilPsr }
+module.exports = { criarPerfilPsr };
