@@ -54,4 +54,7 @@ const exibirServico = async (req, res) => {
   }
 };
 
-module.exports = { criarServico, exibirServico };
+module.exports = {
+  criarServico,
+  exibirServico,
+};

@@ -433,20 +433,7 @@ const exibirApresentacao = async (req, res) => {
   try {
     const conteudosRecentes = await eventoModel.buscarConteudosRecentes();
     const servicosRecentes = await servicoModel.buscarServicosRecentes();
-    console.log('Conteúdos recentes encontrados:', conteudosRecentes); // Adicione este log para verificar os conteúdos
-
-    /* Verificar se conteudosRecentes é uma lista (array)
-      if (Array.isArray(conteudosRecentes)) {
-        //console.log('conteudosRecentes é uma lista:', conteudosRecentes);
-      } else {
-        //console.log('conteudosRecentes não é uma lista:', conteudosRecentes);
-      }
-      // Verificar se conteudosRecentes é uma lista (array)
-      if (Array.isArray(servicosRecentes)) {
-        console.log('conteudosRecentes é uma lista:', servicosRecentes);
-      } else {
-        console.log('servicosRecentes não é uma lista:', servicosRecentes);
-      } */
+    console.log('Conteúdos recentes encontrados:', conteudosRecentes);
 
     res.render('apresentacao', {
       layout: 'layouts/default/apresentacao',

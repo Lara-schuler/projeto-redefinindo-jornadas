@@ -94,5 +94,10 @@ const exibirHome = async (req, res) => {
 };
 
 module.exports = {
-  criarEvento, exibirEvento, curtirEvento, compartilharEvento, participarEvento, exibirHome,
+  criarEvento,
+  exibirEvento,
+  curtirEvento,
+  compartilharEvento,
+  participarEvento,
+  exibirHome,
 };

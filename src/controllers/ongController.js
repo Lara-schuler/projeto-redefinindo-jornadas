@@ -161,5 +161,8 @@ const exibirFeedOng = async (req, res) => {
 };
 
 module.exports = {
-  criarPerfilOng, exibirFeedOng, exibirEditarPerfil, editarPerfilOng,
+  criarPerfilOng,
+  exibirFeedOng,
+  exibirEditarPerfil,
+  editarPerfilOng,
 };

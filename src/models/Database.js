@@ -38,12 +38,14 @@ async function rollbackTransaction(conn) {
 }
 
 async function query(sql, params, conn) {
-  const connection = conn || await connect(); // Conexão reutilizada ou nova
-  const [rows] = await connection.query(sql, params); // Execução da query e destruição para pegar as linhas
-  // console.log('Resultado da query:', rows);  // Log das linhas retornadas
-  return rows; // Retorna as linhas para o chamador
+  const connection = conn || await connect();
+  const [rows] = await connection.query(sql, params); 
+  return rows;
 }
 
 module.exports = {
-  query, beginTransaction, commitTransaction, rollbackTransaction,
+  query,
+  beginTransaction,
+  commitTransaction,
+  rollbackTransaction,
 };
